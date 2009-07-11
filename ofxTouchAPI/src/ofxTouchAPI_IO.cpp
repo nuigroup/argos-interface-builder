@@ -153,14 +153,6 @@ int ofxTouchAPI_IO::getTouches(){
 	return touchlist.size(); 
 }
 
-int ofxTouchAPI_IO::getTouchX() {
-	return _touchX;
-}
-
-int ofxTouchAPI_IO::getTouchY() {
-	return _touchY;
-}
-
 int ofxTouchAPI_IO::getLastMouseButton() {
 	return _mouseButton;
 }
@@ -359,15 +351,15 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
 
 		// is the touch in our list of touches? 
-		if (isTouchActive(ID)) {
-			onTouchUp(touchlist);
-		}
+		//if (isTouchActive(ID)) {
+		//	onTouchUp(touchlist);
+		//}
 	}
 
-	else{
-		// if any touch is that had at one point touched this object, release it
-		onTouchUpOutside(touchlist);  
-	}
+	//else{
+	//	// if any touch is that had at one point touched this object, release it
+	//	onTouchUpOutside(touchlist);  
+	//}
 
 }
 
@@ -385,16 +377,16 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
 
 		// is the touch in our list of touches? 
-		if (isTouchActive(ID)) {
-			onTouchMove(touchlist); 
-		}
+		//if (isTouchActive(ID)) {
+		//	onTouchMove(touchlist); 
+		//}
 	
 		// if finger was not originally down on object, make it so
 		// alternate behavior: call onTouchMove right after
-		else {
-			touchlist.push_back(tuioCursor);
-			//onTouchMove(touchlist); 
-		}
+		//else {
+		//	touchlist.push_back(tuioCursor);
+		//	//onTouchMove(touchlist); 
+		//}
 		
 	}
 

@@ -26,7 +26,6 @@ public:
 	ofxTouchAPI_IO();			// constructor
 	virtual ~ofxTouchAPI_IO();	// destructor
 	
-
 	// ================================================================= Event Enable/Disable
 	void enableAllEvents();				// enable all event callbacks (default) 
 	void disableAllEvents();			// disable all event callbacks
