@@ -56,8 +56,11 @@ public:
 	int  getMouseY();					// returns mouse Y (in screen coordinates)
 	int  getLastMouseButton();			// returns last mouse button to have activity
 
-	bool isTouchActive(int ID);		// Asks if the current finger ID is touching the object
-	int  getTouches();				// returns the number of current fingers on an object
+	bool isTouchActive(int ID);						// Asks if the current finger ID is touching the object
+	int  getTouches();								// returns the number of current fingers on an object
+	void addTouch(ofxTuioCursor &tuioCursor);		// Adds active touch on the object
+	void updateTouch(ofxTuioCursor &tuioCursor);	// Updates an active touch on the object
+	void removeTouch(ofxTuioCursor &tuioCursor);	// Removes an inactive touch on the object
 
 
 	// ================================================================= Updater Methods
@@ -84,11 +87,11 @@ public:
 
 
 	// ================================================================= Touch States
-	virtual void onTouchDown(vector<ofxTuioCursor> &touchlist)				{}		// called when a touch down occurs on an object
-	virtual void onTouchUp(vector<ofxTuioCursor> &touchlist)				{}		// called when a touch up occurs on an object
-	virtual void onTouchUpOutside(vector<ofxTuioCursor> &touchlist)			{}		// called when a touch up occurs after having pressed on an object
-	virtual void onTouchMove(vector<ofxTuioCursor> &touchlist)				{}		// called when touch moves inside the object
-	virtual void onTouchMoveOutside(vector<ofxTuioCursor> &touchlist)		{}		// called when touch release outside of an object after being pressed on an object
+	virtual void onTouchDown(vector<ofxTuioCursor> touchlist)				{}		// called when a touch down occurs on an object
+	virtual void onTouchUp(vector<ofxTuioCursor> touchlist)				{}		// called when a touch up occurs on an object
+	virtual void onTouchUpOutside(vector<ofxTuioCursor> touchlist)			{}		// called when a touch up occurs after having pressed on an object
+	virtual void onTouchMove(vector<ofxTuioCursor> touchlist)				{}		// called when touch moves inside the object
+	virtual void onTouchMoveOutside(vector<ofxTuioCursor> touchlist)		{}		// called when touch release outside of an object after being pressed on an object
 
 	// ================================================================= Events
 	void _setup(ofEventArgs &e);
@@ -113,9 +116,6 @@ protected:
 	int			_mouseX, _mouseY, _mouseButton;
 	bool		_mouseOver;
 	bool		_mouseDown;
-
-	int			_touchX, _touchY; 
-	int			_ID; 
 
 	vector<ofxTuioCursor> touchlist; 
 

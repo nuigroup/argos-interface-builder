@@ -153,6 +153,24 @@ int ofxTouchAPI_IO::getTouches(){
 	return touchlist.size(); 
 }
 
+void ofxTouchAPI_IO::addTouch(ofxTuioCursor &tuioCursor){
+
+	printf("ofxTouchAPI_IO::addTouch\n"); 
+	touchlist.push_back(tuioCursor);
+}
+
+void ofxTouchAPI_IO::updateTouch(ofxTuioCursor &tuioCursor){
+	printf("ofxTouchAPI_IO::updateTouch\n"); 
+
+}
+
+void ofxTouchAPI_IO::removeTouch(ofxTuioCursor &tuioCursor){
+	printf("ofxTouchAPI_IO::removeTouch\n"); 
+
+
+
+}
+
 int ofxTouchAPI_IO::getLastMouseButton() {
 	return _mouseButton;
 }
@@ -325,15 +343,16 @@ void ofxTouchAPI_IO::_keyReleased(ofKeyEventArgs &e) {
 
 void ofxTouchAPI_IO::_tuioAdded(ofxTuioCursor &tuioCursor){
 
-	int x = tuioCursor.getX();
-	int y = tuioCursor.getY();
+	int x = tuioCursor.getX() * ofGetWidth();
+	int y = tuioCursor.getY() * ofGetHeight(); 
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioAdded(x: %i, y: %i)\n", x, y);
 
 	// If the touch is over the object
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
-		touchlist.push_back(tuioCursor);
+
+		addTouch(tuioCursor);
 		onTouchDown(touchlist); 
 	}
 
@@ -341,8 +360,8 @@ void ofxTouchAPI_IO::_tuioAdded(ofxTuioCursor &tuioCursor){
 
 void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 	
-	int x = tuioCursor.getX();
-	int y = tuioCursor.getY();
+	int x = tuioCursor.getX() * ofGetWidth();
+	int y = tuioCursor.getY() * ofGetHeight(); 
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioRemoved(x: %i, y: %i)\n", x, y);
@@ -365,13 +384,18 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 
 void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 	
-	int x = tuioCursor.getX();
-	int y = tuioCursor.getY();
+	int x = tuioCursor.getX() * ofGetWidth();
+	int y = tuioCursor.getY() * ofGetHeight(); 
 	int ID = tuioCursor.getFingerId();
 
 	printf("Number of Touches: %i \n", getTouches());  
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioUpdated(x: %i, y: %i, ID: %i)\n", x, y, ID);
+
+	if ( !touchlist.empty() ){
+		printf("%i \n",touchlist[0].getX());
+
+	}
 
 	// If the touch is over the object
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
@@ -390,4 +414,8 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 		
 	}
 
+}
+
+void onTouchDown(vector<ofxTuioCursor> &touchlist){
+	printf("Test");
 }
