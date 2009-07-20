@@ -3,10 +3,32 @@
  Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
  === Google Summer of Code 2009 - NUI Group === 
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/ 
+ Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
  -> Based on ofxMSAInteractiveObject
 
- [BSD License Here]
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted provided that the following conditions are met:
+
+	1. Redistributions of source code must retain the above copyright notice, 
+	this list of conditions and the following disclaimer.
+
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation and/or 
+	other materials provided with the distribution.
+
+	3. The name of the author may not be used to endorse or promote products derived 
+	from this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE ARGOS PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED 
+	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+	MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+	EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+	SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+	EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
 
@@ -134,41 +156,9 @@ int ofxTouchAPI_IO::getMouseY() {
 	return _mouseY;
 }
 
-/* Function to find ID in a list of touches, update x and y
-bool ofxTouchAPI_IO::isTouchActive(int ID)
-{
-	
-	vector<i>::iterator result;
-
-	result = find(touchlist.begin(), touchlist.end(), ID); 
-		
-	if (result == touchlist.end())
-		return false; 
-	else
-		return true; 
-}
-*/ 
-
+// Quick test to see how many fingers are touching a particular object
 int ofxTouchAPI_IO::getTouches(){
-	return touchlist.size(); 
-}
-
-void ofxTouchAPI_IO::addTouch(ofxTuioCursor &tuioCursor){
-
-	printf("ofxTouchAPI_IO::addTouch\n"); 
-	touchlist.push_back(tuioCursor);
-}
-
-void ofxTouchAPI_IO::updateTouch(ofxTuioCursor &tuioCursor){
-	printf("ofxTouchAPI_IO::updateTouch\n"); 
-
-}
-
-void ofxTouchAPI_IO::removeTouch(ofxTuioCursor &tuioCursor){
-	printf("ofxTouchAPI_IO::removeTouch\n"); 
-
-
-
+	return touchList.size(); 
 }
 
 int ofxTouchAPI_IO::getLastMouseButton() {
@@ -348,12 +338,13 @@ void ofxTouchAPI_IO::_tuioAdded(ofxTuioCursor &tuioCursor){
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioAdded(x: %i, y: %i)\n", x, y);
+	if(!enabled) return;
 
-	// If the touch is over the object
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
-
-		addTouch(tuioCursor);
-		onTouchDown(touchlist); 
+		if(!touchList.size()){
+	    onTouchDown(x, y, ID);	
+		}
+		touchList.push_back(ID);
 	}
 
 }
@@ -365,20 +356,24 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioRemoved(x: %i, y: %i)\n", x, y);
+	if(!enabled) return;
 
-	// If the touch is over the object
+	// If touch is inside object when it's removed
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
+		if(touchList.size() <= 1){
+			onTouchUp(x, y, ID);
+		}
+	} 
+	
+	// If touch is outside the object when it's removed
+	else {
 
-		// is the touch in our list of touches? 
-		//if (isTouchActive(ID)) {
-		//	onTouchUp(touchlist);
-		//}
+		onTouchUpOutside(x, y, ID); 
+
+		std::list<int>::iterator touchid;
+		touchid = find(touchList.begin(), touchList.end(), ID);
+		if(touchid != touchList.end()) touchList.remove(ID);
 	}
-
-	//else{
-	//	// if any touch is that had at one point touched this object, release it
-	//	onTouchUpOutside(touchlist);  
-	//}
 
 }
 
@@ -388,34 +383,41 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 	int y = tuioCursor.getY() * ofGetHeight(); 
 	int ID = tuioCursor.getFingerId();
 
-	printf("Number of Touches: %i \n", getTouches());  
+	//printf("Number of Touches: %i \n", getTouches());  
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioUpdated(x: %i, y: %i, ID: %i)\n", x, y, ID);
+	if(!enabled) return;
 
-	if ( !touchlist.empty() ){
-		printf("%i \n",touchlist[0].getX());
-
-	}
-
-	// If the touch is over the object
+	// If touch is moving inside an object
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
 
-		// is the touch in our list of touches? 
-		//if (isTouchActive(ID)) {
-		//	onTouchMove(touchlist); 
-		//}
+		if(touchList.size()){
+			std::list<int>::iterator touchid;
+			touchid = find(touchList.begin(), touchList.end(), ID);
+			if(touchid==touchList.end()) touchList.push_back(ID);
+			
+			onTouchMove(x, y, ID);		
+		} else {
+			onTouchMoveOver(x, y, ID);
+			touchList.push_back(ID);
+		}
+	} 
 	
-		// if finger was not originally down on object, make it so
-		// alternate behavior: call onTouchMove right after
-		//else {
-		//	touchlist.push_back(tuioCursor);
-		//	//onTouchMove(touchlist); 
-		//}
-		
+	// If the touch moves outside an object
+	else {
+		if(touchList.size()){
+			if(touchList.size() <= 1){
+				std::list<int>::iterator touchid;
+				touchid = find(touchList.begin(), touchList.end(), ID);
+				if(touchid!=touchList.end()){
+					onTouchMoveOutside(x, y, ID);
+					touchList.remove(ID);
+				}
+			} else {
+				std::list<int>::iterator touchid;
+				touchid = find(touchList.begin(), touchList.end(), ID);
+				if(touchid!=touchList.end()) touchList.remove(ID);
+			}
+		}
 	}
-
-}
-
-void onTouchDown(vector<ofxTuioCursor> &touchlist){
-	printf("Test");
 }

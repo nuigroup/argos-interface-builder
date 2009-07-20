@@ -6,7 +6,29 @@
  Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
  -> Based on ofxMSAInteractiveObject
 
- [BSD License Here]
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted provided that the following conditions are met:
+
+	1. Redistributions of source code must retain the above copyright notice, 
+	this list of conditions and the following disclaimer.
+
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation and/or 
+	other materials provided with the distribution.
+
+	3. The name of the author may not be used to endorse or promote products derived 
+	from this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE ARGOS PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED 
+	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+	MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+	EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+	SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+	EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
 
@@ -14,7 +36,6 @@
 
 #include "ofMain.h"
 #include "ofxTouchAPI.h"
-
 
 class ofxTouchAPI_IO : public ofRectangle {
 
@@ -56,12 +77,8 @@ public:
 	int  getMouseY();					// returns mouse Y (in screen coordinates)
 	int  getLastMouseButton();			// returns last mouse button to have activity
 
-	bool isTouchActive(int ID);						// Asks if the current finger ID is touching the object
-	int  getTouches();								// returns the number of current fingers on an object
-	void addTouch(ofxTuioCursor &tuioCursor);		// Adds active touch on the object
-	void updateTouch(ofxTuioCursor &tuioCursor);	// Updates an active touch on the object
-	void removeTouch(ofxTuioCursor &tuioCursor);	// Removes an inactive touch on the object
-
+	bool isTouchActive(int ID);			// Asks if the current finger ID is touching the object
+	int  getTouches();					// returns the number of current fingers on an object
 
 	// ================================================================= Updater Methods
 	virtual void setup()	{}	// called when app starts
@@ -87,13 +104,14 @@ public:
 
 
 	// ================================================================= Touch States
-	virtual void onTouchDown(vector<ofxTuioCursor> touchlist)				{}		// called when a touch down occurs on an object
-	virtual void onTouchUp(vector<ofxTuioCursor> touchlist)				{}		// called when a touch up occurs on an object
-	virtual void onTouchUpOutside(vector<ofxTuioCursor> touchlist)			{}		// called when a touch up occurs after having pressed on an object
-	virtual void onTouchMove(vector<ofxTuioCursor> touchlist)				{}		// called when touch moves inside the object
-	virtual void onTouchMoveOutside(vector<ofxTuioCursor> touchlist)		{}		// called when touch release outside of an object after being pressed on an object
+	virtual void onTouchDown(float x, float y, int ID)			{}		// called when a touch down occurs on an object
+	virtual void onTouchUp(float x, float y, int ID)			{}		// called when a touch up occurs on an object
+	virtual void onTouchUpOutside(float x, float y, int ID)		{}		// called when a touch up occurs after having pressed on an object
+	virtual void onTouchMove(float x, float y, int ID)			{}		// called when touch moves inside an object
+	virtual void onTouchMoveOver(float x, float y, int ID)		{}		// called when touch moves outside to inside an object
+	virtual void onTouchMoveOutside(float x, float y, int ID)	{}		// called when touch moves from inside to outside an object
 
-	// ================================================================= Events
+	// ================================================================= Incoming Events
 	void _setup(ofEventArgs &e);
 	void _update(ofEventArgs &e);
     void _draw(ofEventArgs &e);
@@ -117,9 +135,7 @@ protected:
 	bool		_mouseOver;
 	bool		_mouseDown;
 
-	vector<ofxTuioCursor> touchlist; 
+	std::list<int> touchList;
 
 	ofRectangle	oldRect;
 };
-
-
