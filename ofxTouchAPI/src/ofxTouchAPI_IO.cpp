@@ -19,16 +19,16 @@
 	3. The name of the author may not be used to endorse or promote products derived 
 	from this software without specific prior written permission.
 
-	THIS SOFTWARE IS PROVIDED BY THE ARGOS PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED 
-	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
-	MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-	EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-	SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-	EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+	IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+	ARE DISCLAIMED. IN NOEVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, 
+	INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+	(INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+	LOSS OF USE, DATA, ORPROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+	AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+	OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
+	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
 
@@ -42,7 +42,7 @@ ofxTouchAPI_IO::ofxTouchAPI_IO() {
 	_mouseDown	= false;
 
 	enabled		= true;
-	verbose		= true;
+	verbose		= false;
 	
 	enableAllEvents(); 
 }
@@ -57,7 +57,7 @@ void ofxTouchAPI_IO::killMe() {
 }
 
 
-// ================================================================= Events
+// ================================================================= Events Enablers/Disablers
 void ofxTouchAPI_IO::enableAllEvents() {
 	enableMouseEvents();
 	enableKeyEvents();
@@ -161,6 +161,14 @@ int ofxTouchAPI_IO::getTouches(){
 	return touchList.size(); 
 }
 
+/*
+bool ofxTouchAPI_IO::isBeingTouched(){
+	if (touchList.size() == 0)
+		return touchList.size(); 
+}
+*/
+
+
 int ofxTouchAPI_IO::getLastMouseButton() {
 	return _mouseButton;
 }
@@ -201,7 +209,7 @@ void ofxTouchAPI_IO::_exit(ofEventArgs &e) {
 	exit();
 }
 
-
+// ================================================================= Events
 void ofxTouchAPI_IO::_mouseMoved(ofMouseEventArgs &e) {
 	int x = e.x;
 	int y = e.y;
@@ -338,12 +346,11 @@ void ofxTouchAPI_IO::_tuioAdded(ofxTuioCursor &tuioCursor){
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioAdded(x: %i, y: %i)\n", x, y);
+
 	if(!enabled) return;
 
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
-		if(!touchList.size()){
 	    onTouchDown(x, y, ID);	
-		}
 		touchList.push_back(ID);
 	}
 
@@ -356,11 +363,12 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 	int ID = tuioCursor.getFingerId();
 
 	if(verbose) printf("ofxTouchAPI_IO::_tuioRemoved(x: %i, y: %i)\n", x, y);
+
 	if(!enabled) return;
 
 	// If touch is inside object when it's removed
 	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
-		if(touchList.size() <= 1){
+		if(touchList.size() > 0){
 			onTouchUp(x, y, ID);
 		}
 	} 
@@ -383,9 +391,9 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 	int y = tuioCursor.getY() * ofGetHeight(); 
 	int ID = tuioCursor.getFingerId();
 
-	//printf("Number of Touches: %i \n", getTouches());  
-
+	if(verbose) printf("Number of Touches: %i \n", getTouches());  
 	if(verbose) printf("ofxTouchAPI_IO::_tuioUpdated(x: %i, y: %i, ID: %i)\n", x, y, ID);
+
 	if(!enabled) return;
 
 	// If touch is moving inside an object
