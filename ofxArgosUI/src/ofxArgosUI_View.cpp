@@ -63,7 +63,7 @@ float ofxArgosUI_View::getNextY(float y) {
 	return (iy) * config->gridSize.y;
 }
 
-/*
+
 void ofxArgosUI_View::draw(float x, float y) {
 
 	setPos(x += config->offset.x, y += config->offset.y);
@@ -73,29 +73,30 @@ void ofxArgosUI_View::draw(float x, float y) {
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	
 	for(int i=0; i<controls.size(); i++) {
-		float controlX = posX + x;
-		float controlY = posY + y;
+		float controlX = posX;
+		float controlY = posY;
 		
-		controls[i]->draw(controlX, controlY);
+		controls[i]->draw(controls[i]->x, controls[i]->y);
 		ofNoFill();
 		ofSetColor(config->borderColor);
 		glLineWidth(0.5f);
-		ofRect(controlX, controlY, controls[i]->width, controls[i]->height);
-		posY = getNextY(posY + controls[i]->height + config->padding.y);
+
+		//ofRect(controlX, controlY, controls[i]->width, controls[i]->height);
+
+		//posY = getNextY(posY + controls[i]->height + config->padding.y);
 		
-		if(posY + y >= height - controls[i]->height - config->padding.y) {
-			posX += config->gridSize.x;
-			posY = 0;
-		}
-		//		if(guiFocus == controls[i]->guiID) controls[i]->focused = true;		// MEMO
-		//		else							   controls[i]->focused = false;	
+		//if(posY + y >= height - controls[i]->height - config->padding.y) {
+		//	posX += config->gridSize.x;
+		//	posY = 0;
+		//}
 	}	
 }
-*/ 
 
+/*
 void ofxArgosUI_View::draw(float x, float y) {
 
 }
+*/
 
 
 ofxArgosUI_Control *ofxArgosUI_View::addControl(ofxArgosUI_Control* control) {
@@ -116,30 +117,29 @@ ofxArgosUI_FPSCounter *ofxArgosUI_View::addFPSCounter(int x, int y, int width, i
 	return (ofxArgosUI_FPSCounter *)addControl(new ofxArgosUI_FPSCounter(x, y, width, height));
 }
 
-ofxArgosUI_SliderInt *ofxArgosUI_View::addSlider(string name, int *value, int min, int max) {
-	return (ofxArgosUI_SliderInt *)addControl(new ofxArgosUI_SliderInt(name, value, min, max, 0));
+ofxArgosUI_SliderInt *ofxArgosUI_View::addSlider(string name, int x, int y, int width, int height, int *value, int min, int max) {
+	return (ofxArgosUI_SliderInt *)addControl(new ofxArgosUI_SliderInt(name, x, y, width, height, value, min, max, 0));
 }
 
-ofxArgosUI_SliderFloat *ofxArgosUI_View::addSlider(string name, float *value, float min, float max, float smoothing) {
-	return (ofxArgosUI_SliderFloat *)addControl(new ofxArgosUI_SliderFloat(name, value, min, max, smoothing));
+ofxArgosUI_SliderFloat *ofxArgosUI_View::addSlider(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing) {
+	return (ofxArgosUI_SliderFloat *)addControl(new ofxArgosUI_SliderFloat(name, x, y, width, height, value, min, max, smoothing));
 }
 
-ofxArgosUI_Slider2d *ofxArgosUI_View::addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
-	return (ofxArgosUI_Slider2d *)addControl(new ofxArgosUI_Slider2d(name, value, xmin, xmax, ymin, ymax));
+ofxArgosUI_XYPad *ofxArgosUI_View::addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+	return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, value, xmin, xmax, ymin, ymax));
 }
 
 ofxArgosUI_Title *ofxArgosUI_View::addTitle(string name, bool *value) {
 	return (ofxArgosUI_Title *)addControl(new ofxArgosUI_Title(name, value));
 }
 
-ofxArgosUI_Toggle *ofxArgosUI_View::addToggle(string name, bool *value) {
-	return (ofxArgosUI_Toggle *)addControl(new ofxArgosUI_Toggle(name, value));
+ofxArgosUI_Toggle *ofxArgosUI_View::addToggle(string name, int x, int y, int width, int height, bool *value) {
+	return (ofxArgosUI_Toggle *)addControl(new ofxArgosUI_Toggle(name, x, y, width, height, value));
 }
 
 void ofxArgosUI_View::update(ofEventArgs &e) {
 	for(int i=0; i<controls.size(); i++) controls[i]->update();
 }
-
 
 void ofxArgosUI_View::mouseMoved(ofMouseEventArgs &e) {
 	for(int i=0; i<controls.size(); i++) controls[i]->_mouseMoved(e);

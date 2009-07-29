@@ -38,8 +38,6 @@
 
 #include "ofxArgosUI_Control.h"
 
-
-//------------------------------------------------------------------------------ button
 class ofxArgosUI_Title : public ofxArgosUI_Control {
 	
 public:
@@ -49,7 +47,6 @@ public:
 	bool			beToggle;
 	bool			beenPressed;
 	
-	//---------------------------------------------------------------------
 	ofxArgosUI_Title(string name, bool *value = NULL) : ofxArgosUI_Control(name) {
 		beToggle	= false;
 		beenPressed = false;

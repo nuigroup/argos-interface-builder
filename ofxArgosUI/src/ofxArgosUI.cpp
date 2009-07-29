@@ -38,17 +38,17 @@
 
 ofxArgosUI::ofxArgosUI() {
 
-	config			= &defaultSimpleGuiConfig;
+	config			= &defaultConfiguration;
 	
 //	guiFocus		= 0;
 	
 	verbose			= true;
 	
-	xmlFile			= OFX_SIMPLEGUITOO_XML_NAME;
+	xmlFile			= OFX_ARGOS_XML_NAME;
 
 	doSave			= false;
 	doSaveBackup	= false;
-	changePage		= false;
+	changeView		= false;
 	
 	drawHeader(); 
 
@@ -56,18 +56,18 @@ ofxArgosUI::ofxArgosUI() {
 
 void ofxArgosUI::drawHeader(){
 
-	headerPage	= addView("Header");
-	//headerPage->height = config->buttonHeight * 2;
-	//headerPage->width = 0;
+	headerView	= addView("Header");
+	//headerView->height = config->buttonHeight * 2;
+	//headerView->width = 0;
 
-	//headerPage->addToggle("Auto Save", &doAutoSave);
-	//headerPage->addButton("Save Settings", &doSave);
-	//headerPage->addButton("Backup XML", &doSaveBackup);
+	//headerView->addToggle("Auto Save", &doAutoSave);
+	//headerView->addButton("Save Settings", &doSave);
+	//headerView->addButton("Backup XML", &doSaveBackup);
 
 	addView();
 	setAutoSave(false);
 	setDraw(true);
-	setPage(1);
+	setView(1);
 }
 
 
@@ -129,7 +129,7 @@ void ofxArgosUI::loadFromXML(string file) {
 	
 	if(file.compare("NULL") != 0) xmlFile = file;
 	else {
-		xmlFile = OFX_SIMPLEGUITOO_XML_NAME;
+		xmlFile = OFX_ARGOS_XML_NAME;
 	}
 	
 	if(XML.loadFile(xmlFile) == false) {
@@ -139,13 +139,13 @@ void ofxArgosUI::loadFromXML(string file) {
 	
 	doDraw		= XML.getValue("options:doDraw", true);
 	doAutoSave	= XML.getValue("options:doAutoSave", false);
-	currentPage	= XML.getValue("options:currentPage", 1);
+	currentView	= XML.getValue("options:currentView", 1);
 	
-	for(int i=1; i < pages.size(); i++) {
-		pages[i]->loadFromXML(XML);
+	for(int i=1; i < views.size(); i++) {
+		views[i]->loadFromXML(XML);
 	}
 	
-	setPage(currentPage);
+	setView(currentView);
 	setDraw(doDraw);
 }
 
@@ -156,20 +156,21 @@ void ofxArgosUI::saveToXML(string file) {
 	XML.clear();	// clear cause we are building a new xml file
 	
 	XML.addTag("options");
-	XML.pushTag("options");
-	XML.addValue("doDraw", doDraw);
-	XML.addValue("doAutoSave", doAutoSave);
-	XML.addValue("currentPage", currentPage);
+		XML.pushTag("options");
+			XML.addValue("doDraw", doDraw);
+			XML.addValue("doAutoSave", doAutoSave);
+			XML.addValue("currentView", currentView);
 	XML.popTag();
 	
 	XML.addTag("controls");
-	XML.pushTag("controls");
-	for(int i=1; i < pages.size(); i++) {
-		pages[i]->saveToXML(XML);
-	}
+		XML.pushTag("controls");
+		for(int i=1; i < views.size(); i++) {
+			views[i]->saveToXML(XML);
+		}
 	XML.popTag();
 	
 	XML.saveFile(file);
+
 	if(doSaveBackup) XML.saveFile(file+".bak");
 	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
 }
@@ -179,44 +180,12 @@ void ofxArgosUI::setVerbose(bool v) {
 	verbose = v;
 }
 
-//
-//int ofxArgosUI::getValueI(string nameID) {
-//	for(int i=0; i<controls.size(); i++) {
-//		if(nameID.compare(controls[i]->name) == 0) {
-//			ofxArgosUI_SliderInt *c = dynamic_cast<ofxArgosUI_SliderInt *> (controls[i]);
-//			if(c) return c->getValue();
-//		}
-//	}
-//	return NULL;	
-//}
-//
-//float ofxArgosUI::getValueF(string nameID) {
-//	for(int i=0; i<controls.size(); i++) {
-//		if(nameID.compare(controls[i]->name) == 0) {
-//			ofxArgosUI_SliderFloat *c = dynamic_cast<ofxArgosUI_SliderFloat *> (controls[i]);
-//			if(c) return c->getValue();
-//		}
-//	}	
-//	return NULL;
-//}
-//
-//bool ofxArgosUI::getValueB(string nameID) {
-//	for(int i=0; i<controls.size(); i++) {
-//		if(nameID.compare(controls[i]->name) == 0) {
-//			ofxArgosUI_Toggle *c = dynamic_cast<ofxArgosUI_Toggle *> (controls[i]);
-//			if(c) return c->getValue();
-//		}
-//	}	
-//	return NULL;
-//}
-
-
 void ofxArgosUI::drawFocus(float x, float y) {
 	glPushMatrix();
-	glTranslatef(x, y, 0);
-	ofFill();
-//	ofSetColor(config->focusColor.r, config->focusColor.g, config->focusColor.b, 200);
-	ofRect(0, 0, 10, 10);
+		glTranslatef(x, y, 0);
+		ofFill();
+		//ofSetColor(config->focusColor.r, config->focusColor.g, config->focusColor.b, 200);
+		ofRect(0, 0, 10, 10);
 	glPopMatrix();
 }
 
@@ -226,110 +195,109 @@ void ofxArgosUI::draw() {
 	
 	glDisableClientState(GL_COLOR_ARRAY);
 	
-	headerPage->draw();		// this is the header
+	// Draw the first view (view) 
+	headerView->draw();	
 	ofSetColor(config->borderColor);
-	ofLine(0, headerPage->height, headerPage->width, headerPage->height); 
-	pages[currentPage]->draw(0.0f, headerPage->height);
+	ofLine(0, headerView->height, headerView->width, headerView->height); 
+	views[currentView]->draw(0.0f, headerView->height);
 }
 
 
-void ofxArgosUI::nextPage() {
-	setPage(currentPage + 1);
+void ofxArgosUI::nextView() {
+	setView(currentView + 1);
 }
-void ofxArgosUI::prevPage() {
-	setPage(currentPage - 1);
-}
-
-
-void ofxArgosUI::setPage(int i) {
-	currentPage = i;
-	if(currentPage >= pages.size()) currentPage = 1;
-	else if(currentPage < 1) currentPage = pages.size()-1;
+void ofxArgosUI::prevView() {
+	setView(currentView - 1);
 }
 
 
-void ofxArgosUI::setPage(string name) {
-	ofxArgosUI_View *page;
-	for(int i=1; i < pages.size(); i++) {
-		if(name.compare(pages[i]->name) == 0) {
-			setPage(i);
+void ofxArgosUI::setView(int i) {
+	currentView = i;
+	if(currentView >= views.size()) currentView = 1;
+	else if(currentView < 1) currentView = views.size()-1;
+}
+
+
+void ofxArgosUI::setView(string name) {
+	ofxArgosUI_View *view;
+	for(int i=1; i < views.size(); i++) {
+		if(name.compare(views[i]->name) == 0) {
+			setView(i);
 			break;
 		}
 	}
 }
 
-
-ofxArgosUI_View *ofxArgosUI::page(int i) {
-	return pages.at(i);
+ofxArgosUI_View *ofxArgosUI::view(int i) {
+	return views.at(i);
 }
 
-ofxArgosUI_View *ofxArgosUI::page(string name) {
-	ofxArgosUI_View *page;
-	for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->name) == 0) return pages[i];
+ofxArgosUI_View *ofxArgosUI::view(string name) {
+	ofxArgosUI_View *view;
+	for(int i=1; i<views.size(); i++) if(name.compare(views[i]->name) == 0) return views[i];
 	return NULL;
 }
 
 
 ofxArgosUI_View *ofxArgosUI::addView(string name) {
 
-	ofxArgosUI_View *newPage = new ofxArgosUI_View(name);
-	pages.push_back(newPage);
-	if(name == "") newPage->setName("Page " + ofToString(pages.size()-1, 0));
+	ofxArgosUI_View *newView = new ofxArgosUI_View(name);
+	views.push_back(newView);
+	if(name == "") newView->setName("View " + ofToString(views.size()-1, 0));
 	static bool b;
-//	if(pages.size() > 1) headerPage->addTitle(newPage->name);				// if this isn't the first page, add to header
-	if(pages.size() > 1) newPage->addTitle(newPage->name, &changePage);		// if this isn't the first page, add to header
-	setPage(pages.size() - 1);
-	return newPage;
+	if(views.size() > 1) newView->addTitle(newView->name, &changeView);		// if this isn't the first view, add to header
+	setView(views.size() - 1);
+	return newView;
 }
 
 
 ofxArgosUI_Control *ofxArgosUI::addControl(ofxArgosUI_Control* control) {
-	return pages[currentPage]->addControl(control);
+	return views[currentView]->addControl(control);
 }
 
 ofxArgosUI_Button *ofxArgosUI::addButton(string name, int x, int y, int width, int height, bool *value) {
-	return pages[currentPage]->addButton(name, x, y, width, height, value);
+	return views[currentView]->addButton(name, x, y, width, height, value);
 }
 
-ofxArgosUI_Toggle *ofxArgosUI::addToggle(string name, bool *value) {
-	return pages[currentPage]->addToggle(name, value);
+ofxArgosUI_Toggle *ofxArgosUI::addToggle(string name, int x, int y, int width, int height, bool *value) {
+	return views[currentView]->addToggle(name, x, y, width, height, value);
 }
 
-ofxArgosUI_SliderInt *ofxArgosUI::addSlider(string name, int *value, int min, int max) {
-	return pages[currentPage]->addSlider(name, value, min, max);
+ofxArgosUI_SliderInt *ofxArgosUI::addSlider(string name, int x, int y, int width, int height, int *value, int min, int max) {
+	return views[currentView]->addSlider(name, x, y, width, height, value, min, max);
 }
 
-ofxArgosUI_SliderFloat *ofxArgosUI::addSlider(string name, float *value, float min, float max, float smoothing) {
-	return pages[currentPage]->addSlider(name, value, min, max, smoothing);
+ofxArgosUI_SliderFloat *ofxArgosUI::addSlider(string name,int x, int y, int width, int height, float *value, float min, float max, float smoothing) {
+	return views[currentView]->addSlider(name, x, y, width, height, value, min, max, smoothing);
 }
 
-ofxArgosUI_Slider2d *ofxArgosUI::addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
-	return pages[currentPage]->addSlider2d(name, value, xmin, xmax, ymin, ymax);
+ofxArgosUI_XYPad *ofxArgosUI::addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+	return views[currentView]->addXYPad(name, value, xmin, xmax, ymin, ymax);
 }
 
 ofxArgosUI_Title *ofxArgosUI::addTitle(string name, bool *value) {
-	return pages[currentPage]->addTitle(name, value);
+	return views[currentView]->addTitle(name, value);
 }
 
 ofxArgosUI_Content *ofxArgosUI::addContent(string name, ofBaseDraws *content, float fixwidth) {
-	return pages[currentPage]->addContent(name, content, fixwidth);
+	return views[currentView]->addContent(name, content, fixwidth);
 }
 
 ofxArgosUI_FPSCounter *ofxArgosUI::addFPSCounter(int x, int y, int width, int height) {
-	return pages[currentPage]->addFPSCounter(x, y, width, height);
+	return views[currentView]->addFPSCounter(x, y, width, height);
 }
 
 
 
 void ofxArgosUI::update(ofEventArgs &e) {
-	if(changePage) {
-		nextPage();	
-		changePage = false;
+	if(changeView) {
+		nextView();	
+		changeView = false;
 	}
 	
-	headerPage->update(e);
-	pages[currentPage]->height = ofGetHeight();
-	pages[currentPage]->update(e);
+	headerView->update(e);
+	views[currentView]->height = ofGetHeight();
+	views[currentView]->update(e);
 	
 	
 	if(doSaveBackup) doSave = true;
@@ -338,33 +306,33 @@ void ofxArgosUI::update(ofEventArgs &e) {
 }
 
 void ofxArgosUI::mouseMoved(ofMouseEventArgs &e) {
-	headerPage->mouseMoved(e);
-	pages[currentPage]->mouseMoved(e);
+	headerView->mouseMoved(e);
+	views[currentView]->mouseMoved(e);
 }
 
 void ofxArgosUI::mousePressed(ofMouseEventArgs &e) {
-	headerPage->mousePressed(e);
-	pages[currentPage]->mousePressed(e);
+	headerView->mousePressed(e);
+	views[currentView]->mousePressed(e);
 }
 
 void ofxArgosUI::mouseDragged(ofMouseEventArgs &e) {
-	headerPage->mouseDragged(e);
-	pages[currentPage]->mouseDragged(e);
+	headerView->mouseDragged(e);
+	views[currentView]->mouseDragged(e);
 }
 
 void ofxArgosUI::mouseReleased(ofMouseEventArgs &e) {
-	headerPage->mouseReleased(e);
-	pages[currentPage]->mouseReleased(e);
+	headerView->mouseReleased(e);
+	views[currentView]->mouseReleased(e);
 	if(doAutoSave) saveToXML(xmlFile);
 }
 
 void ofxArgosUI::keyPressed(ofKeyEventArgs &e) {
-	headerPage->keyPressed(e);
-	pages[currentPage]->keyPressed(e);
+	headerView->keyPressed(e);
+	views[currentView]->keyPressed(e);
 	if(doAutoSave) saveToXML(xmlFile);
 }
 
 void ofxArgosUI::keyReleased(ofKeyEventArgs &e) {
-	headerPage->keyReleased(e);
-	pages[currentPage]->keyReleased(e);
+	headerView->keyReleased(e);
+	views[currentView]->keyReleased(e);
 }

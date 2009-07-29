@@ -42,7 +42,7 @@
 #include "ofxTouchAPI.h"
 #include "ofxArgosUI_Includes.h"
 
-#define	OFX_SIMPLEGUITOO_XML_NAME	"ofxArgosUI.xml"
+#define	OFX_ARGOS_XML_NAME	"ofxArgosUI.xml"
 
 // ================================================================= ofxArgosUI
 class ofxArgosUI {
@@ -53,8 +53,8 @@ public:
 	
 	ofxArgosUI();
 
-	void					loadFromXML(string file = OFX_SIMPLEGUITOO_XML_NAME);
-	void					saveToXML(string file = OFX_SIMPLEGUITOO_XML_NAME);	
+	void					loadFromXML(string file = OFX_ARGOS_XML_NAME);
+	void					saveToXML(string file = OFX_ARGOS_XML_NAME);	
 	void					setAutoSave(bool b);
 
 	void					setVerbose(bool v);
@@ -65,25 +65,27 @@ public:
 	void					draw();
 	bool					isOn();
 	
-	void					nextPage();
-	void					prevPage();
-	void					setPage(int i);				// 1 based index of page
-	void					setPage(string name);
+	void					nextView();
+	void					prevView();
+	void					setView(int i);				// 1 based index of view
+	void					setView(string name);
 	
-	ofxArgosUI_View			*page(int i);				// 1 based index of page
-	ofxArgosUI_View			*page(string name);
+	ofxArgosUI_View			*view(int i);				// 1 based index of view
+	ofxArgosUI_View			*view(string name);
 	ofxArgosUI_View			*addView(string name = "");
 
 	ofxArgosUI_Control		*addControl(ofxArgosUI_Control *control);
 
 	ofxArgosUI_Button		*addButton(string name, int x, int y, int width, int height, bool *value);
-	ofxArgosUI_Toggle		*addToggle(string name, bool *value);
-	ofxArgosUI_SliderInt	*addSlider(string name, int *value, int min, int max);
-	ofxArgosUI_SliderFloat	*addSlider(string name, float *value, float min, float max, float smoothing = 0);
-	ofxArgosUI_Slider2d		*addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
+	ofxArgosUI_Toggle		*addToggle(string name, int x, int y, int width, int height, bool *value);
+	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
+
+	ofxArgosUI_SliderInt	*addSlider(string name, int x, int y, int width, int height, int *value, int min, int max);
+	ofxArgosUI_SliderFloat	*addSlider(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0);
+	ofxArgosUI_XYPad		*addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
-	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
+	
 	
 protected:
 
@@ -94,25 +96,25 @@ protected:
 	// ============================ GUI Options
 	bool							doAutoSave;
 	bool							doSave, doSaveBackup;
-	bool							changePage;
-	int								currentPage;		// 1 based index of page (0 is for global controls)
+	bool							changeView;
+	int								currentView;		// 1 based index of view (0 is for global controls)
 	bool							verbose;
 	bool							doDraw;
 	float							border;
 
 	// ============================ List of Views
-	ofxArgosUI_View					*headerPage;
-	vector <ofxArgosUI_View*>		pages;				// 0 is for headerPage
+	ofxArgosUI_View					*headerView;
+	vector <ofxArgosUI_View*>		views;				// 0 is for headerView
 	
 	void drawHeader(); 
 	void addListeners();
 	void removeListeners();
 
 	// ============================ Events
-//	void setup(ofEventArgs &e);
+	//void setup(ofEventArgs &e);
 	void update(ofEventArgs &e);
-//  void draw(ofEventArgs &e);
-//	void exit(ofEventArgs &e);
+	//void draw(ofEventArgs &e);
+	//void exit(ofEventArgs &e);
 	
 	void mouseMoved(ofMouseEventArgs &e);
 	void mousePressed(ofMouseEventArgs &e);	

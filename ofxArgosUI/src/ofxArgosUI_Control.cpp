@@ -38,12 +38,15 @@
 
 
 ofxArgosUI_Control::ofxArgosUI_Control(string name) {
-
+                                     
 	controlType = "";
-	this->config = &defaultSimpleGuiConfig;
+	this->config = &defaultConfiguration;
+
 	setName(name);
 	setKey(key);
+
 	//setPos(0, 0);
+
 	lock	  = false;
 	focused	  = false;
 
@@ -74,12 +77,14 @@ void ofxArgosUI_Control::setKey(string newKey) {
 }
 
 void ofxArgosUI_Control::setTextColor(bool clickable) {
-	if(isMouseOver() && clickable) ofSetColor(config->textOverColor);
+	if (isMouseOver() && clickable) ofSetColor(config->textOverColor);
+	else if (isBeingTouched()) ofSetColor(config->textOverColor);
 	else ofSetColor(config->textColor);
 }
 
 void ofxArgosUI_Control::setTextBGColor(bool clickable) {
 	if(isMouseOver() && clickable) ofSetColor(config->textBGOverColor);
+	else if (isBeingTouched()) ofSetColor(config->textBGOverColor);
 	else ofSetColor(config->textBGColor);
 }
 

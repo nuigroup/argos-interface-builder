@@ -43,7 +43,7 @@
 class ofxArgosUI_SliderFloat : public ofxArgosUI_SliderBase<float> {
 	
 public:
-	ofxArgosUI_SliderFloat(string name, float *value, float min, float max, float smoothing = 0) : ofxArgosUI_SliderBase<float>(name, value, min, max, smoothing) {
+	ofxArgosUI_SliderFloat(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0) : ofxArgosUI_SliderBase<float>(name, x, y, width, height, value, min, max, smoothing) {
 		controlType = "SliderFloat";
 	}
 };

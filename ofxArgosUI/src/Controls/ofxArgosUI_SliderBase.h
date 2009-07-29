@@ -51,7 +51,7 @@ public:
 	Type		targetValue;
 	Type		oldValue;
 	
-	ofxArgosUI_SliderBase(string name, Type *value, Type min, Type max, float smoothing = 0) : ofxArgosUI_Control(name) {
+	ofxArgosUI_SliderBase(string name, int x, int y, int width, int height, Type *value, Type min, Type max, float smoothing = 0) : ofxArgosUI_Control(name) {
 		this->value = value;
 		this->min	= min;
 		this->max	= max;
@@ -60,11 +60,13 @@ public:
 		targetValue	= *value;
 		oldValue	= targetValue;
 		controlType = "SliderBase";
-		setup();
+		setup(x, y, width, height);
 	}
 	
-	void setup() {
-		setSize(config->gridSize.x - config->padding.x, config->sliderHeight + config->sliderTextHeight);
+	void setup(int _x, int _y, int _width, int _height) {
+		setSize(_width, _height);
+		setPos(_x, _y); 
+
 		pct		 = ofMap((*value), min, max, 0.0, width);
 		barwidth = pct;
 	}
@@ -75,10 +77,10 @@ public:
 	
 	void saveToXML(ofxXmlSettings &XML) {
 		XML.addTag(controlType + "_" + key);
-		XML.pushTag(controlType + "_" + key);
-		XML.addValue("name", name);
-		XML.addValue("value", getValue());
-		XML.popTag();
+			XML.pushTag(controlType + "_" + key);
+				XML.addValue("name", name);
+					XML.addValue("value", getValue());
+			XML.popTag();
 	}
 	
 	
@@ -147,9 +149,7 @@ public:
 	void onDragOutside(int x, int y, int button) {
 		updateSlider();
 	}
-	
-	
-	
+		
 	void onKeyRight() {
 		add();
 	}
@@ -189,23 +189,23 @@ public:
 		else if(barwidth <= 0)		barwidth = 0;
 		
 		ofEnableAlphaBlending();
+
 		glPushMatrix();
-		glTranslatef(x, y, 0);
-		ofFill();
-		
-		setEmptyColor();
-		ofRect(0, 0, width, config->sliderHeight);
-		
+			glTranslatef(x, y, 0);
+			ofFill();
+			
+			setEmptyColor();
+			ofRect(0, 0, width, height);
+			
+			setFullColor();
+			ofRect(0, 0, barwidth, height);
+			
+			setTextBGColor();
+			//ofRect(0, config->sliderHeight, width, config->sliderTextHeight);
 
-		setFullColor();
-		ofRect(0, 0, barwidth, config->sliderHeight);
-		
-		setTextBGColor();
-		ofRect(0, config->sliderHeight, width, config->sliderTextHeight);
-
-		setTextColor();
-		ofDrawBitmapString(name+":"+ofToString((*value), 6.0), 3, height - 4);
-		ofDisableAlphaBlending();
+			setTextColor();
+			ofDrawBitmapString(ofToString((*value), 6.0), 3, height - 4);
+			ofDisableAlphaBlending();
 		glPopMatrix();
 	}
 	

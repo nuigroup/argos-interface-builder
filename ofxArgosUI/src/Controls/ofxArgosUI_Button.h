@@ -38,7 +38,6 @@
 
 #include "ofxArgosUI_Control.h"
 
-// ================================================================== ofxArgosUI_Button
 class ofxArgosUI_Button : public ofxArgosUI_Control {
 	
 public:
@@ -87,17 +86,16 @@ public:
 		beToggle = b;
 	}
 	
-	
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
-		printf("mouse pressed\n"); 
+		printf("mouse down on object\n"); 
 		beenPressed = true;	
 		if(beToggle) (*value) = !(*value); 
 		else (*value) = true;
 	}
 	
 	void onRelease(int x, int y, int button) {
-		printf("mouse released\n"); 
+		printf("mouse up on object\n");  
 		if(!beToggle) (*value) = false;
 	}
 
@@ -125,24 +123,21 @@ public:
 		setPos(x, y);
 		
 		glPushMatrix();
-		glTranslatef(x, y, 0);
-		
-		ofEnableAlphaBlending();
-		ofFill();
-		setTextBGColor();
-		ofRect(0, 0, width, height);
-		
-		// if a toggle
-		if((*value) && beToggle) {
+			glTranslatef(x, y, 0);
+			
+			ofEnableAlphaBlending();
+			ofFill();
+			setTextBGColor();
+			ofRect(0, 0, width, height);
+			
+			if((*value) && beToggle) {
+				setTextColor();
+			}
+			
 			setTextColor();
-			//ofLine(0, 0, box.width, box.height);
-			//ofLine(box.width, 0, 0, box.height);
-		}
-		
-		setTextColor();
-		ofDrawBitmapString(name, 3, 15);
+			ofDrawBitmapString(name, 3, 15);
 
-		ofDisableAlphaBlending();
+			ofDisableAlphaBlending();
 		
 		glPopMatrix();
 	}

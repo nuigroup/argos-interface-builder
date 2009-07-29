@@ -38,8 +38,6 @@
 
 #include "ofxArgosUI_Control.h"
 
-
-//------------------------------------------------------------------------------ button
 class ofxArgosUI_FPSCounter : public ofxArgosUI_Control {
 	
 public:

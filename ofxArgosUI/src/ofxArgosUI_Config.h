@@ -47,12 +47,12 @@ public:
 	float	toggleHeight;
 	float	sliderHeight;
 	float	sliderTextHeight;
-	float	slider2DTextHeight;
+	float	XYPadTextHeight;
 	float	titleHeight;
 	
 	ofPoint padding;
 	ofPoint offset;
-	ofPoint	slider2DSize;
+	ofPoint	XYPadSize;
 	
 	int	textColor;
 	int textOverColor;
@@ -72,33 +72,28 @@ public:
 		titleHeight			= sliderHeight + sliderTextHeight;
 		toggleHeight		= titleHeight;
 		buttonHeight		= titleHeight;
-		slider2DTextHeight	= titleHeight * 1.5;
+		XYPadTextHeight	= titleHeight * 1.5f;
 
 		padding.set			(titleHeight/2, titleHeight/2);
 		offset.set			(titleHeight/2, titleHeight/2);
-		slider2DSize.set	(titleHeight * 4, titleHeight * 4);
+		XYPadSize.set		(titleHeight * 4, titleHeight * 4);
 		
 		gridSize.x			= titleHeight * 8 + padding.x;		
 		gridSize.y			= toggleHeight + padding.y;
 		
-		// Text:
 		textColor			= 0xf1f1f1;
-		// Text Hover: 
 		textOverColor		= 0xf1f1f1;
 
-		// BG Color
 		textBGColor			= 0x3a3950;
-		// Background Hover
 		textBGOverColor		= 0x585778;
-		
-		// These aren't working? Test.
-		fullColor			= 0xCCCCCC;
-		fullOverColor		= 0xCCCCCC;
-		fullActiveColor		= 0xCCCCCC;
-		emptyColor			= 0xCCCCCC;		
+
+		fullColor			= 0x3d399b;
+		fullOverColor		= 0x3d399b;
+		fullActiveColor		= 0x3d399b;
+		emptyColor			= 0x393b43;		
 		
 		borderColor			= 0xCCCCCC;
 	}
 };
 
-extern ofxArgosUI_Config defaultSimpleGuiConfig;
+extern ofxArgosUI_Config defaultConfiguration;

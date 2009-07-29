@@ -38,22 +38,20 @@
 
 #include "ofxArgosUI_Control.h"
 
-
-//------------------------------------------------------------------------------ toggle
 class ofxArgosUI_Toggle : public ofxArgosUI_Control {
 	
 public:
 	bool	*value;
 	
-	ofxArgosUI_Toggle(string name, bool *value) : ofxArgosUI_Control(name) {
+	ofxArgosUI_Toggle(string name, int x, int y, int width, int height, bool *value) : ofxArgosUI_Control(name) {
 		this->value	= value;
 		controlType = "Toggle";
-		setup();
+		setup(x, y, width, height);
 	}
 	
-	
-	virtual void setup() {
-		setSize(config->gridSize.x - config->padding.x, config->toggleHeight);
+	void setup(int _x, int _y, int _width, int _height) {
+		setPos(_x, _y); 
+		setSize(_width, _height);
 	}
 	
 	void loadFromXML(ofxXmlSettings &XML) {
@@ -62,10 +60,10 @@ public:
 	
 	void saveToXML(ofxXmlSettings &XML) {
 		XML.addTag(controlType + "_" + key);
-		XML.pushTag(controlType + "_" + key);
-		XML.addValue("name", name);
-		XML.addValue("value", getValue());
-		XML.popTag();
+			XML.pushTag(controlType + "_" + key);
+				XML.addValue("name", name);
+				XML.addValue("value", getValue());
+			XML.popTag();
 	}
 	
 	bool getValue() {
@@ -78,11 +76,31 @@ public:
 		(*value) = !(*value); 
 	}
 
+	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
+		printf("mouse down on object \n"); 
 		toggle();
 	}
 
-	//---------------------------------------------------------------------		
+	void onRelease(int x, int y, int button) {
+		printf("mouse up on object\n");  
+	}
+
+	// ============================================= Touch
+	void onTouchDown(float x, float y, int ID){
+		printf("touch down on object \n"); 
+		toggle();
+	}
+
+	void onTouchMoveOver(float x, float y, int ID){
+		printf("touch dragged onto object\n"); 
+	}
+
+	void onTouchUp(float x, float y, int ID){
+		printf("touch released on object \n"); 
+	}
+
+
 	void update() {
 		if(!enabled) return;
 		enabled = false;
@@ -93,32 +111,32 @@ public:
 	}
 	
 	void draw(float x, float y) {
+
 		enabled = true;
 		setPos(x, y);
 		
 		glPushMatrix();
-		glTranslatef(x, y, 0);
-		
-		ofEnableAlphaBlending();
-		ofFill();
-		setFullColor(*value);
-		ofRect(0, 0, height, height);
+			glTranslatef(x, y, 0);
+			
+			ofEnableAlphaBlending();
+			ofFill();
+			setFullColor(*value);
+			ofRect(0, 0, height, height);
 
-		// Draw X
-		if((*value)) {
+			// Draw O
+			if((*value)) {
+				setTextColor();
+				ofCircle(10,10,(height/2.5));
+			}
+			
+			setTextBGColor();
+
+			// Interior
+			ofRect(height, 0, width - height, height);
+
 			setTextColor();
-			ofLine(0, 0, height, height);
-			ofLine(height, 0, 0, height);
-		}
-		
-		setTextBGColor();
-
-		// Interior
-		ofRect(height, 0, width - height, height);
-
-		setTextColor();
-		ofDrawBitmapString(name, height + 15, 15);
-		ofDisableAlphaBlending();
+			ofDrawBitmapString(name, height + 15, 15);
+			ofDisableAlphaBlending();
 		
 		glPopMatrix();
 	}

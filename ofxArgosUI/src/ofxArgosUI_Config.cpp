@@ -36,4 +36,4 @@
 *************************************************************************/ 
 #include "ofxArgosUI_Config.h"
 
-ofxArgosUI_Config defaultSimpleGuiConfig;
+ofxArgosUI_Config defaultConfiguration;

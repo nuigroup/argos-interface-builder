@@ -50,10 +50,10 @@ public:
 	
 	ofxArgosUI_Control		*addControl(ofxArgosUI_Control* control);
 	ofxArgosUI_Button		*addButton(string name, int x, int y, int width, int height, bool *value);
-	ofxArgosUI_Toggle		*addToggle(string name, bool *value);
-	ofxArgosUI_SliderInt	*addSlider(string name, int *value, int min, int max);
-	ofxArgosUI_SliderFloat	*addSlider(string name, float *value, float min, float max, float smoothing = 0);
-	ofxArgosUI_Slider2d		*addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
+	ofxArgosUI_Toggle		*addToggle(string name, int x, int y, int width, int height, bool *value);
+	ofxArgosUI_SliderInt	*addSlider(string name, int x, int y, int width, int height, int *value, int min, int max);
+	ofxArgosUI_SliderFloat	*addSlider(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0);
+	ofxArgosUI_XYPad		*addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
 	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
