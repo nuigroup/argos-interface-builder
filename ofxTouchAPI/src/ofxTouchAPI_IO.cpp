@@ -350,7 +350,6 @@ void ofxTouchAPI_IO::_tuioAdded(ofxTuioCursor &tuioCursor){
 	    onTouchDown(x, y, ID);	
 		touchList.push_back(ID);
 	}
-
 }
 
 void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
@@ -379,7 +378,6 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 		touchid = find(touchList.begin(), touchList.end(), ID);
 		if(touchid != touchList.end()) touchList.remove(ID);
 	}
-
 }
 
 void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
@@ -399,7 +397,7 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 		if(touchList.size()){
 			std::list<int>::iterator touchid;
 			touchid = find(touchList.begin(), touchList.end(), ID);
-			if(touchid==touchList.end()) touchList.push_back(ID);
+			if(touchid == touchList.end()) touchList.push_back(ID);
 			
 			onTouchMove(x, y, ID);		
 		} else {
@@ -414,14 +412,14 @@ void ofxTouchAPI_IO::_tuioUpdated(ofxTuioCursor &tuioCursor){
 			if(touchList.size() <= 1){
 				std::list<int>::iterator touchid;
 				touchid = find(touchList.begin(), touchList.end(), ID);
-				if(touchid!=touchList.end()){
+				if(touchid != touchList.end()){
 					onTouchMoveOutside(x, y, ID);
 					touchList.remove(ID);
 				}
 			} else {
 				std::list<int>::iterator touchid;
 				touchid = find(touchList.begin(), touchList.end(), ID);
-				if(touchid!=touchList.end()) touchList.remove(ID);
+				if(touchid != touchList.end()) touchList.remove(ID);
 			}
 		}
 	}
