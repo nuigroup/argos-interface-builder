@@ -56,7 +56,7 @@ public:
 	ofxArgosUI_Slider2d		*addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
-	ofxArgosUI_FPSCounter	*addFPSCounter();
+	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
 
 	
 	//void setup(ofEventArgs &e);

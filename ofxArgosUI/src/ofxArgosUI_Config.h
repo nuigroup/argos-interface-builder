@@ -74,7 +74,6 @@ public:
 		buttonHeight		= titleHeight;
 		slider2DTextHeight	= titleHeight * 1.5;
 
-		
 		padding.set			(titleHeight/2, titleHeight/2);
 		offset.set			(titleHeight/2, titleHeight/2);
 		slider2DSize.set	(titleHeight * 4, titleHeight * 4);
@@ -82,19 +81,24 @@ public:
 		gridSize.x			= titleHeight * 8 + padding.x;		
 		gridSize.y			= toggleHeight + padding.y;
 		
-		textColor			= 0xAAAAAA;
-		textOverColor		= 0xFFFFFF;
-		textBGColor			= 0x303030;
-		textBGOverColor		= 0x707070;
+		// Text:
+		textColor			= 0xf1f1f1;
+		// Text Hover: 
+		textOverColor		= 0xf1f1f1;
+
+		// BG Color
+		textBGColor			= 0x3a3950;
+		// Background Hover
+		textBGOverColor		= 0x585778;
 		
-		fullColor			= 0x8d9cf8;
-		fullOverColor		= 0x8d9cf8;
-		fullActiveColor		= 0xc4c7db;
-		emptyColor			= 0xDCDCDC;		
+		// These aren't working? Test.
+		fullColor			= 0xCCCCCC;
+		fullOverColor		= 0xCCCCCC;
+		fullActiveColor		= 0xCCCCCC;
+		emptyColor			= 0xCCCCCC;		
 		
 		borderColor			= 0xCCCCCC;
 	}
 };
-
 
 extern ofxArgosUI_Config defaultSimpleGuiConfig;

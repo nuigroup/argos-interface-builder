@@ -38,8 +38,6 @@
 
 ofxArgosUI_View::ofxArgosUI_View(string name) : ofxArgosUI_Control(name) {
 	disableAllEvents();
-	width = 0;
-	height = ofGetHeight();
 }
 
 ofxArgosUI_View::~ofxArgosUI_View() {
@@ -114,8 +112,8 @@ ofxArgosUI_Content *ofxArgosUI_View::addContent(string name, ofBaseDraws *conten
 	return (ofxArgosUI_Content *)addControl(new ofxArgosUI_Content(name, content, fixwidth));
 }
 
-ofxArgosUI_FPSCounter *ofxArgosUI_View::addFPSCounter() {
-	return (ofxArgosUI_FPSCounter *)addControl(new ofxArgosUI_FPSCounter());
+ofxArgosUI_FPSCounter *ofxArgosUI_View::addFPSCounter(int x, int y, int width, int height) {
+	return (ofxArgosUI_FPSCounter *)addControl(new ofxArgosUI_FPSCounter(x, y, width, height));
 }
 
 ofxArgosUI_SliderInt *ofxArgosUI_View::addSlider(string name, int *value, int min, int max) {

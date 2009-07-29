@@ -36,7 +36,7 @@
 *************************************************************************/ 
 #include "ofxArgosUI.h"
 
-ofxArgosUI_Too::ofxArgosUI_Too() {
+ofxArgosUI::ofxArgosUI() {
 
 	config			= &defaultSimpleGuiConfig;
 	
@@ -54,7 +54,7 @@ ofxArgosUI_Too::ofxArgosUI_Too() {
 
 }
 
-void ofxArgosUI_Too::drawHeader(){
+void ofxArgosUI::drawHeader(){
 
 	headerPage	= addView("Header");
 	//headerPage->height = config->buttonHeight * 2;
@@ -71,61 +71,61 @@ void ofxArgosUI_Too::drawHeader(){
 }
 
 
-void ofxArgosUI_Too::addListeners() {
-	//ofAddListener(ofEvents.setup, this, &ofxArgosUI_Too::setup);
-	ofAddListener(ofEvents.update, this, &ofxArgosUI_Too::update);
-	//ofAddListener(ofEvents.draw, this, &ofxArgosUI_Too::draw);
-	//ofAddListener(ofEvents.exit, this, &ofxArgosUI_Too::exit);
+void ofxArgosUI::addListeners() {
+	//ofAddListener(ofEvents.setup, this, &ofxArgosUI::setup);
+	ofAddListener(ofEvents.update, this, &ofxArgosUI::update);
+	//ofAddListener(ofEvents.draw, this, &ofxArgosUI::draw);
+	//ofAddListener(ofEvents.exit, this, &ofxArgosUI::exit);
 
-	ofAddListener(ofEvents.mousePressed, this, &ofxArgosUI_Too::mousePressed);
-	ofAddListener(ofEvents.mouseMoved, this, &ofxArgosUI_Too::mouseMoved);
-	ofAddListener(ofEvents.mouseDragged, this, &ofxArgosUI_Too::mouseDragged);
-	ofAddListener(ofEvents.mouseReleased, this, &ofxArgosUI_Too::mouseReleased);
+	ofAddListener(ofEvents.mousePressed, this, &ofxArgosUI::mousePressed);
+	ofAddListener(ofEvents.mouseMoved, this, &ofxArgosUI::mouseMoved);
+	ofAddListener(ofEvents.mouseDragged, this, &ofxArgosUI::mouseDragged);
+	ofAddListener(ofEvents.mouseReleased, this, &ofxArgosUI::mouseReleased);
 	
-	ofAddListener(ofEvents.keyPressed, this, &ofxArgosUI_Too::keyPressed);
-	ofAddListener(ofEvents.keyReleased, this, &ofxArgosUI_Too::keyReleased);
+	ofAddListener(ofEvents.keyPressed, this, &ofxArgosUI::keyPressed);
+	ofAddListener(ofEvents.keyReleased, this, &ofxArgosUI::keyReleased);
 
 }
 
 
-void ofxArgosUI_Too::removeListeners() {
-	//ofRemoveListener(ofEvents.setup, this, &ofxArgosUI_Too::setup);
-	ofRemoveListener(ofEvents.update, this, &ofxArgosUI_Too::update);
-	//ofRemoveListener(ofEvents.draw, this, &ofxArgosUI_Too::draw);
-	//ofRemoveListener(ofEvents.exit, this, &ofxArgosUI_Too::exit);
+void ofxArgosUI::removeListeners() {
+	//ofRemoveListener(ofEvents.setup, this, &ofxArgosUI::setup);
+	ofRemoveListener(ofEvents.update, this, &ofxArgosUI::update);
+	//ofRemoveListener(ofEvents.draw, this, &ofxArgosUI::draw);
+	//ofRemoveListener(ofEvents.exit, this, &ofxArgosUI::exit);
 	
-	ofRemoveListener(ofEvents.mousePressed, this, &ofxArgosUI_Too::mousePressed);
-	ofRemoveListener(ofEvents.mouseMoved, this, &ofxArgosUI_Too::mouseMoved);
-	ofRemoveListener(ofEvents.mouseDragged, this, &ofxArgosUI_Too::mouseDragged);
-	ofRemoveListener(ofEvents.mouseReleased, this, &ofxArgosUI_Too::mouseReleased);
+	ofRemoveListener(ofEvents.mousePressed, this, &ofxArgosUI::mousePressed);
+	ofRemoveListener(ofEvents.mouseMoved, this, &ofxArgosUI::mouseMoved);
+	ofRemoveListener(ofEvents.mouseDragged, this, &ofxArgosUI::mouseDragged);
+	ofRemoveListener(ofEvents.mouseReleased, this, &ofxArgosUI::mouseReleased);
 	
-	ofRemoveListener(ofEvents.keyPressed, this, &ofxArgosUI_Too::keyPressed);
-	ofRemoveListener(ofEvents.keyReleased, this, &ofxArgosUI_Too::keyReleased);
+	ofRemoveListener(ofEvents.keyPressed, this, &ofxArgosUI::keyPressed);
+	ofRemoveListener(ofEvents.keyReleased, this, &ofxArgosUI::keyReleased);
 }
 
-void ofxArgosUI_Too::setDraw(bool b) {
+void ofxArgosUI::setDraw(bool b) {
 	doDraw = b;
 	if(doDraw) addListeners();
 	else removeListeners();	
 	if(doAutoSave) saveToXML(xmlFile);
 }
 
-void ofxArgosUI_Too::toggleDraw() {
+void ofxArgosUI::toggleDraw() {
 	setDraw(!doDraw);
 }
 
-bool ofxArgosUI_Too::isOn() {
+bool ofxArgosUI::isOn() {
 	return doDraw;
 }
 
 
-void ofxArgosUI_Too::setAutoSave(bool b) {
+void ofxArgosUI::setAutoSave(bool b) {
 	doAutoSave = b;
 }
 
 
-void ofxArgosUI_Too::loadFromXML(string file) {
-	if(verbose) printf("ofxArgosUI_Too::loadFromXML( %s )\n", file.c_str());
+void ofxArgosUI::loadFromXML(string file) {
+	if(verbose) printf("ofxArgosUI::loadFromXML( %s )\n", file.c_str());
 	
 	if(file.compare("NULL") != 0) xmlFile = file;
 	else {
@@ -150,7 +150,7 @@ void ofxArgosUI_Too::loadFromXML(string file) {
 }
 
 
-void ofxArgosUI_Too::saveToXML(string file) {
+void ofxArgosUI::saveToXML(string file) {
 	doSave = false;
 	
 	XML.clear();	// clear cause we are building a new xml file
@@ -171,16 +171,16 @@ void ofxArgosUI_Too::saveToXML(string file) {
 	
 	XML.saveFile(file);
 	if(doSaveBackup) XML.saveFile(file+".bak");
-	printf("ofxArgosUI_Too::saveToXML( %s )\n", file.c_str());
+	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
 }
 
 
-void ofxArgosUI_Too::setVerbose(bool v) {
+void ofxArgosUI::setVerbose(bool v) {
 	verbose = v;
 }
 
 //
-//int ofxArgosUI_Too::getValueI(string nameID) {
+//int ofxArgosUI::getValueI(string nameID) {
 //	for(int i=0; i<controls.size(); i++) {
 //		if(nameID.compare(controls[i]->name) == 0) {
 //			ofxArgosUI_SliderInt *c = dynamic_cast<ofxArgosUI_SliderInt *> (controls[i]);
@@ -190,7 +190,7 @@ void ofxArgosUI_Too::setVerbose(bool v) {
 //	return NULL;	
 //}
 //
-//float ofxArgosUI_Too::getValueF(string nameID) {
+//float ofxArgosUI::getValueF(string nameID) {
 //	for(int i=0; i<controls.size(); i++) {
 //		if(nameID.compare(controls[i]->name) == 0) {
 //			ofxArgosUI_SliderFloat *c = dynamic_cast<ofxArgosUI_SliderFloat *> (controls[i]);
@@ -200,7 +200,7 @@ void ofxArgosUI_Too::setVerbose(bool v) {
 //	return NULL;
 //}
 //
-//bool ofxArgosUI_Too::getValueB(string nameID) {
+//bool ofxArgosUI::getValueB(string nameID) {
 //	for(int i=0; i<controls.size(); i++) {
 //		if(nameID.compare(controls[i]->name) == 0) {
 //			ofxArgosUI_Toggle *c = dynamic_cast<ofxArgosUI_Toggle *> (controls[i]);
@@ -211,7 +211,7 @@ void ofxArgosUI_Too::setVerbose(bool v) {
 //}
 
 
-void ofxArgosUI_Too::drawFocus(float x, float y) {
+void ofxArgosUI::drawFocus(float x, float y) {
 	glPushMatrix();
 	glTranslatef(x, y, 0);
 	ofFill();
@@ -221,7 +221,7 @@ void ofxArgosUI_Too::drawFocus(float x, float y) {
 }
 
 
-void ofxArgosUI_Too::draw() {
+void ofxArgosUI::draw() {
 	if(!doDraw) return;
 	
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -233,22 +233,22 @@ void ofxArgosUI_Too::draw() {
 }
 
 
-void ofxArgosUI_Too::nextPage() {
+void ofxArgosUI::nextPage() {
 	setPage(currentPage + 1);
 }
-void ofxArgosUI_Too::prevPage() {
+void ofxArgosUI::prevPage() {
 	setPage(currentPage - 1);
 }
 
 
-void ofxArgosUI_Too::setPage(int i) {
+void ofxArgosUI::setPage(int i) {
 	currentPage = i;
 	if(currentPage >= pages.size()) currentPage = 1;
 	else if(currentPage < 1) currentPage = pages.size()-1;
 }
 
 
-void ofxArgosUI_Too::setPage(string name) {
+void ofxArgosUI::setPage(string name) {
 	ofxArgosUI_View *page;
 	for(int i=1; i < pages.size(); i++) {
 		if(name.compare(pages[i]->name) == 0) {
@@ -259,18 +259,18 @@ void ofxArgosUI_Too::setPage(string name) {
 }
 
 
-ofxArgosUI_View *ofxArgosUI_Too::page(int i) {
+ofxArgosUI_View *ofxArgosUI::page(int i) {
 	return pages.at(i);
 }
 
-ofxArgosUI_View *ofxArgosUI_Too::page(string name) {
+ofxArgosUI_View *ofxArgosUI::page(string name) {
 	ofxArgosUI_View *page;
 	for(int i=1; i<pages.size(); i++) if(name.compare(pages[i]->name) == 0) return pages[i];
 	return NULL;
 }
 
 
-ofxArgosUI_View *ofxArgosUI_Too::addView(string name) {
+ofxArgosUI_View *ofxArgosUI::addView(string name) {
 
 	ofxArgosUI_View *newPage = new ofxArgosUI_View(name);
 	pages.push_back(newPage);
@@ -283,45 +283,45 @@ ofxArgosUI_View *ofxArgosUI_Too::addView(string name) {
 }
 
 
-ofxArgosUI_Control *ofxArgosUI_Too::addControl(ofxArgosUI_Control* control) {
+ofxArgosUI_Control *ofxArgosUI::addControl(ofxArgosUI_Control* control) {
 	return pages[currentPage]->addControl(control);
 }
 
-ofxArgosUI_Button *ofxArgosUI_Too::addButton(string name, int x, int y, int width, int height, bool *value) {
+ofxArgosUI_Button *ofxArgosUI::addButton(string name, int x, int y, int width, int height, bool *value) {
 	return pages[currentPage]->addButton(name, x, y, width, height, value);
 }
 
-ofxArgosUI_Toggle *ofxArgosUI_Too::addToggle(string name, bool *value) {
+ofxArgosUI_Toggle *ofxArgosUI::addToggle(string name, bool *value) {
 	return pages[currentPage]->addToggle(name, value);
 }
 
-ofxArgosUI_SliderInt *ofxArgosUI_Too::addSlider(string name, int *value, int min, int max) {
+ofxArgosUI_SliderInt *ofxArgosUI::addSlider(string name, int *value, int min, int max) {
 	return pages[currentPage]->addSlider(name, value, min, max);
 }
 
-ofxArgosUI_SliderFloat *ofxArgosUI_Too::addSlider(string name, float *value, float min, float max, float smoothing) {
+ofxArgosUI_SliderFloat *ofxArgosUI::addSlider(string name, float *value, float min, float max, float smoothing) {
 	return pages[currentPage]->addSlider(name, value, min, max, smoothing);
 }
 
-ofxArgosUI_Slider2d *ofxArgosUI_Too::addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+ofxArgosUI_Slider2d *ofxArgosUI::addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
 	return pages[currentPage]->addSlider2d(name, value, xmin, xmax, ymin, ymax);
 }
 
-ofxArgosUI_Title *ofxArgosUI_Too::addTitle(string name, bool *value) {
+ofxArgosUI_Title *ofxArgosUI::addTitle(string name, bool *value) {
 	return pages[currentPage]->addTitle(name, value);
 }
 
-ofxArgosUI_Content *ofxArgosUI_Too::addContent(string name, ofBaseDraws *content, float fixwidth) {
+ofxArgosUI_Content *ofxArgosUI::addContent(string name, ofBaseDraws *content, float fixwidth) {
 	return pages[currentPage]->addContent(name, content, fixwidth);
 }
 
-ofxArgosUI_FPSCounter *ofxArgosUI_Too::addFPSCounter() {
-	return pages[currentPage]->addFPSCounter();
+ofxArgosUI_FPSCounter *ofxArgosUI::addFPSCounter(int x, int y, int width, int height) {
+	return pages[currentPage]->addFPSCounter(x, y, width, height);
 }
 
 
 
-void ofxArgosUI_Too::update(ofEventArgs &e) {
+void ofxArgosUI::update(ofEventArgs &e) {
 	if(changePage) {
 		nextPage();	
 		changePage = false;
@@ -337,34 +337,34 @@ void ofxArgosUI_Too::update(ofEventArgs &e) {
 	if(doSave) saveToXML(xmlFile);
 }
 
-void ofxArgosUI_Too::mouseMoved(ofMouseEventArgs &e) {
+void ofxArgosUI::mouseMoved(ofMouseEventArgs &e) {
 	headerPage->mouseMoved(e);
 	pages[currentPage]->mouseMoved(e);
 }
 
-void ofxArgosUI_Too::mousePressed(ofMouseEventArgs &e) {
+void ofxArgosUI::mousePressed(ofMouseEventArgs &e) {
 	headerPage->mousePressed(e);
 	pages[currentPage]->mousePressed(e);
 }
 
-void ofxArgosUI_Too::mouseDragged(ofMouseEventArgs &e) {
+void ofxArgosUI::mouseDragged(ofMouseEventArgs &e) {
 	headerPage->mouseDragged(e);
 	pages[currentPage]->mouseDragged(e);
 }
 
-void ofxArgosUI_Too::mouseReleased(ofMouseEventArgs &e) {
+void ofxArgosUI::mouseReleased(ofMouseEventArgs &e) {
 	headerPage->mouseReleased(e);
 	pages[currentPage]->mouseReleased(e);
 	if(doAutoSave) saveToXML(xmlFile);
 }
 
-void ofxArgosUI_Too::keyPressed(ofKeyEventArgs &e) {
+void ofxArgosUI::keyPressed(ofKeyEventArgs &e) {
 	headerPage->keyPressed(e);
 	pages[currentPage]->keyPressed(e);
 	if(doAutoSave) saveToXML(xmlFile);
 }
 
-void ofxArgosUI_Too::keyReleased(ofKeyEventArgs &e) {
+void ofxArgosUI::keyReleased(ofKeyEventArgs &e) {
 	headerPage->keyReleased(e);
 	pages[currentPage]->keyReleased(e);
 }

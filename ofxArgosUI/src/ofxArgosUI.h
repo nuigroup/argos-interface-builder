@@ -34,34 +34,30 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
-#ifndef OFX_SIMPLE_GUI_H
-#define OFX_SIMPLE_GUI_H
+#ifndef OFX_ARGOS_UI
+#define OFX_ARGOS_UI
 
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
 #include "ofxTouchAPI.h"
 #include "ofxArgosUI_Includes.h"
 
-#define	OFX_SIMPLEGUITOO_XML_NAME	"ofxArgosUI_Too.xml"
+#define	OFX_SIMPLEGUITOO_XML_NAME	"ofxArgosUI.xml"
 
-class ofxArgosUI_Too {
+// ================================================================= ofxArgosUI
+class ofxArgosUI {
 
-	
 public:
-	int							guiFocus;
-	ofxArgosUI_Config			*config;	
+	int						guiFocus;
+	ofxArgosUI_Config		*config;	
 	
-	ofxArgosUI_Too();
+	ofxArgosUI();
 
 	void					loadFromXML(string file = OFX_SIMPLEGUITOO_XML_NAME);
 	void					saveToXML(string file = OFX_SIMPLEGUITOO_XML_NAME);	
 	void					setAutoSave(bool b);
 
 	void					setVerbose(bool v);
-	
-//	int		getValueI(string nameID);
-//	float	getValueF(string nameID);
-//	bool	getValueB(string nameID);
 	
 	void					drawFocus(float x, float y);
 	void					setDraw(bool b);
@@ -74,11 +70,11 @@ public:
 	void					setPage(int i);				// 1 based index of page
 	void					setPage(string name);
 	
-	ofxArgosUI_View		*page(int i);				// 1 based index of page
-	ofxArgosUI_View		*page(string name);
-	ofxArgosUI_View		*addView(string name = "");
+	ofxArgosUI_View			*page(int i);				// 1 based index of page
+	ofxArgosUI_View			*page(string name);
+	ofxArgosUI_View			*addView(string name = "");
 
-	ofxArgosUI_Control		*addControl(ofxArgosUI_Control* control);
+	ofxArgosUI_Control		*addControl(ofxArgosUI_Control *control);
 
 	ofxArgosUI_Button		*addButton(string name, int x, int y, int width, int height, bool *value);
 	ofxArgosUI_Toggle		*addToggle(string name, bool *value);
@@ -87,28 +83,32 @@ public:
 	ofxArgosUI_Slider2d		*addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
-	ofxArgosUI_FPSCounter	*addFPSCounter();
+	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
 	
 protected:
+
+	// ============================ XML Settings
+	ofxXmlSettings					XML;
+	string							xmlFile;
+
+	// ============================ GUI Options
 	bool							doAutoSave;
 	bool							doSave, doSaveBackup;
 	bool							changePage;
-	int								currentPage;			// 1 based index of page (0 is for global controls)
-	
-	ofxXmlSettings					XML;
-	string							xmlFile;
-	
+	int								currentPage;		// 1 based index of page (0 is for global controls)
 	bool							verbose;
 	bool							doDraw;
 	float							border;
 
-	ofxArgosUI_View				*headerPage;
+	// ============================ List of Views
+	ofxArgosUI_View					*headerPage;
 	vector <ofxArgosUI_View*>		pages;				// 0 is for headerPage
 	
 	void drawHeader(); 
 	void addListeners();
 	void removeListeners();
-	
+
+	// ============================ Events
 //	void setup(ofEventArgs &e);
 	void update(ofEventArgs &e);
 //  void draw(ofEventArgs &e);
