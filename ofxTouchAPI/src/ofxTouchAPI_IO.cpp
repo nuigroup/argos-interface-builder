@@ -156,17 +156,14 @@ int ofxTouchAPI_IO::getMouseY() {
 	return _mouseY;
 }
 
-// Quick test to see how many fingers are touching a particular object
 int ofxTouchAPI_IO::getTouches(){
 	return touchList.size(); 
 }
 
-/*
 bool ofxTouchAPI_IO::isBeingTouched(){
-	if (touchList.size() == 0)
-		return touchList.size(); 
+	if (touchList.size() >= 1)
+		return true; 
 }
-*/
 
 
 int ofxTouchAPI_IO::getLastMouseButton() {

@@ -77,9 +77,11 @@ public:
 	int  getMouseY();					// returns mouse Y (in screen coordinates)
 	int  getLastMouseButton();			// returns last mouse button to have activity
 
-	bool isTouchActive(int ID);			// Asks if the current finger ID is touching the object
-	int getTouches(); 
-	bool isBeingTouched();				// Asks if any touch is currently down -- good for hover over state; 
+	int getTouches();					// returns number of touches (doesn't work currently); 
+	bool isTouchActive(int ID);			// asks if the current finger ID is touching the object
+	bool isBeingTouched();				// asks if any touch is currently down -- good for hover over state; 
+
+
 
 	// ================================================================= Updater Methods
 	virtual void setup()	{}	// called when app starts
