@@ -94,39 +94,14 @@ public:
 		(*value) = f;
 	}
 	
-	void add() {
-		pct += .05f;
-		float temp = ofMap(pct, 0.0, width, min, max);
-		
-		//VALUE CLAMP
-		if(temp >= max)			temp = max;
-		else if(temp <= min)	temp = min;
-		
-		targetValue = temp;	
-		oldValue = *value;		// save oldValue (so the draw doesn't update target but uses it)
-	}
-	
-	void sub() {
-		pct -= .05f;
-		float temp = ofMap(pct, 0.0, width, min, max);
-		
-		//VALUE CLAMP
-		if(temp >= max)			temp = max;
-		else if(temp <= min)	temp = min;
-		
-		targetValue = temp;	
-		oldValue = *value;		// save oldValue (so the draw doesn't update target but uses it)
-	}
-	
-	
-	void updateSlider() {
+	void updateSlider(int xMovement) {
 		if(!enabled) return;
 		
 		if(pct > width) {
 			pct = width;
 		}
 		else {
-			pct = getMouseX() - x;
+			pct = xMovement - x;
 			float temp = ofMap(pct, 0.0, (float)width, min, max);
 			
 			//VALUE CLAMP
@@ -138,32 +113,37 @@ public:
 		}
 	}
 	
+	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
-		updateSlider();
+		updateSlider(x);
 	}
 	
 	void onDragOver(int x, int y, int button) {
-		updateSlider();
+		updateSlider(x);
 	}
 	
 	void onDragOutside(int x, int y, int button) {
-		updateSlider();
-	}
-		
-	void onKeyRight() {
-		add();
-	}
-
-	void onKeyLeft() {
-		sub();
+		updateSlider(x);
 	}
 	
+	// ============================================= Touch
+	void onTouchDown(float x, float y, int ID){
+		updateSlider(x);
+	}
+
+	void onTouchMove(float x, float y, int ID){
+		updateSlider(x);
+	}
+
+	void onTouchMoveOutside(float x, float y, int ID){
+		updateSlider(x);
+	}
 	
 	void update() {
 		if(!enabled) return;
 		
 		if(lock) {
-			updateSlider();
+			//updateSlider();
 		}
 		
 		enabled = false;
@@ -186,7 +166,7 @@ public:
 		barwidth = ofMap((*value), min, max, 0.0, (float)width);
 		
 		if(barwidth >= width)	barwidth = width;
-		else if(barwidth <= 0)		barwidth = 0;
+		else if(barwidth <= 0)	barwidth = 0;
 		
 		ofEnableAlphaBlending();
 
@@ -198,15 +178,14 @@ public:
 			ofRect(0, 0, width, height);
 			
 			setFullColor();
-			ofRect(0, 0, barwidth, height);
-			
-			setTextBGColor();
-			//ofRect(0, config->sliderHeight, width, config->sliderTextHeight);
+			ofRect(0, 0, barwidth, height);	
 
 			setTextColor();
-			ofDrawBitmapString(ofToString((*value), 6.0), 3, height - 4);
-			ofDisableAlphaBlending();
+			myFont.drawString(ofToString((*value), 2), 3, height - 4);
+			
 		glPopMatrix();
+
+		ofDisableAlphaBlending();
 	}
 	
 	

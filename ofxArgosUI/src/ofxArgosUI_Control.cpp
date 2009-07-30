@@ -36,7 +36,6 @@
 *************************************************************************/ 
 #include "ofxArgosUI_Control.h"
 
-
 ofxArgosUI_Control::ofxArgosUI_Control(string name) {
                                      
 	controlType = "";
@@ -49,6 +48,8 @@ ofxArgosUI_Control::ofxArgosUI_Control(string name) {
 
 	lock	  = false;
 	focused	  = false;
+
+	myFont.loadFont("districtthin.ttf", 12);
 
 	setup();
 

@@ -88,33 +88,28 @@ public:
 	
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
-		printf("mouse down on object\n"); 
 		beenPressed = true;	
 		if(beToggle) (*value) = !(*value); 
 		else (*value) = true;
 	}
 	
 	void onRelease(int x, int y, int button) {
-		printf("mouse up on object\n");  
 		if(!beToggle) (*value) = false;
 	}
 
 	// ============================================= Touch
 	void onTouchDown(float x, float y, int ID){
-		printf("touch down on object \n"); 
 		beenPressed = true;	
 		if(beToggle) (*value) = !(*value); 
 		else (*value) = true;
 	}
 
 	void onTouchMoveOver(float x, float y, int ID){
-		printf("touch dragged onto object\n"); 
 		beenPressed = true;	
 		if(beToggle) (*value) = !(*value); 
 		else (*value) = true;
 	}
 	void onTouchUp(float x, float y, int ID){
-		printf("touch released on object \n"); 
 		if(!beToggle) (*value) = false;
 	}
 
@@ -135,7 +130,9 @@ public:
 			}
 			
 			setTextColor();
-			ofDrawBitmapString(name, 3, 15);
+
+			myFont.drawString(name, 3,15);
+			//ofDrawBitmapString(name, 3, 15);
 
 			ofDisableAlphaBlending();
 		

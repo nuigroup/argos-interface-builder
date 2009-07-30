@@ -85,6 +85,8 @@ public:
 	ofxArgosUI_XYPad		*addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
+
+	ofxArgosUI_Knob			*addKnob(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing);
 	
 	
 protected:

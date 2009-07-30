@@ -79,9 +79,8 @@ void ofxArgosUI_View::draw(float x, float y) {
 		controls[i]->draw(controls[i]->x, controls[i]->y);
 		ofNoFill();
 		ofSetColor(config->borderColor);
-		glLineWidth(0.5f);
-
-		//ofRect(controlX, controlY, controls[i]->width, controls[i]->height);
+		glLineWidth(1.0f);
+		ofRect(controls[i]->x, controls[i]->y-1, controls[i]->width, controls[i]->height);
 
 		//posY = getNextY(posY + controls[i]->height + config->padding.y);
 		
@@ -91,13 +90,6 @@ void ofxArgosUI_View::draw(float x, float y) {
 		//}
 	}	
 }
-
-/*
-void ofxArgosUI_View::draw(float x, float y) {
-
-}
-*/
-
 
 ofxArgosUI_Control *ofxArgosUI_View::addControl(ofxArgosUI_Control* control) {
 	controls.push_back(control);
@@ -135,6 +127,10 @@ ofxArgosUI_Title *ofxArgosUI_View::addTitle(string name, bool *value) {
 
 ofxArgosUI_Toggle *ofxArgosUI_View::addToggle(string name, int x, int y, int width, int height, bool *value) {
 	return (ofxArgosUI_Toggle *)addControl(new ofxArgosUI_Toggle(name, x, y, width, height, value));
+}
+
+ofxArgosUI_Knob	*ofxArgosUI_View::addKnob(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing){
+	return (ofxArgosUI_Knob *)addControl(new ofxArgosUI_Knob(name, x, y, width, height, value, min, max, smoothing));
 }
 
 void ofxArgosUI_View::update(ofEventArgs &e) {

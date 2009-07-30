@@ -42,6 +42,9 @@
 
 class ofxArgosUI_Control : public ofxTouchAPI_IO {
 public:
+
+	ofTrueTypeFont myFont;
+
 	string		name;			// Human readable name
 	string		key;			// Machine readable name
 	string		controlType;	// ...

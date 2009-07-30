@@ -43,6 +43,7 @@
 
 
 class ofxArgosUI_XYPad : public ofxArgosUI_Control {
+
 public:
 	ofPoint		*value;
 	ofPoint		point, min, max;

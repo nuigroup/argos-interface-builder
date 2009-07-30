@@ -92,7 +92,7 @@ public:
 		fullActiveColor		= 0x3d399b;
 		emptyColor			= 0x393b43;		
 		
-		borderColor			= 0xCCCCCC;
+		borderColor			= 0x6c7086;
 	}
 };
 

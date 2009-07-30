@@ -78,26 +78,21 @@ public:
 
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
-		printf("mouse down on object \n"); 
 		toggle();
 	}
 
 	void onRelease(int x, int y, int button) {
-		printf("mouse up on object\n");  
 	}
 
 	// ============================================= Touch
 	void onTouchDown(float x, float y, int ID){
-		printf("touch down on object \n"); 
 		toggle();
 	}
 
 	void onTouchMoveOver(float x, float y, int ID){
-		printf("touch dragged onto object\n"); 
 	}
 
 	void onTouchUp(float x, float y, int ID){
-		printf("touch released on object \n"); 
 	}
 
 
@@ -135,9 +130,8 @@ public:
 			ofRect(height, 0, width - height, height);
 
 			setTextColor();
-			ofDrawBitmapString(name, height + 15, 15);
+			myFont.drawString(name, height + 5, 14);
 			ofDisableAlphaBlending();
-		
 		glPopMatrix();
 	}
 };

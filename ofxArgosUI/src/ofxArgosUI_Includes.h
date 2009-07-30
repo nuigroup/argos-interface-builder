@@ -9,3 +9,4 @@
 #include "ofxArgosUI_Toggle.h"
 #include "ofxArgosUI_Title.h"
 #include "ofxArgosUI_Panel.h"
+#include "ofxArgosUI_Knob.h"

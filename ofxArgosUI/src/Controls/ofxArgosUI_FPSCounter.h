@@ -64,16 +64,14 @@ public:
 		setPos(x, y);
 		
 		glPushMatrix();
-		glTranslatef(x, y, 0);
-		
-		ofEnableAlphaBlending();
-		ofFill();
-		setTextBGColor(false);
-		//ofRect(0, 0, width, height);
+			glTranslatef(x, y, 0);
+			
+			ofEnableAlphaBlending();
+			ofFill();
+			setTextBGColor(false);
 
-		setTextColor(false);
-		ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 3, 15);
-
+			setTextColor(false);
+			myFont.drawString("FPS: " + ofToString(ofGetFrameRate(), 2), 2, 13);
 		glPopMatrix();
 	}
 	
