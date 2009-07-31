@@ -120,10 +120,16 @@ public:
 
 			// Draw O
 			if((*value)) {
-				setTextColor();
-				ofCircle(10,10,(height/2.5));
+			setTextColor();
+			ofEnableSmoothing();
+				ofFill();
+					ofCircle(10,10,(height/2.5));
+				ofNoFill();
+					ofCircle(10,10,(height/2.5));
+			ofDisableSmoothing();
 			}
-			
+
+			ofFill();
 			setTextBGColor();
 
 			// Interior

@@ -287,8 +287,8 @@ ofxArgosUI_FPSCounter *ofxArgosUI::addFPSCounter(int x, int y, int width, int he
 	return views[currentView]->addFPSCounter(x, y, width, height);
 }
 
-ofxArgosUI_Knob	*ofxArgosUI::addKnob(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing){
-	return views[currentView]->addKnob(name, x, y, width, height, value, min, max, smoothing);
+ofxArgosUI_Knob	*ofxArgosUI::addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing){
+	return views[currentView]->addKnob(name, x, y, radius, value, min, max, smoothing);
 }
 
 void ofxArgosUI::update(ofEventArgs &e) {

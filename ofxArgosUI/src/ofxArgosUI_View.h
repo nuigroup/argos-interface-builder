@@ -59,7 +59,7 @@ public:
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
 	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
 
-	ofxArgosUI_Knob			*addKnob(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing);
+	ofxArgosUI_Knob			*addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing);
 
 	
 	//void setup(ofEventArgs &e);
