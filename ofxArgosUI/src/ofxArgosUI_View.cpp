@@ -57,43 +57,42 @@ void ofxArgosUI_View::saveToXML(ofxXmlSettings &XML) {
 	}
 }
 
-float ofxArgosUI_View::getNextY(float y) {
-	int iy = ceil(y/config->gridSize.y);
-//	return y;
-	return (iy) * config->gridSize.y;
+void ofxArgosUI_View::update(ofEventArgs &e) {
+	for(int i=0; i<controls.size(); i++) controls[i]->update();
 }
-
 
 void ofxArgosUI_View::draw(float x, float y) {
 
-	setPos(x += config->offset.x, y += config->offset.y);
+	// don't change
+	setPos(0,0);
+
 	float posX		= 0;
 	float posY		= 0;
 	
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	
 	for(int i=0; i<controls.size(); i++) {
-		float controlX = posX;
-		float controlY = posY;
-		
+
 		controls[i]->draw(controls[i]->x, controls[i]->y);
+
+		// Draws a border around the controls 
+		/*
 		ofNoFill();
 		ofSetColor(config->borderColor);
 		glLineWidth(0.0f);
-		//ofRect(controls[i]->x, controls[i]->y-1, controls[i]->width, controls[i]->height);
-
-		//posY = getNextY(posY + controls[i]->height + config->padding.y);
-		
-		//if(posY + y >= height - controls[i]->height - config->padding.y) {
-		//	posX += config->gridSize.x;
-		//	posY = 0;
-		//}
+		ofRect(controls[i]->x, controls[i]->y-1, controls[i]->width, controls[i]->height);
+		*/ 
 	}	
 }
 
+// ==================================================================== Controls
 ofxArgosUI_Control *ofxArgosUI_View::addControl(ofxArgosUI_Control* control) {
 	controls.push_back(control);
 	return control;
+}
+
+ofxArgosUI_Panel *ofxArgosUI_View::addPanel(string name, int x, int y, int width, int height) {
+	return (ofxArgosUI_Panel *)addControl(new ofxArgosUI_Panel(name, x, y, width, height));
 }
 
 ofxArgosUI_Button *ofxArgosUI_View::addButton(string name, int x, int y, int width, int height, bool *value) {
@@ -101,7 +100,6 @@ ofxArgosUI_Button *ofxArgosUI_View::addButton(string name, int x, int y, int wid
 }
 
 ofxArgosUI_Content *ofxArgosUI_View::addContent(string name, ofBaseDraws *content, float fixwidth) {
-	if(fixwidth == -1) fixwidth = config->gridSize.x - config->padding.x;
 	return (ofxArgosUI_Content *)addControl(new ofxArgosUI_Content(name, content, fixwidth));
 }
 
@@ -133,10 +131,8 @@ ofxArgosUI_Knob	*ofxArgosUI_View::addKnob(string name, int x, int y, int radius,
 	return (ofxArgosUI_Knob *)addControl(new ofxArgosUI_Knob(name, x, y, radius, value, min, max, smoothing));
 }
 
-void ofxArgosUI_View::update(ofEventArgs &e) {
-	for(int i=0; i<controls.size(); i++) controls[i]->update();
-}
 
+// ==================================================================== Events
 void ofxArgosUI_View::mouseMoved(ofMouseEventArgs &e) {
 	for(int i=0; i<controls.size(); i++) controls[i]->_mouseMoved(e);
 }

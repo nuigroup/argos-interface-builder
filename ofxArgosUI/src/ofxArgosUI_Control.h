@@ -66,11 +66,6 @@ public:
 	void setEmptyColor();
 
 
-	// ========================================= OSC Settings
-	void setOSCType(string type);				 // int, float, bool, string, etc
-	void setOSCDestination(string destination);  // remote path, e.g. "/button1" 
-
-
 	// ========================================= XML Settings
 	virtual void loadFromXML(ofxXmlSettings &XML) {}
 	virtual void saveToXML(ofxXmlSettings &XML) {}

@@ -42,7 +42,6 @@ class ofxArgosUI_FPSCounter : public ofxArgosUI_Control {
 	
 public:
 	
-	//---------------------------------------------------------------------
 	ofxArgosUI_FPSCounter(int x, int y, int width, int height) : ofxArgosUI_Control("FPS Counter") {
 		controlType = "FPSCounter";
 		setup(x, y, width, height);
@@ -53,12 +52,10 @@ public:
 		setPos(_x, _y); 
 	}
 	
-	void loadFromXML(ofxXmlSettings &XML) {
+	void update() {
+		if(!enabled) return;
+		enabled = false;
 	}
-	
-	void saveToXML(ofxXmlSettings &XML) {
-	}
-	
 	
 	void draw(float x, float y) {
 		setPos(x, y);

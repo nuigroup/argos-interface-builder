@@ -34,6 +34,11 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
+
+// This class should be turned into ofxArgosUI_ViewTab
+// The only feature that uses this class is Views, which uses it to scroll
+// through the different views. 
+
 #pragma once
 
 #include "ofxArgosUI_Control.h"

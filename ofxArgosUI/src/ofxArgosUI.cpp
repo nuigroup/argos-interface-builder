@@ -246,13 +246,17 @@ ofxArgosUI_View *ofxArgosUI::addView(string name) {
 	static bool b;
 
 	// HEADER BUTTON
-	if(views.size() > 1) newView->addTitle(newView->name, &changeView);		// if this isn't the first view, add to header
+	//if(views.size() > 1) newView->addTitle(newView->name, &changeView);		// if this isn't the first view, add to header
 	setView(views.size() - 1);
 	return newView;
 }
 
 ofxArgosUI_Control *ofxArgosUI::addControl(ofxArgosUI_Control* control) {
 	return views[currentView]->addControl(control);
+}
+
+ofxArgosUI_Panel *ofxArgosUI::addPanel(string name, int x, int y, int width, int height) {
+	return views[currentView]->addPanel(name, x, y, width, height);
 }
 
 ofxArgosUI_Button *ofxArgosUI::addButton(string name, int x, int y, int width, int height, bool *value) {

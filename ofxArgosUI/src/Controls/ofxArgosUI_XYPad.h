@@ -34,7 +34,7 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	ToDo
-	- Add visual indicators of last position on the side(almost like a slider), x and y
+	- Add visual indicators of last position on the side (almost like a slider), x and y
 
 *************************************************************************/ 
 #pragma once

@@ -141,13 +141,7 @@ public:
 	
 	void update() {
 		if(!enabled) return;
-		
-		if(lock) {
-			//updateSlider();
-		}
-		
 		enabled = false;
-		
 	}
 	
 	void draw(float x, float y) {

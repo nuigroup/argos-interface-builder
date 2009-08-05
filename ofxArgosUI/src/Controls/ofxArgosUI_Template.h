@@ -69,16 +69,6 @@ public:
 		XML.popTag();
 	}
 	
-	
-	bool getValue() {
-		return (*value);
-	}
-
-	void set(bool b) {
-		(*value) = b;
-	}
-
-	
 	// ============================================= Mouse
 	void onRollOver(int x, int y)						{}
 	void onRollOut()									{}

@@ -113,13 +113,20 @@ public:
 		if(!beToggle) (*value) = false;
 	}
 
+	void update() {
+		if(!enabled) return;
+		enabled = false;
+	}
+
 	void draw(float x, float y) {
+	
+		enabled = true; 
 
 		setPos(x, y);
-		
+
 		glPushMatrix();
 			glTranslatef(x, y, 0);
-			
+
 			ofEnableAlphaBlending();
 			ofFill();
 			setTextBGColor();
