@@ -296,6 +296,7 @@ ofxArgosUI_Knob	*ofxArgosUI::addKnob(string name, int x, int y, int radius, floa
 }
 
 void ofxArgosUI::update(ofEventArgs &e) {
+
 	if(changeView) {
 		nextView();	
 		changeView = false;

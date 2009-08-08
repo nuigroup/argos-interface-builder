@@ -41,6 +41,7 @@
 #include "ofxXmlSettings.h"
 
 class ofxArgosUI_Control : public ofxTouchAPI_IO {
+
 public:
 
 	ofTrueTypeFont myFont;

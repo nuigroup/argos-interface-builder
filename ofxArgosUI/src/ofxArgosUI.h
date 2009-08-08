@@ -48,6 +48,7 @@
 class ofxArgosUI {
 
 public:
+
 	int						guiFocus;
 	ofxArgosUI_Config		*config;	
 	
@@ -88,8 +89,6 @@ public:
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
 
 	ofxArgosUI_Content		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
-
-	
 	
 protected:
 

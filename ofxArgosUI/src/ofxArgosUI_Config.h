@@ -64,6 +64,9 @@ public:
 	int fullActiveColor;
 	int emptyColor;
 	int borderColor;
+
+	int panelColor;
+	int panelBorderColor; 
 	
 	ofxArgosUI_Config() {
 
@@ -72,7 +75,7 @@ public:
 		titleHeight			= sliderHeight + sliderTextHeight;
 		toggleHeight		= titleHeight;
 		buttonHeight		= titleHeight;
-		XYPadTextHeight	= titleHeight * 1.5f;
+		XYPadTextHeight		= titleHeight * 1.5f;
 
 		padding.set			(titleHeight/2, titleHeight/2);
 		offset.set			(titleHeight/2, titleHeight/2);
@@ -81,18 +84,19 @@ public:
 		gridSize.x			= titleHeight * 8 + padding.x;		
 		gridSize.y			= toggleHeight + padding.y;
 		
-		textColor			= 0xf1f1f1;
-		textOverColor		= 0xf1f1f1;
+		textColor			= 0x000000;
+		textOverColor		= 0x000000;
 
-		textBGColor			= 0x3a3950;
-		textBGOverColor		= 0x585778;
+		textBGColor			= 0xc0f400;
+		textBGOverColor		= 0xdcfa70;
 
-		fullColor			= 0x3d399b;
-		fullOverColor		= 0x3d399b;
-		fullActiveColor		= 0x3d399b;
-		emptyColor			= 0x393b43;		
+		fullColor			= 0xff4e40;
+		fullOverColor		= 0xff4e40;
+		fullActiveColor		= 0xff4e40;
+
+		emptyColor			= 0x363636;		
 		
-		borderColor			= 0x6c7086;
+		borderColor			= 0xd0f05a;
 	}
 };
 

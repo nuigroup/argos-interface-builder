@@ -65,7 +65,15 @@ public:
 	}
 
 	void setEnabled(bool x){
-		enabled = x; 
+		enabled = x;
+	}
+
+	void showPanel(){
+
+	}
+
+	void hidePanel(){
+
 	}
 
 	ofxArgosUI_Control *addControl(ofxArgosUI_Control *control) {
@@ -115,11 +123,15 @@ public:
 
 			setPos(x, y);
 
+			ofFill();
+			ofSetColor(0x363636);
+			ofRect(x, y, width, height);
+
 			ofNoFill();
-			ofSetColor(config->borderColor);
+			ofSetColor(0xd0f05a);
 			glLineWidth(1.0f);
 			ofRect(x, y, width, height);
-			
+
 			glPushMatrix();
 				glTranslatef(x, y, 0);
 				myFont.drawString(name, -4, -5);

@@ -220,13 +220,16 @@ public:
 			ofEnableSmoothing();
 				ofFill();
 				// Draw outside
-					ofSetColor(0x363895);
+					setTextBGColor();
+					//ofSetColor(0x363895);
 					ofCircle(0.f, 0.f, radius);
 				// Draw knob arcs
-					ofSetColor(0xdddddd);
+					setFullColor();
+					//ofSetColor(0xdddddd);
 					drawArc(0.0f, 0.0f, radius, 135, 135 + knobDisplay);
 				// Draw bottom arc
-					ofSetColor(0x22234c);
+					setEmptyColor(); 
+					//ofSetColor(0x22234c);
 					drawArc(0.0f, 0.0f, radius, 45, 135);
 				// Draw donut center
 					ofSetColor(0x000000);
@@ -241,7 +244,7 @@ public:
 			ofDisableSmoothing();
 
 			// ToDo: Reposition the knob value somewhere other than the center
-			setTextColor();
+			ofSetColor(0xffffff);
 			myFont.drawString(ofToString((*value), 0), -12 , 3 );
 
 		glPopMatrix();
