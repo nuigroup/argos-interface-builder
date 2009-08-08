@@ -43,7 +43,7 @@ public:
 	}
 
 	// Static function for ellipse hit testing. 
-	// ToDo: Use mutltiple types of interactive objects (they extend different primatives)
+	// ToDo: Use mutltiple types of interactive objects (they extend different primatives); template
 	static bool ellipse(){}
 
 };
