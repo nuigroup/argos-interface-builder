@@ -118,19 +118,69 @@ public:
 		enabled = false;
 	}
 
+	void rRectangle(int x, int y, int w, int h, int radius){
+
+        glDisable(GL_TEXTURE_2D);
+
+        //glLineWidth(1.0f);
+        
+        glBegin(GL_POLYGON );
+
+        glVertex2f (x + radius, y);
+        glVertex2f (x + w - radius, y);
+			for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+
+        glVertex2f (x + w, y + radius);
+        glVertex2f (x + w, y + h - radius);
+			for(float t  = 0; t < PI * 0.5f; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+	        
+        glVertex2f (x + w -radius, y + h);
+        glVertex2f (x + radius, y + h);
+			for(float t  = PI * 0.5f; t < PI; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glVertex2f (x, y + h - radius);
+        glVertex2f (x, y + radius);
+			for(float t  = PI; t < PI * 1.5f; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);    
+    }
+
 	void draw(float x, float y) {
 	
 		enabled = true; 
 
 		setPos(x, y);
 
+
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 
 			ofEnableAlphaBlending();
 			ofFill();
+
 			setTextBGColor();
-			ofRect(0, 0, width, height);
+
+			rRectangle(0, 0, width, height, 8); 
+
+			//ofRect(0, 0, width, height);
 			
 			if((*value) && beToggle) {
 				setTextColor();
@@ -138,7 +188,7 @@ public:
 			
 			setTextColor();
 
-			myFont.drawString(name, 3,15);
+			myFont.drawString(name, 3 , 14);
 			//ofDrawBitmapString(name, 3, 15);
 
 			ofDisableAlphaBlending();

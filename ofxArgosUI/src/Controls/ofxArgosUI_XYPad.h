@@ -41,25 +41,25 @@
 
 #include "ofxArgosUI_Control.h"
 
-
 class ofxArgosUI_XYPad : public ofxArgosUI_Control {
 
 public:
+
 	ofPoint		*value;
 	ofPoint		point, min, max;
 
-	ofxArgosUI_XYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) : ofxArgosUI_Control(name) {
+	ofxArgosUI_XYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax) : ofxArgosUI_Control(name) {
+
 		min.set(xmin, ymin);
 		max.set(xmax, ymax);
 		this->value = value;
 		controlType = "XYPad";
-		setup();
+		setup(x, y, width, height);
 	}
 	
-	void setup() {
-		setSize(config->XYPadSize.x, config->XYPadSize.y + config->XYPadTextHeight);
-		point.x = ofMap((*value).x, min.x, max.x, x, x+width); 
-		point.y = ofMap((*value).y, min.y, max.y, y, y+height-config->XYPadTextHeight); 
+	void setup(int _x, int _y, int _width, int _height) {
+		setPos(_x, _y); 
+		setSize(_width, _height);
 	}
 
 	void loadFromXML(ofxXmlSettings &XML) {
@@ -68,11 +68,11 @@ public:
 	
 	void saveToXML(ofxXmlSettings &XML) {
 		XML.addTag(controlType + "_" + key);
-		XML.pushTag(controlType + "_" + key);
-		XML.addValue("name", name);
-		XML.addValue("valueX", value->x);
-		XML.addValue("valueY", value->y);
-		XML.popTag();
+			XML.pushTag(controlType + "_" + key);
+				XML.addValue("name", name);
+				XML.addValue("valueX", value->x);
+				XML.addValue("valueY", value->y);
+			XML.popTag();
 	}
 	
 	void set(float x, float y) {
@@ -87,68 +87,110 @@ public:
 		max.x = x;
 		max.y = y;
 	}	
-
+	
+	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
 		lock = true;
 		point.set(x, y);
 	}
 	
 	void onDragOver(int x, int y, int button) {
-		if(lock) {
+		if(lock)
 			point.set(x, y);
-		}
 	}
 	
 	void onDragOutside(int x, int y, int button) {
-		if(lock) {
+		if(lock)
 			point.set(x, y);
-		}
-	}	
-	
+	}
+
 	void onRelease() {
 		lock = false;
 	}
-	
+
+	// ============================================= Touch
+	void onTouchDown(float x, float y, int ID){
+		lock = true;
+		point.set(x, y);
+	}
+
+	void onTouchMove(float x, float y, int ID){
+		if(lock)
+			point.set(x, y);
+	}
+
+	void onTouchMoveOutside(float x, float y, int ID){
+		if(lock)
+			point.set(x, y);
+	}
+
+	void onTouchUp(float x, float y, int ID){
+		lock = false;
+	}
+
 	void update() {
-		if(point.x > x + width)				point.x = x + width; 
-		else if(point.x < x)				point.x = x; 
+
+		if(!enabled) return;
+		enabled = false;
+
+		if(point.x > x + width)
+			point.x = x + width; 
+
+		else if(point.x < x)
+			point.x = x; 
 		
-		if(point.y > y+height - config->XYPadTextHeight)			point.y = y + height - config->XYPadTextHeight;
-		else if(point.y < y)				point.y = y;
+		if(point.y > y + height)
+			point.y = y + height;
+
+		else if(point.y < y)
+			point.y = y;
 		
 		if(lock){
-			(*value).x = ofMap(point.x, x, x+width, min.x, max.x); 
-			(*value).y = ofMap(point.y, y, y+height-config->XYPadTextHeight, min.y, max.y); 
+			(*value).x = ofMap(point.x, x, x + width, min.x, max.x); 
+			(*value).y = ofMap(point.y, y, y + height, min.y, max.y); 
 		}
+
 	}
-	
+
 	void draw(float x, float y) {
+
+		enabled = true;
+
 		setPos(x, y);
+
 		ofPoint	pointv;
-		pointv.x = ofMap((*value).x, min.x, max.x, x, x+width);
-		pointv.y = ofMap((*value).y, min.y, max.y, y, y+height-config->XYPadTextHeight);
+
+		pointv.x = ofMap((*value).x, min.x, max.x, x, x + width);
+		pointv.y = ofMap((*value).y, min.y, max.y, y, y + height);
 		
 		ofEnableAlphaBlending();
+
 		glPushMatrix();
 			glTranslatef(x, y, 0);		
 			
 			ofFill();
 			setFullColor();
-			ofRect(0, 0, width, height - config->XYPadTextHeight);
+
+			// Pad Area
+			ofRect(0, 0, width, height);
 			
-			ofFill();
+			// Bottom text area
 			setTextBGColor();
-			ofRect(0, height-config->XYPadTextHeight, width, config->XYPadTextHeight);
+			ofRect(0, height, width, 20);
 
+			// Draw the text
 			setTextColor();
-			ofDrawBitmapString(name+"\nx:"+ofToString(value->x, 2)+"\ny:"+ofToString(value->y, 2), 3, height+15-config->XYPadTextHeight);
+			myFont.drawString("" + ofToString(value->x, 1) + " || " + ofToString(value->y, 1), 2, height + 13 );
+
+			// Draw the crosshairs 
+			setTextBGColor();
+			ofLine(pointv.x - x, 0, pointv.x - x, height);
+			ofLine(0, pointv.y - y, width, pointv.y - y);
 			
+			// Draw circle in middle of crosshairs
 			setTextColor();
-			ofCircle(pointv.x-x, pointv.y-y, 2);
+			ofCircle(pointv.x - x, pointv.y - y, 8);
 
-			setTextColor();
-			ofLine(pointv.x-x, 0, pointv.x-x, height-config->XYPadTextHeight);
-			ofLine(0, pointv.y-y,width, pointv.y-y);	
 		glPopMatrix();
 
 		ofDisableAlphaBlending();

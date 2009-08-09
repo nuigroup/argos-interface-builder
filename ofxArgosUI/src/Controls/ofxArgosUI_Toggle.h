@@ -136,7 +136,7 @@ public:
 			ofRect(height, 0, width - height, height);
 
 			setTextColor();
-			myFont.drawString(name, height + 5, 14);
+			myFont.drawString(name, height + 3, 13);
 			ofDisableAlphaBlending();
 		glPopMatrix();
 	}

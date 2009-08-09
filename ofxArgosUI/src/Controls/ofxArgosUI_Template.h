@@ -34,6 +34,9 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 *************************************************************************/ 
+
+// Copy & Paste template for new controls. 
+
 #pragma once
 
 #include "ofxArgosUI_Control.h"
@@ -66,7 +69,7 @@ public:
 			XML.pushTag(controlType + "_" + key);
 				XML.addValue("name", name);
 				XML.addValue("value", getValue());
-		XML.popTag();
+			XML.popTag();
 	}
 	
 	// ============================================= Mouse

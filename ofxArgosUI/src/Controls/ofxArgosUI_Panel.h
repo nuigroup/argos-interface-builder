@@ -85,10 +85,6 @@ public:
 		return (ofxArgosUI_Button *)addControl(new ofxArgosUI_Button(name, x, y, width, height, value));
 	}
 
-	ofxArgosUI_Content *addContent(string name, ofBaseDraws *content, float fixwidth) {
-		return (ofxArgosUI_Content *)addControl(new ofxArgosUI_Content(name, content, fixwidth));
-	}
-
 	ofxArgosUI_FPSCounter *addFPSCounter(int x, int y, int width, int height) {
 		return (ofxArgosUI_FPSCounter *)addControl(new ofxArgosUI_FPSCounter(x, y, width, height));
 	}
@@ -101,8 +97,8 @@ public:
 		return (ofxArgosUI_SliderFloat *)addControl(new ofxArgosUI_SliderFloat(name, x, y, width, height, value, min, max, smoothing));
 	}
 
-	ofxArgosUI_XYPad *addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
-		return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, value, xmin, xmax, ymin, ymax));
+	ofxArgosUI_XYPad *addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+		return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, x, y, width, height, value, xmin, xmax, ymin, ymax));
 	}
 
 	ofxArgosUI_Title *addTitle(string name, bool *value) {
@@ -117,6 +113,50 @@ public:
 		return (ofxArgosUI_Knob *)addControl(new ofxArgosUI_Knob(name, x, y, radius, value, min, max, smoothing));
 	}
 
+	void rRectangle(int x, int y, int w, int h, int radius){
+        glDisable(GL_TEXTURE_2D);
+
+        glLineWidth(1.0f);
+        
+        glBegin(GL_POLYGON );
+        
+        glVertex2f (x + radius, y);
+        glVertex2f (x + w - radius, y);
+			for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+
+        glVertex2f (x + w, y + radius);
+        glVertex2f (x + w, y + h - radius);
+			for(float t  = 0; t < PI * 0.5f; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+	        
+        glVertex2f (x + w -radius, y + h);
+        glVertex2f (x + radius, y + h);
+			for(float t  = PI * 0.5f; t < PI; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glVertex2f (x, y + h - radius);
+        glVertex2f (x, y + radius);
+			for(float t  = PI; t < PI * 1.5f; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);    
+    }
+
 	void draw(float x, float y) {
 
 		if (enabled){
@@ -125,16 +165,16 @@ public:
 
 			ofFill();
 			ofSetColor(0x363636);
-			ofRect(x, y, width, height);
+			rRectangle(x, y, width, height, 13);
 
-			ofNoFill();
-			ofSetColor(0xd0f05a);
-			glLineWidth(1.0f);
-			ofRect(x, y, width, height);
+			//ofNoFill();
+			//glLineWidth(1.0f);
+			//rRectangle(x, y, width, height, 13);
 
+			ofSetColor(0xdcfa70); 
 			glPushMatrix();
 				glTranslatef(x, y, 0);
-				myFont.drawString(name, -4, -5);
+				myFont.drawString(name, 8, -6);
 			glPopMatrix();
 
 			for(int i = 0; i < panel_children.size(); i++) {

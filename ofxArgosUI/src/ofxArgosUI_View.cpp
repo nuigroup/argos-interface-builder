@@ -99,10 +99,6 @@ ofxArgosUI_Button *ofxArgosUI_View::addButton(string name, int x, int y, int wid
 	return (ofxArgosUI_Button *)addControl(new ofxArgosUI_Button(name, x, y, width, height, value));
 }
 
-ofxArgosUI_Content *ofxArgosUI_View::addContent(string name, ofBaseDraws *content, float fixwidth) {
-	return (ofxArgosUI_Content *)addControl(new ofxArgosUI_Content(name, content, fixwidth));
-}
-
 ofxArgosUI_FPSCounter *ofxArgosUI_View::addFPSCounter(int x, int y, int width, int height) {
 	return (ofxArgosUI_FPSCounter *)addControl(new ofxArgosUI_FPSCounter(x, y, width, height));
 }
@@ -115,8 +111,8 @@ ofxArgosUI_SliderFloat *ofxArgosUI_View::addSlider(string name, int x, int y, in
 	return (ofxArgosUI_SliderFloat *)addControl(new ofxArgosUI_SliderFloat(name, x, y, width, height, value, min, max, smoothing));
 }
 
-ofxArgosUI_XYPad *ofxArgosUI_View::addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
-	return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, value, xmin, xmax, ymin, ymax));
+ofxArgosUI_XYPad *ofxArgosUI_View::addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+	return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, x, y, width, height, value, xmin, xmax, ymin, ymax));
 }
 
 ofxArgosUI_Title *ofxArgosUI_View::addTitle(string name, bool *value) {

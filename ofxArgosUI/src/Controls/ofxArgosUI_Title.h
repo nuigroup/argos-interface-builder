@@ -57,11 +57,12 @@ public:
 		beenPressed = false;
 		this->value	= value;
 		controlType = "Title";
+
 		setup();
 	}
 	
 	void setup() {
-		setSize(config->gridSize.x - config->padding.x, config->titleHeight);
+		//setSize();
 	}
 	
 	void loadFromXML(ofxXmlSettings &XML) {

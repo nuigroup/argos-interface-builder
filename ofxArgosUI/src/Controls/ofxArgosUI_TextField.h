@@ -69,7 +69,7 @@ public:
 			XML.pushTag(controlType + "_" + key);
 				XML.addValue("name", name);
 				XML.addValue("value", getValue());
-		XML.popTag();
+			XML.popTag();
 	}
 	
 	// ============================================= Mouse

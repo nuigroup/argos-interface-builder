@@ -40,49 +40,25 @@
 
 class ofxArgosUI_Config {
 public:	
-
-	ofPoint	gridSize;
-
-	float	buttonHeight;
-	float	toggleHeight;
-	float	sliderHeight;
-	float	sliderTextHeight;
-	float	XYPadTextHeight;
-	float	titleHeight;
-	
-	ofPoint padding;
-	ofPoint offset;
-	ofPoint	XYPadSize;
 	
 	int	textColor;
 	int textOverColor;
+
 	int textBGColor;
 	int textBGOverColor;
 	
 	int fullColor;
 	int	fullOverColor;
 	int fullActiveColor;
+
 	int emptyColor;
+
 	int borderColor;
 
 	int panelColor;
 	int panelBorderColor; 
 	
 	ofxArgosUI_Config() {
-
-		sliderHeight		= 12;
-		sliderTextHeight	= 18;
-		titleHeight			= sliderHeight + sliderTextHeight;
-		toggleHeight		= titleHeight;
-		buttonHeight		= titleHeight;
-		XYPadTextHeight		= titleHeight * 1.5f;
-
-		padding.set			(titleHeight/2, titleHeight/2);
-		offset.set			(titleHeight/2, titleHeight/2);
-		XYPadSize.set		(titleHeight * 4, titleHeight * 4);
-		
-		gridSize.x			= titleHeight * 8 + padding.x;		
-		gridSize.y			= toggleHeight + padding.y;
 		
 		textColor			= 0x000000;
 		textOverColor		= 0x000000;

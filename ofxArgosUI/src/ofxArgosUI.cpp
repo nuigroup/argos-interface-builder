@@ -275,16 +275,12 @@ ofxArgosUI_SliderFloat *ofxArgosUI::addSlider(string name,int x, int y, int widt
 	return views[currentView]->addSlider(name, x, y, width, height, value, min, max, smoothing);
 }
 
-ofxArgosUI_XYPad *ofxArgosUI::addXYPad(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
-	return views[currentView]->addXYPad(name, value, xmin, xmax, ymin, ymax);
+ofxArgosUI_XYPad *ofxArgosUI::addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
+	return views[currentView]->addXYPad(name, x, y, width, height, value, xmin, xmax, ymin, ymax);
 }
 
 ofxArgosUI_Title *ofxArgosUI::addTitle(string name, bool *value) {
 	return views[currentView]->addTitle(name, value);
-}
-
-ofxArgosUI_Content *ofxArgosUI::addContent(string name, ofBaseDraws *content, float fixwidth) {
-	return views[currentView]->addContent(name, content, fixwidth);
 }
 
 ofxArgosUI_FPSCounter *ofxArgosUI::addFPSCounter(int x, int y, int width, int height) {
