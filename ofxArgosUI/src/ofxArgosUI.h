@@ -38,9 +38,9 @@
 #define OFX_ARGOS_UI
 
 #include "ofMain.h"
-#include "ofxXmlSettings.h"
 #include "ofxTouchAPI.h"
 #include "ofxArgosUI_Includes.h"
+#include "ofxXmlSettings.h"
 
 #define	OFX_ARGOS_XML_NAME	"ofxArgosUI.xml"
 
@@ -64,7 +64,6 @@ public:
 	void					setDraw(bool b);
 	void					toggleDraw();
 	void					draw();
-	bool					isOn();
 	
 	void					nextView();
 	void					prevView();
@@ -115,7 +114,7 @@ protected:
 	// ============================ Events
 	//void setup(ofEventArgs &e);
 	void update(ofEventArgs &e);
-	//void draw(ofEventArgs &e);
+	void draw(ofEventArgs &e);
 	//void exit(ofEventArgs &e);
 	
 	void mouseMoved(ofMouseEventArgs &e);

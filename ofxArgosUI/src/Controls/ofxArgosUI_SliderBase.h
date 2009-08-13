@@ -83,8 +83,6 @@ public:
 			XML.popTag();
 	}
 	
-	
-	
 	Type getValue() {
 		return (*value);
 	}
@@ -104,7 +102,7 @@ public:
 			pct = xMovement - x;
 			float temp = ofMap(pct, 0.0, (float)width, min, max);
 			
-			//VALUE CLAMP
+			//Clamp - make this use oF's clamp util function eventually
 			if(temp >= max)			temp = max;
 			else if(temp <= min)	temp = min;
 			

@@ -41,13 +41,27 @@
 class ofxArgosUI_Panel : public ofxArgosUI_Control {
 
 public:
-		
 
+	bool hidden;
+	int oWidth; 
+	int oHeight;
+
+	float counter;
+	float spin;
+	float spinPct;
+		
 	ofxArgosUI_Panel(string name, int x, int y, int width, int height) : ofxArgosUI_Control(name) {
 
-		enabled = true; 
+		disableAllEvents();
+
+		hidden = false; 
+		oHeight = height; 
 		controlType = "Panel";
 		setup(x, y, width, height);
+
+		counter = 0.0;
+		spin	= 0.0;
+		spinPct	= 0.0;
 
 	}
 	
@@ -64,15 +78,45 @@ public:
 
 	}
 
-	void setEnabled(bool x){
-		enabled = x;
+	void toggleDraw(bool x){
+		enabled = !enabled; 
 	}
 
 	void showPanel(){
 
+		printf("ofxArgosUI_Panel::showPanel\n");
+		
+		for(int i = height; i <= oHeight; i++) {
+			setSize(width, i); 
+		}
+
+
+		// Show the controls
+		hidden = false; 
+
+		// Enable the controls
+		for(int i = 0; i < panel_children.size(); i++) {
+			panel_children[i]->enabled = true; 
+		}	
+
 	}
 
 	void hidePanel(){
+
+		printf("ofxArgosUI_Panel::hidePanel\n");
+
+		// Save height
+		oHeight = height;
+
+		// Set new height
+
+		// Stop drawing the controls
+		hidden = true; 
+
+		// Disable the controls
+		for(int i = 0; i < panel_children.size(); i++) {
+			panel_children[i]->enabled = false; 
+		}	
 
 	}
 
@@ -157,31 +201,39 @@ public:
         glEnable(GL_TEXTURE_2D);    
     }
 
+	void update() {
+		if(!enabled) return;
+		enabled = false;
+	}
+
 	void draw(float x, float y) {
 
-		if (enabled){
+		enabled = true; 
 
-			setPos(x, y);
+		setPos(x, y);
 
-			ofFill();
-			ofSetColor(0x363636);
-			rRectangle(x, y, width, height, 13);
+		ofFill();
+		ofSetColor(0x363636);
+		rRectangle(x, y, width, height, 13);
 
-			//ofNoFill();
-			//glLineWidth(1.0f);
-			//rRectangle(x, y, width, height, 13);
+		//ofNoFill();
+		//glLineWidth(1.0f);
 
-			ofSetColor(0xdcfa70); 
-			glPushMatrix();
-				glTranslatef(x, y, 0);
-				myFont.drawString(name, 8, -6);
-			glPopMatrix();
+		//rRectangle(x, y, width, height, 13);
+		ofEnableAlphaBlending();
 
-			for(int i = 0; i < panel_children.size(); i++) {
+		ofSetColor(0xdcfa70); 
+		glPushMatrix();
+			glTranslatef(x, y, 0);
+			myFont.drawString(name, 8, -6);
+		glPopMatrix();
 
-				panel_children[i]->draw(panel_children[i]->x, panel_children[i]->y);
+		ofDisableAlphaBlending();
 
-			}	
+		for(int i = 0; i < panel_children.size(); i++) {
+
+			panel_children[i]->draw(panel_children[i]->x, panel_children[i]->y);
+
 		}
 	}
 	

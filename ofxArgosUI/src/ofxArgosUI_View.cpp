@@ -58,7 +58,11 @@ void ofxArgosUI_View::saveToXML(ofxXmlSettings &XML) {
 }
 
 void ofxArgosUI_View::update(ofEventArgs &e) {
-	for(int i=0; i<controls.size(); i++) controls[i]->update();
+
+	for(int i=0; i<controls.size(); i++){
+		controls[i]->update();
+	}
+
 }
 
 void ofxArgosUI_View::draw(float x, float y) {

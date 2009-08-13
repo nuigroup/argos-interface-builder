@@ -60,16 +60,19 @@ public:
 	void draw(float x, float y) {
 		setPos(x, y);
 		
+		ofEnableAlphaBlending();
+
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 			
-			ofEnableAlphaBlending();
+			
 			ofFill();
-			setTextBGColor(false);
-
-			setTextColor(false);
-			myFont.drawString("FPS: " + ofToString(ofGetFrameRate(), 2), 2, 13);
+			
+			ofSetColor(0xfffffff); 
+			myFont.drawString("FPS: " + ofToString(ofGetFrameRate(), 2), 0, 5);
 		glPopMatrix();
+
+		ofDisableAlphaBlending();
 	}
 	
 };

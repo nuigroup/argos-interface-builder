@@ -56,8 +56,8 @@ ofxArgosUI::ofxArgosUI() {
 void ofxArgosUI::drawHeader(){
 
 	headerView	= addView("Header");
-	//headerView->height = config->buttonHeight * 2;
-	//headerView->width = 0;
+	//headerView->height = 0
+	//headerView->width	 = 0;
 
 	//headerView->addToggle("Auto Save", &doAutoSave);
 	//headerView->addButton("Save Settings", &doSave);
@@ -72,7 +72,7 @@ void ofxArgosUI::drawHeader(){
 
 void ofxArgosUI::addListeners() {
 	//ofAddListener(ofEvents.setup, this, &ofxArgosUI::setup);
-	ofAddListener(ofEvents.update, this, &ofxArgosUI::update);
+	//ofAddListener(ofEvents.update, this, &ofxArgosUI::update);
 	//ofAddListener(ofEvents.draw, this, &ofxArgosUI::draw);
 	//ofAddListener(ofEvents.exit, this, &ofxArgosUI::exit);
 
@@ -89,7 +89,7 @@ void ofxArgosUI::addListeners() {
 
 void ofxArgosUI::removeListeners() {
 	//ofRemoveListener(ofEvents.setup, this, &ofxArgosUI::setup);
-	ofRemoveListener(ofEvents.update, this, &ofxArgosUI::update);
+	//ofRemoveListener(ofEvents.update, this, &ofxArgosUI::update);
 	//ofRemoveListener(ofEvents.draw, this, &ofxArgosUI::draw);
 	//ofRemoveListener(ofEvents.exit, this, &ofxArgosUI::exit);
 	
@@ -104,19 +104,18 @@ void ofxArgosUI::removeListeners() {
 
 void ofxArgosUI::setDraw(bool b) {
 	doDraw = b;
-	if(doDraw) addListeners();
-	else removeListeners();	
-	if(doAutoSave) saveToXML(xmlFile);
+
+	if(doDraw) 
+		addListeners();
+	else 
+		removeListeners();	
+
+	//if(doAutoSave) saveToXML(xmlFile);
 }
 
 void ofxArgosUI::toggleDraw() {
 	setDraw(!doDraw);
 }
-
-bool ofxArgosUI::isOn() {
-	return doDraw;
-}
-
 
 void ofxArgosUI::setAutoSave(bool b) {
 	doAutoSave = b;
@@ -159,7 +158,7 @@ void ofxArgosUI::saveToXML(string file) {
 			XML.addValue("doDraw", doDraw);
 			XML.addValue("doAutoSave", doAutoSave);
 			XML.addValue("currentView", currentView);
-	XML.popTag();
+		XML.popTag();
 	
 	XML.addTag("controls");
 		XML.pushTag("controls");
@@ -188,19 +187,37 @@ void ofxArgosUI::drawFocus(float x, float y) {
 	glPopMatrix();
 }
 
+void ofxArgosUI::update(ofEventArgs &e) {
+
+	if(changeView) {
+		nextView();	
+		changeView = false;
+	}
+	
+	//headerView->update(e);
+	//views[currentView]->height = ofGetHeight();
+	//views[currentView]->update(e);
+	
+	
+	//if(doSaveBackup) doSave = true;
+	
+	//if(doSave) saveToXML(xmlFile);
+}
 
 void ofxArgosUI::draw() {
+
 	if(!doDraw) return;
 	
 	glDisableClientState(GL_COLOR_ARRAY);
-	
-	// Draw the first view (view) 
-	headerView->draw();	
-	ofSetColor(config->borderColor);
-	ofLine(0, headerView->height, headerView->width, headerView->height); 
-	views[currentView]->draw(0.0f, headerView->height);
-}
 
+	// Draw the current view
+	views[currentView]->draw(0.0f, 0.0f);
+	
+	// Draw the header
+	//headerView->draw();	
+	//ofSetColor(config->emptyColor);
+	//ofLine(0, headerView->height, headerView->width, headerView->height); 
+}
 
 void ofxArgosUI::nextView() {
 	setView(currentView + 1);
@@ -289,23 +306,6 @@ ofxArgosUI_FPSCounter *ofxArgosUI::addFPSCounter(int x, int y, int width, int he
 
 ofxArgosUI_Knob	*ofxArgosUI::addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing){
 	return views[currentView]->addKnob(name, x, y, radius, value, min, max, smoothing);
-}
-
-void ofxArgosUI::update(ofEventArgs &e) {
-
-	if(changeView) {
-		nextView();	
-		changeView = false;
-	}
-	
-	headerView->update(e);
-	views[currentView]->height = ofGetHeight();
-	views[currentView]->update(e);
-	
-	
-	if(doSaveBackup) doSave = true;
-	
-	if(doSave) saveToXML(xmlFile);
 }
 
 void ofxArgosUI::mouseMoved(ofMouseEventArgs &e) {

@@ -75,16 +75,7 @@ public:
 	// =========================================
 	virtual void setup() {}
 	virtual void draw(float x, float y) {}
-	virtual void draw() { draw(x, y); }
-
-
-	// =========================================
-	virtual void onKeyUp() {}
-	virtual void onKeyDown() {}
-	virtual void onKeyLeft() {}
-	virtual void onKeyRight() {}
-	virtual void onKeyEnter() {}
-	
+	virtual void draw() { draw(x, y); }	
 
 protected:
 	ofxArgosUI_Config	*config;

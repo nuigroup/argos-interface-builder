@@ -95,25 +95,27 @@ public:
 	void onTouchUp(float x, float y, int ID){
 	}
 
+	void onKeyEnter() {
+		toggle();
+	}
 
 	void update() {
 		if(!enabled) return;
 		enabled = false;
 	}
-
-	void onKeyEnter() {
-		toggle();
-	}
 	
 	void draw(float x, float y) {
 
 		enabled = true;
+
 		setPos(x, y);
 		
+		ofEnableAlphaBlending();
+
 		glPushMatrix();
+
 			glTranslatef(x, y, 0);
 			
-			ofEnableAlphaBlending();
 			ofFill();
 			setFullColor(*value);
 			ofRect(0, 0, height, height);
@@ -137,7 +139,9 @@ public:
 
 			setTextColor();
 			myFont.drawString(name, height + 3, 13);
-			ofDisableAlphaBlending();
+			
 		glPopMatrix();
+
+		ofDisableAlphaBlending();
 	}
 };

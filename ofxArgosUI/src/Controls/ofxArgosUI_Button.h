@@ -75,13 +75,15 @@ public:
 	bool getValue() {
 		return (*value);
 	}
+
 	void set(bool b) {
 		(*value) = b;
 	}
+
 	void toggle() {
 		(*value) = !(*value); 
 	}
-	
+
 	void setToggleMode(bool b) {
 		beToggle = b;
 	}
@@ -169,18 +171,15 @@ public:
 
 		setPos(x, y);
 
+		ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 
-			ofEnableAlphaBlending();
 			ofFill();
-
 			setTextBGColor();
 
 			rRectangle(0, 0, width, height, 8); 
-
-			//ofRect(0, 0, width, height);
 			
 			if((*value) && beToggle) {
 				setTextColor();
@@ -189,11 +188,10 @@ public:
 			setTextColor();
 
 			myFont.drawString(name, 3 , 14);
-			//ofDrawBitmapString(name, 3, 15);
 
-			ofDisableAlphaBlending();
-		
 		glPopMatrix();
+
+		ofDisableAlphaBlending();
 	}
 	
 };
