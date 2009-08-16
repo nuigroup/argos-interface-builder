@@ -28,8 +28,8 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
 
 *************************************************************************/ 
+#pragma once
 
-#include "ofxArgosUI.h"
 #include "ofxArgosUI_Control.h"
 
 class ofxArgosUI_Icon : public ofxArgosUI_Control {

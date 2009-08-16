@@ -36,7 +36,7 @@
 *************************************************************************/ 
 
 // Ideally make this so it creates a fixed-sized control based on length of the string
-// mostly font dependant.... 
+// mostly font dependent. 
 
 #pragma once
 
@@ -45,7 +45,7 @@
 class ofxArgosUI_Label : public ofxArgosUI_Control {
 	
 public:
-	
+
 	bool*			value;
 	
 	ofxArgosUI_Label(string name, int x, int y, int width, int height) : ofxArgosUI_Control(name) {
@@ -101,6 +101,15 @@ public:
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
+
+			myFont.drawString(name, 0, 5)
+
+			ofNoFill();
+
+			ofRect(0, 0, width, height); 
+
+			ofFill(); 
+
 		glPopMatrix();
 
 		ofDisableAlphaBlending();

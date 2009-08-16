@@ -59,10 +59,6 @@ public:
 		controlType = "Panel";
 		setup(x, y, width, height);
 
-		counter = 0.0;
-		spin	= 0.0;
-		spinPct	= 0.0;
-
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -82,14 +78,18 @@ public:
 		enabled = !enabled; 
 	}
 
+	void move(){
+
+		setPos(x + 20, y); 
+		for(int i = 0; i < panel_children.size(); i++) {
+			panel_children[i]->setPos(panel_children[i]->x + 20, panel_children[i]->y);
+		}
+
+	}
+
 	void showPanel(){
 
 		printf("ofxArgosUI_Panel::showPanel\n");
-		
-		for(int i = height; i <= oHeight; i++) {
-			setSize(width, i); 
-		}
-
 
 		// Show the controls
 		hidden = false; 
@@ -108,9 +108,7 @@ public:
 		// Save height
 		oHeight = height;
 
-		// Set new height
-
-		// Stop drawing the controls
+		// Hide the controls
 		hidden = true; 
 
 		// Disable the controls
@@ -121,6 +119,10 @@ public:
 	}
 
 	ofxArgosUI_Control *addControl(ofxArgosUI_Control *control) {
+		// Rather than glTranslate the controls every draw, 
+		// simply create them relative to the panel's (0,0); 
+		control->setPos(x + control->x, y + control->y); 
+
 		panel_children.push_back(control);
 		return control;
 	}
@@ -155,6 +157,10 @@ public:
 
 	ofxArgosUI_Knob	*addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing){
 		return (ofxArgosUI_Knob *)addControl(new ofxArgosUI_Knob(name, x, y, radius, value, min, max, smoothing));
+	}
+
+	ofxArgosUI_Icon *addIcon(int x, int y, int width, int height) {
+		return (ofxArgosUI_Icon *)addControl(new ofxArgosUI_Icon(x, y, width, height));
 	}
 
 	void rRectangle(int x, int y, int w, int h, int radius){
@@ -203,6 +209,7 @@ public:
 
 	void update() {
 		if(!enabled) return;
+
 		enabled = false;
 	}
 
@@ -213,32 +220,25 @@ public:
 		setPos(x, y);
 
 		ofFill();
+
+		ofEnableAlphaBlending();
+
 		ofSetColor(0x363636);
 		rRectangle(x, y, width, height, 13);
 
-		//ofNoFill();
-		//glLineWidth(1.0f);
+		ofSetColor(0xf0f0f0);
+		myFont.drawString(name, x + 5, y - 3);
 
-		//rRectangle(x, y, width, height, 13);
-		ofEnableAlphaBlending();
 
-		ofSetColor(0xdcfa70); 
-		glPushMatrix();
-			glTranslatef(x, y, 0);
-			myFont.drawString(name, 8, -6);
-		glPopMatrix();
+		for(int i = 0; i < panel_children.size(); i++) {
+			panel_children[i]->draw(panel_children[i]->x, panel_children[i]->y);
+		}
 
 		ofDisableAlphaBlending();
 
-		for(int i = 0; i < panel_children.size(); i++) {
-
-			panel_children[i]->draw(panel_children[i]->x, panel_children[i]->y);
-
-		}
 	}
-	
 	
 protected:
 	vector <ofxArgosUI_Control*> panel_children; 
 
-}; 
+};

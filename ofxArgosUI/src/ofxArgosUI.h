@@ -86,6 +86,7 @@ public:
 	ofxArgosUI_XYPad		*addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
 	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
 	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
+	ofxArgosUI_Icon			*addIcon(int x, int y, int width, int height);
 	
 protected:
 

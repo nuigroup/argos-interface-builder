@@ -308,6 +308,10 @@ ofxArgosUI_Knob	*ofxArgosUI::addKnob(string name, int x, int y, int radius, floa
 	return views[currentView]->addKnob(name, x, y, radius, value, min, max, smoothing);
 }
 
+ofxArgosUI_Icon	*ofxArgosUI::addIcon(int x, int y, int width, int height){
+	return views[currentView]->addIcon(x, y, width, height);
+}
+
 void ofxArgosUI::mouseMoved(ofMouseEventArgs &e) {
 	headerView->mouseMoved(e);
 	views[currentView]->mouseMoved(e);

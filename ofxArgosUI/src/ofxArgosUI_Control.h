@@ -51,6 +51,11 @@ public:
 	string		controlType;	// ...
 	bool		lock;			// ...
 	bool		focused;		// ...
+
+	bool		dragging; 
+
+	int			dragX;
+	int			dragY; 
 	
 	ofxArgosUI_Control(string name);
 
@@ -66,16 +71,18 @@ public:
 	void setFullColor(bool forceActive = false);
 	void setEmptyColor();
 
-
 	// ========================================= XML Settings
 	virtual void loadFromXML(ofxXmlSettings &XML) {}
 	virtual void saveToXML(ofxXmlSettings &XML) {}
 
-
-	// =========================================
+	// ========================================= Drawing
 	virtual void setup() {}
 	virtual void draw(float x, float y) {}
 	virtual void draw() { draw(x, y); }	
+
+	// ========================================= Drag/Drop
+	virtual void dropControl(int x, int y) {}
+
 
 protected:
 	ofxArgosUI_Config	*config;

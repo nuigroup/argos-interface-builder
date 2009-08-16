@@ -59,7 +59,7 @@ void ofxArgosUI_View::saveToXML(ofxXmlSettings &XML) {
 
 void ofxArgosUI_View::update(ofEventArgs &e) {
 
-	for(int i=0; i<controls.size(); i++){
+	for(int i = 0; i<controls.size(); i++){
 		controls[i]->update();
 	}
 
@@ -69,13 +69,10 @@ void ofxArgosUI_View::draw(float x, float y) {
 
 	// don't change
 	setPos(0,0);
-
-	float posX		= 0;
-	float posY		= 0;
 	
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	
-	for(int i=0; i<controls.size(); i++) {
+	for(int i = 0; i<controls.size(); i++) {
 
 		controls[i]->draw(controls[i]->x, controls[i]->y);
 
@@ -129,6 +126,10 @@ ofxArgosUI_Toggle *ofxArgosUI_View::addToggle(string name, int x, int y, int wid
 
 ofxArgosUI_Knob	*ofxArgosUI_View::addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing){
 	return (ofxArgosUI_Knob *)addControl(new ofxArgosUI_Knob(name, x, y, radius, value, min, max, smoothing));
+}
+
+ofxArgosUI_Icon	*ofxArgosUI_View::addIcon(int x, int y, int width, int height){
+	return (ofxArgosUI_Icon *)addControl(new ofxArgosUI_Icon(x, y, width, height));
 }
 
 

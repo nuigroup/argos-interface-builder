@@ -210,7 +210,7 @@ public:
 		else if(knobAngle <= 0)	knobAngle = 0;
 
 		// Take the LERP'd value and scale it across the full range of the knob
-		knobDisplay = (( 315 / (2*radius)) * knobAngle);
+		knobDisplay = (( 405 / (2*radius)) * knobAngle);
 
 		ofEnableAlphaBlending();
 

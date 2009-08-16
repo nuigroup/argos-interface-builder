@@ -163,7 +163,7 @@ public:
 		pointv.x = ofMap((*value).x, min.x, max.x, x, x + width);
 		pointv.y = ofMap((*value).y, min.y, max.y, y, y + height);
 		
-		ofEnableAlphaBlending();
+		//ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);		
@@ -193,7 +193,7 @@ public:
 
 		glPopMatrix();
 
-		ofDisableAlphaBlending();
+		//ofDisableAlphaBlending();
 		
 	}
 	
