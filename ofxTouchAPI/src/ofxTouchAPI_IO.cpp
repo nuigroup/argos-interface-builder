@@ -42,7 +42,7 @@ ofxTouchAPI_IO::ofxTouchAPI_IO() {
 	_mouseDown	= false;
 
 	enabled		= true;
-	verbose		= false;
+	verbose		= false; 
 	
 	enableAllEvents(); 
 }

@@ -41,7 +41,7 @@ class ofxTouchAPI_IO : public ofRectangle {
 
 public:
 
-	bool		enabled;		// set to false to disable all events (temporarily) 
+	bool		enabled;		// set to false to disable all events
 	bool		verbose;
 	
 	ofxTouchAPI_IO();			// constructor
@@ -63,12 +63,10 @@ public:
 	void enableAppEvents();				// call this if object should update/draw automatically	(default)
 	void disableAppEvents();			// call this if object doesn't need to update/draw automatically
 
-
 	// ================================================================= Setters
 	void setPos(float _x, float _y);								// set position of object
 	void setSize(float _w, float _h);								// set size of object
 	void setPosAndSize(float _x, float _y, float _w, float _h);		// set pos and size in one
-
 
 	// ================================================================= Getters
 	bool isMouseOver();					// returns true if mouse is over object (based on position and size)
@@ -82,14 +80,12 @@ public:
 	bool isBeingTouched();				// asks if any touch is currently down -- good for hover over state; 
 
 
-
 	// ================================================================= Updater Methods
 	virtual void setup()	{}	// called when app starts
 	virtual void update()	{}	// called every frame to update object
     virtual void draw()		{}	// called every frame to draw object
 	virtual void exit()		{}	// called when app quits
-	void killMe();				// if your object is a pointer, and you are done with it, explicitly call this
-
+	void killMe();				// if your object is a pointer and you are done with it, explicitly call this
 
 	// ================================================================= Mouse States
 	virtual void onRollOver(int x, int y)					{}		// called when mouse enters object x, y, width, height
@@ -105,7 +101,6 @@ public:
 	virtual void keyPressed(int key)	{}
 	virtual void keyReleased(int key)	{}
 
-
 	// ================================================================= Touch States
 	virtual void onTouchDown(float x, float y, int ID)			{}		// called when a touch down occurs on an object
 	virtual void onTouchUp(float x, float y, int ID)			{}		// called when a touch up occurs on an object
@@ -114,7 +109,7 @@ public:
 	virtual void onTouchMoveOver(float x, float y, int ID)		{}		// called when touch moves outside to inside an object
 	virtual void onTouchMoveOutside(float x, float y, int ID)	{}		// called when touch moves from inside to outside an object
 
-	// ================================================================= Incoming Events
+	// ================================================================= Event Handlers
 	void _setup(ofEventArgs &e);
 	void _update(ofEventArgs &e);
     void _draw(ofEventArgs &e);
