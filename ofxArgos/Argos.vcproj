@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxArgosUI\src;..\..\..\addons\ofxArgosUI\src\Controls;..\..\..\addons\ofxTuio\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxTouchAPI\src;&quot;.\src\UI Panels&quot;;.\src"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxMSAInteractiveObject\src;..\..\..\addons\ofxArgosUI\src;..\..\..\addons\ofxArgosUI\src\Controls;..\..\..\addons\ofxTuio\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxTouchAPI\src;.\src;&quot;.\src\UI Panels&quot;;.\src\OSCHandler"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;POCO_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -125,7 +125,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxArgosUI\src;..\..\..\addons\ofxArgosUI\src\Controls;..\..\..\addons\ofxTuio\src;..\..\..\addons\ofxTouchAPI\src;.\src;&quot;.\src\UI Panels&quot;;.\src\OSCHandler"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;POCO_STATIC"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -209,6 +209,10 @@
 			<Filter
 				Name="UI Objects"
 				>
+				<File
+					RelativePath=".\src\UI Panels\Draggables.h"
+					>
+				</File>
 				<Filter
 					Name="Menu"
 					>
@@ -244,10 +248,6 @@
 						RelativePath=".\src\UI Panels\Browser.h"
 						>
 					</File>
-					<File
-						RelativePath=".\src\UI Panels\Draggables.h"
-						>
-					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -259,6 +259,18 @@
 				</File>
 				<File
 					RelativePath=".\src\XML Handler\XMLHandler.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="OSCHandler"
+				>
+				<File
+					RelativePath=".\src\OSCHandler\OSCHandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\OSCHandler\OSCHandler.h"
 					>
 				</File>
 			</Filter>
@@ -605,11 +617,11 @@
 					Name="Config"
 					>
 					<File
-						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Config.cpp"
+						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Parameter.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Config.h"
+						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Parameter.h"
 						>
 					</File>
 				</Filter>

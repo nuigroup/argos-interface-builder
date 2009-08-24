@@ -57,20 +57,20 @@ void Argos::setup(){
 	
 	WindowWidth = ofGetWidth();
 	WindowHeight = ofGetHeight();
-	ofSetVerticalSync(false);
+	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
 	ofBackground(0, 0, 0);
 	
-	// Open TUIO on Port 3333
-	tuio.start(3333);
+	tuio.start(3333);			// Declared in ofxTouchAPI.h
+	oschandler.start(3335);		// Declared in OSCHandler.h
+	oschandler.setDebug(true); 
 
-	argos_tag.loadImage("Argos.png");
+	string tester; 
 
-	editor  = new Argos_editor(gui); 
-	browser = new Argos_browser(gui); 
-	
 	// addFPSCounter(X, Y, Width, Height)
 	gui.addFPSCounter((WindowWidth - 100), (WindowHeight - 20), 100, 20); 
+
+	//gui.addTextField("Text Field 1", 400, 120, 120, 20, &tester); 
 
 	/*
 	// addButton(Name, X, Y, Width, Height, Value)
@@ -101,14 +101,14 @@ void Argos::setup(){
 void Argos::update(){
 
 	tuio.getMessage();
-	
-	//cout << f[1] << "\n"; 
+	//editor.update();
+	//browser.update();
+	//menu.update(); 
 }
 
 // ========================================================== Draw
 void Argos::draw(){
 
-	// Good for testing
 	tuio.drawCursors();
 
 	gui.draw();
@@ -126,9 +126,9 @@ void Argos::resized(int w, int h){
 // ========================================================== Key Pressed
 void Argos::keyPressed (int key){ 
 
-	//if(key == '-') gui.toggleDraw();
+	if(key == '-') gui.toggleDraw();
 
-	if(key == '-') editor->editor->move();
-	//if(key == '=') editor->editor->hidePanel();
+	//if(key == '-') editor.editor->toggleDraw();
+	if(key == '=') browser.browser->toggleDraw();
 
 }

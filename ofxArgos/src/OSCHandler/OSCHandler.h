@@ -41,7 +41,7 @@ public:
 
 	void start(int port){
 		sender.setup("127.0.0.1", port); 
-		printf("OSCHandler sucessfully started at localost on port %i \n", port);
+		printf("====> OSCHandler sucessfully started at localost on port %i \n", port);
 		debug = false; 
 	}
 

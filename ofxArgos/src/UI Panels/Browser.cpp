@@ -31,33 +31,21 @@
 
 #include "Browser.h"
 
-Argos_browser::Argos_browser(ofxArgosUI &gui) {
+Argos_browser::Argos_browser(){}
+
+void Argos_browser::init(ofxArgosUI &gui) {
+
+		this->gui = &gui; 
 
 		browser = gui.addPanel("Element Browser", 280, 670, 570, 90); 
 
-		// Pay close attention to the syntax here. Not adding
-		// specific controls (button, toggle) etc to the panel,
-		// but rather adding a derived icon type to the panel,
-		// using a generic addControl method
-		button	= new Draggable_Button	(gui, 10, 10, 70, 70); 
-			browser->addControl(button); 
-
-		toggle	= new Draggable_Toggle	(gui,  90, 10, 70, 70); 
-			browser->addControl(toggle); 
-
-		slider  = new Draggable_Slider	(gui, 170, 10, 70, 70);
-			browser->addControl(slider);
-
-		knob	= new Draggable_Knob	(gui, 250, 10, 70, 70);
-			browser->addControl(knob); 
-
-		xypad	= new Draggable_XYPad	(gui, 330, 10, 70, 70);
-			browser->addControl(xypad); 
-
-		label	= new Draggable_Label	(gui, 410, 10, 70, 70); 
-			browser->addControl(label);
-
-		panel	= new Draggable_Panel	(gui, 490, 10, 70, 70); 
-			browser->addControl(panel); 
+		// +++ List of icons in the browser
+		browser->addControl(new Draggable_Button(gui, 10, 10, 70, 70)); 
+		browser->addControl(new Draggable_Toggle(gui,  90, 10, 70, 70)); 
+		browser->addControl(new Draggable_Slider(gui, 170, 10, 70, 70));
+		browser->addControl(new Draggable_Knob(gui, 250, 10, 70, 70)); 
+		browser->addControl(new Draggable_XYPad(gui, 330, 10, 70, 70)); 
+		browser->addControl(new Draggable_Label(gui, 410, 10, 70, 70));
+		browser->addControl(new Draggable_Panel(gui, 490, 10, 70, 70)); 
 
 }

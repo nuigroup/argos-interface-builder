@@ -31,24 +31,36 @@
 
 #include "Editor.h"
 
-bool	ba[20]; 
-float	fa[20];
-int		fib;
+bool e_apply;
+bool e_cancel;
+bool e_reset;
 
-bool minimized; 
+string e_label;
+string e_x;
+string e_y;
+string e_w;
+string e_h; 
 
-Argos_editor::Argos_editor(ofxArgosUI &gui) {
+Argos_editor::Argos_editor() {}
 
-		// Reference the Argos GUI into this object
-		egui   = &gui; 
+void Argos_editor::init(ofxArgosUI &gui){
 
-		editor = egui->addPanel("Element Editor", 10, 20, 240, ofGetHeight()-30); 
+		this->gui  = &gui; 
+
+		editor = gui.addPanel("Element Editor", 10, 20, 240, ofGetHeight()-30); 
+		
+		// +++ Basic Properties 
+		editor->addTextField("Label:", 10, 30, 190, 20, &e_label); 
+		editor->addTextField("X:", 10, 70, 40, 20, &e_x); 
+		editor->addTextField("Y:", 60, 70, 40, 20, &e_y); 
+		editor->addTextField("W:", 110, 70, 40, 20, &e_w); 
+		editor->addTextField("H:", 160, 70, 40, 20, &e_h); 
+
+		editor->addTextField("OSC Address", 10, 110, 100, 20, &e_h); 
 
 		// +++ Apply/Cancel/Reset Buttons
-		editor->addButton("Apply", 10,(editor->height - 35), 70, 25, &ba[fib++]);
-		editor->addButton("Cancel", 85,(editor->height - 35), 70, 25, &ba[fib++]);
-		editor->addButton("Reset", 160,(editor->height - 35), 70, 25, &ba[fib++]);
+		editor->addButton("Apply", 10,(editor->height - 35), 70, 25, &e_apply);
+		editor->addButton("Cancel", 85,(editor->height - 35), 70, 25, &e_cancel);
+		editor->addButton("Reset", 160,(editor->height - 35), 70, 25, &e_reset);
 
-		// +++ Minimize/Maximize 
-		//editor->addButton("", editor->width - 35, 15 , 18, 18, &minimized);
 }

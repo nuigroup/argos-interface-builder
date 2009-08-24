@@ -32,24 +32,33 @@
 #ifndef _ARGOS_
 #define _ARGOS_
 
-#include "ofMain.h"				// ofMain
+#include "ofMain.h"		// ofMain
 
-#include "ofxArgosUI.h"			// Argos UI Toolkit
+#include "ofxArgosUI.h"	// Argos UI Toolkit
 
 #include "Editor.h"		// Control/Element Editor.
 #include "Browser.h"	// Control/Eement Browser (for Drag n' Drop). 
 #include "Menu.h"		// Context Menu
 
-class Argos : public ofSimpleApp{
+#include "OSCHandler.h" // OSC Controller
+
+class Argos : public ofSimpleApp{ 
 	
 public:
 
 	ofImage			argos_tag; 
+
 	ofxArgosUI		gui;
-	Argos_editor	*editor; 
-	Argos_browser	*browser; 
-	//Argos_menu	*menu; 
-	
+	Argos_editor	editor;  
+	Argos_browser	browser; 
+
+
+	Argos() {
+		argos_tag.loadImage("Argos.png");
+		editor.init(gui); 
+		browser.init(gui); 
+	}
+
 	void setup();
 	void update();
 	void draw();
@@ -57,6 +66,7 @@ public:
 	void resized(int w, int h);
 	
 	void keyPressed(int key);
+
 
 };
 

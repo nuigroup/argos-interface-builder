@@ -32,21 +32,18 @@
 #include "ofxArgosUI.h"
 #include "Draggables.h"
 
-class Argos_browser{
+class Argos_browser {
 
 public:
+	
+	Argos_browser();
 
-	Draggable_Button	*button;
-	Draggable_Toggle	*toggle; 
-	Draggable_Slider	*slider;
-	Draggable_Label		*label;
-	Draggable_Panel		*panel;
-	Draggable_Knob		*knob;
-	Draggable_XYPad		*xypad; 
-
+	ofxArgosUI			*gui; 
 	ofxArgosUI_Panel	*browser;
 
-	Argos_browser(ofxArgosUI &gui);
+	void init(ofxArgosUI &gui); 
+
+	void update(); 
 
 };
 

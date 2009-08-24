@@ -31,7 +31,6 @@
 
 #include "ofxArgosUI.h"
 #include "ofxArgosUI_Icon.h"
-
 #include "utils.h"
 
 // ============================================================================ Button
@@ -73,7 +72,6 @@ public:
 };
 
 // ============================================================================ Slider
-
 class Draggable_Slider : public ofxArgosUI_Icon {
 	
 public:
@@ -107,12 +105,11 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
-		gui->addKnob("New Knob", x, y, (defaultCWidth / 2), &f[fi++], 0, 100, .85);
+		gui->addKnob("New Knob", x, y, (defaultCWidth / 2), &f[fi++], 0, 1, .85);
 	}
 };
 
 // ============================================================================ Label
-
 class Draggable_Label : public ofxArgosUI_Icon {
 	
 public:
@@ -151,7 +148,6 @@ public:
 
 
 // ============================================================================ XYPad
-
 class Draggable_XYPad : public ofxArgosUI_Icon {
 	
 public:

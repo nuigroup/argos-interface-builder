@@ -37,11 +37,13 @@ class Argos_editor{
 
 public:
 
-	bool				doDraw; 
+	Argos_editor();
 
-	ofxArgosUI			*egui; 
+	ofxArgosUI			*gui; 
 	ofxArgosUI_Panel	*editor;
 
-	Argos_editor(ofxArgosUI &gui);
+	void init(ofxArgosUI &gui); 
+
+	void update(); 
 
 };
