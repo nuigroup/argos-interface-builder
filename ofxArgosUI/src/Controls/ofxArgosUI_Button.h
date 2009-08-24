@@ -115,18 +115,13 @@ public:
 		if(!beToggle) (*value) = false;
 	}
 
-	void update() {
-		if(!enabled) return;
-		enabled = false;
-	}
-
 	void rRectangle(int x, int y, int w, int h, int radius){
 
         glDisable(GL_TEXTURE_2D);
 
         //glLineWidth(1.0f);
         
-        glBegin(GL_POLYGON );
+        glBegin(GL_POLYGON);
 
         glVertex2f (x + radius, y);
         glVertex2f (x + w - radius, y);
@@ -164,6 +159,11 @@ public:
 
         glEnable(GL_TEXTURE_2D);    
     }
+
+	void update() {
+		if(!enabled) return;
+		enabled = false;
+	}
 
 	void draw(float x, float y) {
 	

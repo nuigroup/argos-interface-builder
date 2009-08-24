@@ -58,16 +58,16 @@ public:
 	}
 	
 	void draw(float x, float y) {
+
+		enabled = true; 
+
 		setPos(x, y);
 		
 		ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
-			
-			
 			ofFill();
-			
 			ofSetColor(0xfffffff); 
 			myFont.drawString("FPS: " + ofToString(ofGetFrameRate(), 2), 0, 5);
 		glPopMatrix();

@@ -37,43 +37,45 @@
 #pragma once
 
 #include "ofxTouchAPI_IO.h"
-#include "ofxArgosUI_Config.h"
+#include "ofxArgosUI_Parameter.h"
 #include "ofxXmlSettings.h"
+#include "OSCHandler.h"
 
 class ofxArgosUI_Control : public ofxTouchAPI_IO {
 
 public:
 
-	ofTrueTypeFont myFont;
+	ofTrueTypeFont			myFont;
+	ofxArgosUI_Parameter	param;  
 
 	string		name;			// Human readable name
 	string		key;			// Machine readable name
 	string		controlType;	// ...
-	bool		lock;			// ...
-	bool		focused;		// ...
+	bool		lock;			// ... 
 
-	bool		dragging; 
+	bool		dragging;		// Is the control currently being dragged?
+
+	bool		selected;		// Is the control currently being selected?
+	bool		selectable;		// Can the control be selected?
+
+	string		OSCaddress;		// OSC address
 
 	int			dragX;
 	int			dragY; 
 	
+	// ========================================= Constructor
 	ofxArgosUI_Control(string name);
 
 	// ========================================= Basic Settings
 	void setName(string newName);
 	void setKey(string newKey);
-	void setConfig(ofxArgosUI_Config *config);
-
+	void setConfig(ofxArgosUI_Parameter *config);
 
 	// ========================================= Visual Settings
 	void setTextColor(bool clickable = true);
 	void setTextBGColor(bool clickable = true);
 	void setFullColor(bool forceActive = false);
 	void setEmptyColor();
-
-	// ========================================= XML Settings
-	virtual void loadFromXML(ofxXmlSettings &XML) {}
-	virtual void saveToXML(ofxXmlSettings &XML) {}
 
 	// ========================================= Drawing
 	virtual void setup() {}
@@ -83,8 +85,8 @@ public:
 	// ========================================= Drag/Drop
 	virtual void dropControl(int x, int y) {}
 
-
-protected:
-	ofxArgosUI_Config	*config;
+	// ========================================= XML Settings (deprecated)
+	virtual void loadFromXML(ofxXmlSettings &XML) {}
+	virtual void saveToXML(ofxXmlSettings &XML) {}
 
 };

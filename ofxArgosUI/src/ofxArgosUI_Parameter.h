@@ -39,24 +39,25 @@
 #include "ofTypes.h"
 
 class ofxArgosUI_Parameter {
+
 public:	
+
+	int		textColor;
+	int		textOverColor;
+
+	int		textBGColor;
+	int		textBGOverColor;
 	
-	int	textColor;
-	int textOverColor;
+	int		fullColor;
+	int		fullOverColor;
+	int		fullActiveColor;
 
-	int textBGColor;
-	int textBGOverColor;
-	
-	int fullColor;
-	int	fullOverColor;
-	int fullActiveColor;
+	int		emptyColor;
 
-	int emptyColor;
+	int		borderColor;
 
-	int borderColor;
-
-	int panelColor;
-	int panelBorderColor; 
+	int		panelColor;
+	int		panelBorderColor; 
 	
 	ofxArgosUI_Parameter() {
 		
@@ -64,7 +65,7 @@ public:
 		textOverColor		= 0x000000;
 
 		textBGColor			= 0xc0f400;
-		textBGOverColor		= 0xdcfa70;
+		textBGOverColor		= 0xe3f992;
 
 		fullColor			= 0xff4e40;
 		fullOverColor		= 0xff4e40;
@@ -73,7 +74,7 @@ public:
 		emptyColor			= 0x363636;		
 		
 		borderColor			= 0xd0f05a;
-	}
-};
 
-extern ofxArgosUI_Parameter defaultConfiguration;
+	}
+
+};

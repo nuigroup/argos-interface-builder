@@ -35,5 +35,3 @@
 
 *************************************************************************/ 
 #include "ofxArgosUI_Parameter.h"
-
-ofxArgosUI_Parameter defaultConfiguration;

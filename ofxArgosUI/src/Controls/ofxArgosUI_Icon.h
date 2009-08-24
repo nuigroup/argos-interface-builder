@@ -42,9 +42,8 @@ public:
 	int			defaultCHeight; 
 
 	ofxArgosUI_Icon(int x, int y, int width, int height) : ofxArgosUI_Control("Icon") {
-
 		dragging = false; 
-
+		controlType ="Icon";
 		setup(x, y, width, height);
 	}
 	
@@ -59,29 +58,19 @@ public:
 	void onMouseMove(int x, int y)						{}
 	void onDragOver(int x, int y, int button)			{}
 	void onDragOutside(int x, int y, int button){
-	
-		//printf("onDragOutside\n"); 
-		//printf("X: %i, Y: %i", x, y;
-	
 			dragging = true; 
 			dragX = (floor(((float) x / 20)) * 20);
 			dragY = (floor(((float) y / 20)) * 20);
 	}
 
 	void onRelease(int x, int y, int button){
-	
 		dragging = false; 
-
 		dropControl(dragX, dragY); 
-		
 	}
 
 	void onReleaseOutside(int x, int y, int button)	{
-		
 		dragging = false; 
-
 		dropControl(dragX, dragY); 
-		
 	}
 
 	// ============================================= Touch
@@ -118,7 +107,6 @@ public:
 		glPopMatrix();
 
 		ofDisableAlphaBlending();
-
 
 	}
 

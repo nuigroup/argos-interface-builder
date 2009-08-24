@@ -38,34 +38,24 @@
 
 ofxArgosUI_Control::ofxArgosUI_Control(string name) {
                                      
+	lock = false; 
+
 	controlType = "";
-	this->config = &defaultConfiguration;
 
 	setName(name);
 	setKey(key);
 
-	//setPos(0, 0);
-
-	lock	  = false;
-	focused	  = false;
-
-	myFont.loadFont("districtthin.ttf", 12);
+	myFont.loadFont("verdana.ttf", 10);
 
 	setup();
-
 	enableAllEvents(); 
 
-}
-
-void ofxArgosUI_Control::setConfig(ofxArgosUI_Config *config) {
-	this->config = config;
-	setup();
 }
 
 
 void ofxArgosUI_Control::setName(string newName) {
 	name = newName;
-	if(key.compare("") == 0) setKey("");	// if key has not been set yet, set name as key too
+	if(key.compare("") == 0) setKey("");
 }
 
 
@@ -78,23 +68,23 @@ void ofxArgosUI_Control::setKey(string newKey) {
 }
 
 void ofxArgosUI_Control::setTextColor(bool clickable) {
-	if (isMouseOver() && clickable) ofSetColor(config->textOverColor);
-	else if (isBeingTouched()) ofSetColor(config->textOverColor);
-	else ofSetColor(config->textColor);
+	if (isMouseOver() && clickable) ofSetColor(param.textOverColor);
+	else if (isBeingTouched()) ofSetColor(param.textOverColor);
+	else ofSetColor(param.textColor);
 }
 
 void ofxArgosUI_Control::setTextBGColor(bool clickable) {
-	if(isMouseOver() && clickable) ofSetColor(config->textBGOverColor);
-	else if (isBeingTouched()) ofSetColor(config->textBGOverColor);
-	else ofSetColor(config->textBGColor);
+	if(isMouseOver() && clickable) ofSetColor(param.textBGOverColor);
+	else if (isBeingTouched()) ofSetColor(param.textBGOverColor);
+	else ofSetColor(param.textBGColor);
 }
 
 void ofxArgosUI_Control::setFullColor(bool forceActive) {
-	if(isMouseDown() || forceActive) ofSetColor(config->fullActiveColor);
-	else if(isMouseOver()) ofSetColor(config->fullOverColor);
-	else ofSetColor(config->fullColor);
+	if(isMouseDown() || forceActive) ofSetColor(param.fullActiveColor);
+	else if(isMouseOver()) ofSetColor(param.fullOverColor);
+	else ofSetColor(param.fullColor);
 }
 
 void ofxArgosUI_Control::setEmptyColor() {
-	ofSetColor(config->emptyColor);
+	ofSetColor(param.emptyColor);
 }

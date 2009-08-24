@@ -45,10 +45,6 @@ public:
 	bool hidden;
 	int oWidth; 
 	int oHeight;
-
-	float counter;
-	float spin;
-	float spinPct;
 		
 	ofxArgosUI_Panel(string name, int x, int y, int width, int height) : ofxArgosUI_Control(name) {
 
@@ -66,25 +62,12 @@ public:
 		setSize(_width, _height);
 	}
 	
-	void loadFromXML(ofxXmlSettings &XML){
+	void loadFromXML(ofxXmlSettings &XML){}
 
-	}
+	void saveToXML(ofxXmlSettings &XML){}
 
-	void saveToXML(ofxXmlSettings &XML){
-
-	}
-
-	void toggleDraw(bool x){
+	void toggleDraw(){
 		enabled = !enabled; 
-	}
-
-	void move(){
-
-		setPos(x + 20, y); 
-		for(int i = 0; i < panel_children.size(); i++) {
-			panel_children[i]->setPos(panel_children[i]->x + 20, panel_children[i]->y);
-		}
-
 	}
 
 	void showPanel(){
@@ -120,7 +103,7 @@ public:
 
 	ofxArgosUI_Control *addControl(ofxArgosUI_Control *control) {
 		// Rather than glTranslate the controls every draw, 
-		// simply create them relative to the panel's (0,0); 
+		// this adds them them relative to the panel's (0,0); 
 		control->setPos(x + control->x, y + control->y); 
 
 		panel_children.push_back(control);
@@ -145,6 +128,10 @@ public:
 
 	ofxArgosUI_XYPad *addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax) {
 		return (ofxArgosUI_XYPad *)addControl(new ofxArgosUI_XYPad(name, x, y, width, height, value, xmin, xmax, ymin, ymax));
+	}
+
+	ofxArgosUI_TextField *addTextField(string name, int x, int y, int width, int height, string *value){
+		return (ofxArgosUI_TextField *)addControl(new ofxArgosUI_TextField(name, x, y, width, height, value)); 
 	}
 
 	ofxArgosUI_Title *addTitle(string name, bool *value) {
@@ -209,17 +196,14 @@ public:
 
 	void update() {
 		if(!enabled) return;
-
 		enabled = false;
 	}
 
 	void draw(float x, float y) {
 
-		enabled = true; 
+		if(!enabled) return; 
 
 		setPos(x, y);
-
-		ofFill();
 
 		ofEnableAlphaBlending();
 

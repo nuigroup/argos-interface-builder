@@ -38,21 +38,18 @@
 
 #include "ofxArgosUI_Control.h"
 
-class ofxArgosUI_TextField : public ofxArgosUI_Control {
+class ofxArgosUI_TextField : public ofxArgosUI_Control { 
 	
 public:
 	
-	string		*text;
-	string		defaultText; 
-	
-	ofxArgosUI_TextField(string name, int x, int y, int width, int height, string defaultText, string *text) : ofxArgosUI_Control(name) {
+	string		input;			// Stores user input internally, 
+	string		*value;			// then publishes to the external value
 
-		this->text = text; 
-		this->defaultText = defaultText; 
-
+	ofxArgosUI_TextField(string name, int x, int y, int width, int height, string *value) : ofxArgosUI_Control(name) {
+		this->value = value; 
+		input = "Text Field"; 
 		controlType = "TextField";
 		setup(x, y, width, height);
-
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -60,17 +57,9 @@ public:
 		setSize(_width, _height);
 	}
 	
-	void loadFromXML(ofxXmlSettings &XML) {
-		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0));
-	}
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
-	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("value", getValue());
-			XML.popTag();
-	}
+	void saveToXML(ofxXmlSettings &XML) {}
 	
 	// ============================================= Mouse
 	void onRollOver(int x, int y)						{}
@@ -90,7 +79,72 @@ public:
 	void onTouchMoveOver(float x, float y, int ID)		{}
 	void onTouchMoveOutside(float x, float y, int ID)	{}
 
+	// ============================================= Key
+	void keyPressed(int key){
+
+		if(key == OF_KEY_DEL || key == OF_KEY_BACKSPACE){
+			if (input.size() >= 1) input.erase( input.size() - 1);
+		} else {
+			input += key; 
+		}
+
+		printf("%i \n", key); 
+		
+		cout << input  << "\n"; 
+	}
+
+	void resetInput(){
+		input.clear(); 
+	}
+
+	void applyInput(){
+		*value = input; 
+	}
+
 	void update() {}
+
+	void rRectangle(int x, int y, int w, int h, int radius){
+
+        glDisable(GL_TEXTURE_2D);
+        
+        glBegin(GL_POLYGON);
+
+        glVertex2f (x + radius, y);
+        glVertex2f (x + w - radius, y);
+			for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+
+        glVertex2f (x + w, y + radius);
+        glVertex2f (x + w, y + h - radius);
+			for(float t  = 0; t < PI * 0.5f; t += 0.1f){
+				float sx = x + w - radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+	        
+        glVertex2f (x + w -radius, y + h);
+        glVertex2f (x + radius, y + h);
+			for(float t  = PI * 0.5f; t < PI; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + h - radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glVertex2f (x, y + h - radius);
+        glVertex2f (x, y + radius);
+			for(float t  = PI; t < PI * 1.5f; t += 0.1f){
+				float sx = x + radius + cos(t) * radius;
+				float sy = y + radius + sin(t) * radius;
+				glVertex2f (sx, sy);
+			}
+        
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);    
+    }
 
 	void draw(float x, float y) {
 
@@ -100,9 +154,24 @@ public:
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
+			
+			myFont.drawString(name, -2, -5); 
+
+			ofSetColor(0x919090); 
+			rRectangle(0, 0, width, height, 4); 
+
+			ofSetColor(0xffffff); 
+			
+			if ( (input.size() * 7) < width ){
+				myFont.drawString(input, 2, (height/1.5)); 
+			}
+
 		glPopMatrix();
 
 		ofDisableAlphaBlending();
+
 	}
 	
 };
+
+

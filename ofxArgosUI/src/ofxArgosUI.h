@@ -48,9 +48,6 @@
 class ofxArgosUI {
 
 public:
-
-	int						guiFocus;
-	ofxArgosUI_Config		*config;	
 	
 	ofxArgosUI();
 
@@ -74,20 +71,21 @@ public:
 	ofxArgosUI_View			*view(string name);
 	ofxArgosUI_View			*addView(string name = "");
 
-	ofxArgosUI_Control		*addControl(ofxArgosUI_Control *control);
+	ofxArgosUI_Control		*addControl		(ofxArgosUI_Control *control);
 
-	ofxArgosUI_Panel		*addPanel(string name, int x, int y, int width, int height); 
+	ofxArgosUI_Panel		*addPanel		(string name, int x, int y, int width, int height); 
+	ofxArgosUI_Button		*addButton		(string name, int x, int y, int width, int height, bool *value);
+	ofxArgosUI_Toggle		*addToggle		(string name, int x, int y, int width, int height, bool *value);
+	ofxArgosUI_Knob			*addKnob		(string name, int x, int y, int radius, float *value, float min, float max, float smoothing);
+	ofxArgosUI_SliderInt	*addSlider		(string name, int x, int y, int width, int height, int *value, int min, int max);
+	ofxArgosUI_SliderFloat	*addSlider		(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0);
+	ofxArgosUI_XYPad		*addXYPad		(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
+	ofxArgosUI_TextField	*addTextField	(string name, int x, int y, int width, int height, string *value);
+	ofxArgosUI_FPSCounter	*addFPSCounter	(int x, int y, int width, int height);
+	ofxArgosUI_Icon			*addIcon		(int x, int y, int width, int height);
+	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);
 
-	ofxArgosUI_Button		*addButton(string name, int x, int y, int width, int height, bool *value);
-	ofxArgosUI_Toggle		*addToggle(string name, int x, int y, int width, int height, bool *value);
-	ofxArgosUI_Knob			*addKnob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing);
-	ofxArgosUI_SliderInt	*addSlider(string name, int x, int y, int width, int height, int *value, int min, int max);
-	ofxArgosUI_SliderFloat	*addSlider(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0);
-	ofxArgosUI_XYPad		*addXYPad(string name, int x, int y, int width, int height, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
-	ofxArgosUI_FPSCounter	*addFPSCounter(int x, int y, int width, int height);
-	ofxArgosUI_Title		*addTitle(string name, bool *value = NULL);
-	ofxArgosUI_Icon			*addIcon(int x, int y, int width, int height);
-	
+
 protected:
 
 	// ============================ XML Settings
@@ -117,14 +115,7 @@ protected:
 	void update(ofEventArgs &e);
 	void draw(ofEventArgs &e);
 	//void exit(ofEventArgs &e);
-	
-	void mouseMoved(ofMouseEventArgs &e);
-	void mousePressed(ofMouseEventArgs &e);	
-	void mouseDragged(ofMouseEventArgs &e);	
-	void mouseReleased(ofMouseEventArgs &e);
-	
-	void keyPressed(ofKeyEventArgs &e);
-	void keyReleased(ofKeyEventArgs &e);
+
 };
 
 #endif

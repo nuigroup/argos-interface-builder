@@ -1,5 +1,5 @@
 #include "ofxArgosUI_View.h"
-#include "ofxArgosUI_Config.h"
+#include "ofxArgosUI_Parameter.h"
 #include "ofxArgosUI_Button.h"
 #include "ofxArgosUI_FPSCounter.h"
 #include "ofxArgosUI_SliderFloat.h"
@@ -10,3 +10,4 @@
 #include "ofxArgosUI_Panel.h"
 #include "ofxArgosUI_Knob.h"
 #include "ofxArgosUI_Icon.h" 
+#include "ofxArgosUI_TextField.h"

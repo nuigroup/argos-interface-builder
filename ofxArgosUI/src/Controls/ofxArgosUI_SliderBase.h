@@ -59,8 +59,14 @@ public:
 		lerpSpeed	= 1.0f - smoothing * 0.99;		// so smoothing :1 still results in some motion!
 		targetValue	= *value;
 		oldValue	= targetValue;
+
 		controlType = "SliderBase";
+
+		OSCaddress = "/UnlabeledSlider" + ofToString((rand() % 100), 0);
+
 		setup(x, y, width, height);
+
+
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -93,11 +99,13 @@ public:
 	}
 	
 	void updateSlider(int xMovement) {
+
 		if(!enabled) return;
 		
 		if(pct > width) {
 			pct = width;
 		}
+
 		else {
 			pct = xMovement - x;
 			float temp = ofMap(pct, 0.0, (float)width, min, max);
@@ -109,6 +117,8 @@ public:
 			targetValue = temp;	
 			oldValue = *value;		// save oldValue (so the draw doesn't update target but uses it)
 		}
+
+		oschandler.sendOSC(*value, OSCaddress);
 	}
 	
 	// ============================================= Mouse
@@ -166,10 +176,10 @@ public:
 			glTranslatef(x, y, 0);
 			ofFill();
 			
-			setEmptyColor();
+			setFullColor();
 			ofRect(0, 0, width, height);
 			
-			setFullColor();
+			setTextBGColor();
 			ofRect(0, 0, barwidth, height);	
 
 			setTextColor();

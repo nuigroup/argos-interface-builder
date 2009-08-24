@@ -53,7 +53,6 @@ public:
 		this->value	= value;
 		controlType = "Label";
 		setup(x, y, width, height);
-
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {

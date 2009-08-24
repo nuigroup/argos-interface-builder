@@ -37,10 +37,6 @@
 #include "ofxArgosUI.h"
 
 ofxArgosUI::ofxArgosUI() {
-
-	config			= &defaultConfiguration;
-	
-//	guiFocus		= 0;
 	
 	verbose			= true;
 	
@@ -75,15 +71,6 @@ void ofxArgosUI::addListeners() {
 	//ofAddListener(ofEvents.update, this, &ofxArgosUI::update);
 	//ofAddListener(ofEvents.draw, this, &ofxArgosUI::draw);
 	//ofAddListener(ofEvents.exit, this, &ofxArgosUI::exit);
-
-	ofAddListener(ofEvents.mousePressed, this, &ofxArgosUI::mousePressed);
-	ofAddListener(ofEvents.mouseMoved, this, &ofxArgosUI::mouseMoved);
-	ofAddListener(ofEvents.mouseDragged, this, &ofxArgosUI::mouseDragged);
-	ofAddListener(ofEvents.mouseReleased, this, &ofxArgosUI::mouseReleased);
-	
-	ofAddListener(ofEvents.keyPressed, this, &ofxArgosUI::keyPressed);
-	ofAddListener(ofEvents.keyReleased, this, &ofxArgosUI::keyReleased);
-
 }
 
 
@@ -92,14 +79,6 @@ void ofxArgosUI::removeListeners() {
 	//ofRemoveListener(ofEvents.update, this, &ofxArgosUI::update);
 	//ofRemoveListener(ofEvents.draw, this, &ofxArgosUI::draw);
 	//ofRemoveListener(ofEvents.exit, this, &ofxArgosUI::exit);
-	
-	ofRemoveListener(ofEvents.mousePressed, this, &ofxArgosUI::mousePressed);
-	ofRemoveListener(ofEvents.mouseMoved, this, &ofxArgosUI::mouseMoved);
-	ofRemoveListener(ofEvents.mouseDragged, this, &ofxArgosUI::mouseDragged);
-	ofRemoveListener(ofEvents.mouseReleased, this, &ofxArgosUI::mouseReleased);
-	
-	ofRemoveListener(ofEvents.keyPressed, this, &ofxArgosUI::keyPressed);
-	ofRemoveListener(ofEvents.keyReleased, this, &ofxArgosUI::keyReleased);
 }
 
 void ofxArgosUI::setDraw(bool b) {
@@ -182,7 +161,7 @@ void ofxArgosUI::drawFocus(float x, float y) {
 	glPushMatrix();
 		glTranslatef(x, y, 0);
 		ofFill();
-		//ofSetColor(config->focusColor.r, config->focusColor.g, config->focusColor.b, 200);
+		//ofSetColor(param.focusColor.r, param.focusColor.g, param.focusColor.b, 200);
 		ofRect(0, 0, 10, 10);
 	glPopMatrix();
 }
@@ -215,13 +194,14 @@ void ofxArgosUI::draw() {
 	
 	// Draw the header
 	//headerView->draw();	
-	//ofSetColor(config->emptyColor);
+	//ofSetColor(param.emptyColor);
 	//ofLine(0, headerView->height, headerView->width, headerView->height); 
 }
 
 void ofxArgosUI::nextView() {
 	setView(currentView + 1);
 }
+
 void ofxArgosUI::prevView() {
 	setView(currentView - 1);
 }
@@ -232,7 +212,6 @@ void ofxArgosUI::setView(int i) {
 	if(currentView >= views.size()) currentView = 1;
 	else if(currentView < 1) currentView = views.size()-1;
 }
-
 
 void ofxArgosUI::setView(string name) {
 	ofxArgosUI_View *view;
@@ -312,34 +291,6 @@ ofxArgosUI_Icon	*ofxArgosUI::addIcon(int x, int y, int width, int height){
 	return views[currentView]->addIcon(x, y, width, height);
 }
 
-void ofxArgosUI::mouseMoved(ofMouseEventArgs &e) {
-	headerView->mouseMoved(e);
-	views[currentView]->mouseMoved(e);
-}
-
-void ofxArgosUI::mousePressed(ofMouseEventArgs &e) {
-	headerView->mousePressed(e);
-	views[currentView]->mousePressed(e);
-}
-
-void ofxArgosUI::mouseDragged(ofMouseEventArgs &e) {
-	headerView->mouseDragged(e);
-	views[currentView]->mouseDragged(e);
-}
-
-void ofxArgosUI::mouseReleased(ofMouseEventArgs &e) {
-	headerView->mouseReleased(e);
-	views[currentView]->mouseReleased(e);
-	if(doAutoSave) saveToXML(xmlFile);
-}
-
-void ofxArgosUI::keyPressed(ofKeyEventArgs &e) {
-	headerView->keyPressed(e);
-	views[currentView]->keyPressed(e);
-	if(doAutoSave) saveToXML(xmlFile);
-}
-
-void ofxArgosUI::keyReleased(ofKeyEventArgs &e) {
-	headerView->keyReleased(e);
-	views[currentView]->keyReleased(e);
+ofxArgosUI_TextField *ofxArgosUI::addTextField(string name, int x, int y, int width, int height, string *value){
+	return views[currentView]->addTextField(name, x, y, width, height, value);
 }

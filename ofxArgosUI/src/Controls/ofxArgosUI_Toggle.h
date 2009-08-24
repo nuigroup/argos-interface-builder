@@ -41,6 +41,7 @@
 class ofxArgosUI_Toggle : public ofxArgosUI_Control {
 	
 public:
+
 	bool	*value;
 	
 	ofxArgosUI_Toggle(string name, int x, int y, int width, int height, bool *value) : ofxArgosUI_Control(name) {
@@ -74,6 +75,7 @@ public:
 	}
 	void toggle() {
 		(*value) = !(*value); 
+		oschandler.sendOSC(*value, OSCaddress);
 	}
 
 	// ============================================= Mouse
@@ -81,21 +83,8 @@ public:
 		toggle();
 	}
 
-	void onRelease(int x, int y, int button) {
-	}
-
 	// ============================================= Touch
 	void onTouchDown(float x, float y, int ID){
-		toggle();
-	}
-
-	void onTouchMoveOver(float x, float y, int ID){
-	}
-
-	void onTouchUp(float x, float y, int ID){
-	}
-
-	void onKeyEnter() {
 		toggle();
 	}
 
@@ -116,30 +105,28 @@ public:
 
 			glTranslatef(x, y, 0);
 			
-			ofFill();
-			setFullColor(*value);
+			// Left-side Box
+			ofNoFill();
+			setTextBGColor();  
 			ofRect(0, 0, height, height);
 
-			// Draw O
+			// Draw X
 			if((*value)) {
-			setTextColor();
-			ofEnableSmoothing();
-				ofFill();
-					ofCircle(10,10,(height/2.5));
-				ofNoFill();
-					ofCircle(10,10,(height/2.5));
-			ofDisableSmoothing();
+				ofEnableSmoothing();
+					ofFill();
+					ofLine(0, 0, height, height);
+					ofLine(height, 0, 0, height);
+					ofNoFill();
+					ofLine(0, 0, height, height);
+					ofLine(height, 0, 0, height);
+				ofDisableSmoothing();
 			}
 
 			ofFill();
-			setTextBGColor();
 
-			// Interior
-			ofRect(height, 0, width - height, height);
+			ofSetColor(0xdfdfdf); 
+			myFont.drawString(name, height + 3, 14);
 
-			setTextColor();
-			myFont.drawString(name, height + 3, 13);
-			
 		glPopMatrix();
 
 		ofDisableAlphaBlending();

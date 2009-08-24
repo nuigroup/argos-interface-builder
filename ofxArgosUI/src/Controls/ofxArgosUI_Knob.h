@@ -49,7 +49,7 @@ public:
 	float	min;
 	float	max; 
 
-	float	knobAngle;
+	float	knobY;
 	int		knobDisplay;
 
 	float	pct; 
@@ -70,6 +70,8 @@ public:
 		oldValue	= targetValue;
 
 		controlType = "Knob";
+
+		OSCaddress = "/UnLabeledKnob" + ofToString((rand() % 100), 0);
 	
 		setup(x, y, 2*radius, 2*radius);
 
@@ -80,7 +82,7 @@ public:
 		setSize(_width, _height);
 
 		pct = ofMap((*value), min, max, 0.0, width);
-		knobAngle = pct;
+		knobY = pct;
 	}
 	
 	void loadFromXML(ofxXmlSettings &XML) {
@@ -106,6 +108,7 @@ public:
 
 	// Uses yMovement
 	void updateKnob(int xMovement, int yMovement) {
+
 		if(!enabled) return;
 		
 		if(pct > width) {
@@ -118,20 +121,20 @@ public:
 
 			float temp = ofMap(pct, 0.0, (float)width, min, max);
 
-
-			//temp = ofClamp(temp, min, max);
-			
+			//Clamp - make this use oF's clamp util function eventually
 			if(temp >= max)			temp = max;
 			else if(temp <= min)	temp = min;
 			
 			targetValue = temp;	
 			oldValue = *value;	
 		}
+
+		oschandler.sendOSC(*value, OSCaddress);
 	}
 
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
-		updateKnob(x,y);  
+		updateKnob(x,y);
 	}
 
 	void onDragOver(int x, int y, int button){
@@ -186,6 +189,8 @@ public:
 		vectorX1 = xctr;
 	}
 
+
+
 	void update() {
 		if(!enabled) return;
 		enabled = false;
@@ -204,13 +209,16 @@ public:
 
 		setPos(x, y);
 
-		knobAngle = ofMap((*value), min, max, 0.0, (float)width);
-		
-		if(knobAngle >= width)	knobAngle = 405; 
-		else if(knobAngle <= 0)	knobAngle = 0;
+		// Scales between 0 and height
+		knobY = ofMap((*value), min, max, 0.0, (float)height);
 
-		// Take the LERP'd value and scale it across the full range of the knob
-		knobDisplay = (( 405 / (2*radius)) * knobAngle);
+		// Scales between 0 and 270 degrees
+		knobDisplay = (( 270 / height) * knobY);
+
+		if(knobY >= height)	
+			knobDisplay = 270; 
+		else if(knobY <= 0)	
+			knobDisplay = 0;
 
 		ofEnableAlphaBlending();
 
@@ -220,11 +228,11 @@ public:
 			ofEnableSmoothing();
 				ofFill();
 				// Draw outside
-					setTextBGColor();
+					setFullColor();
 					//ofSetColor(0x363895);
 					ofCircle(0.f, 0.f, radius);
 				// Draw knob arcs
-					setFullColor();
+					setTextBGColor();
 					//ofSetColor(0xdddddd);
 					drawArc(0.0f, 0.0f, radius, 135, 135 + knobDisplay);
 				// Draw bottom arc
@@ -232,7 +240,7 @@ public:
 					//ofSetColor(0x22234c);
 					drawArc(0.0f, 0.0f, radius, 45, 135);
 				// Draw donut center
-					ofSetColor(0x000000);
+					setTextColor();
 					ofCircle(0.f, 0.f, (radius * 0.5));
 
 				// Draw the outside and center again as outlines (for anti-aliasing)
@@ -245,7 +253,7 @@ public:
 
 			// ToDo: Reposition the knob value somewhere other than the center
 			ofSetColor(0xffffff);
-			myFont.drawString(ofToString((*value), 0), -12 , 3 );
+			myFont.drawString(ofToString((*value), 2), -15 , (radius + 10 ));
 
 		glPopMatrix();
 
