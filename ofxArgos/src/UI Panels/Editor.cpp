@@ -62,5 +62,12 @@ void Argos_editor::init(ofxArgosUI &gui){
 		editor->addButton("Apply", 10,(editor->height - 35), 70, 25, &e_apply);
 		editor->addButton("Cancel", 85,(editor->height - 35), 70, 25, &e_cancel);
 		editor->addButton("Reset", 160,(editor->height - 35), 70, 25, &e_reset);
+}
+
+void Argos_editor::update(){
+
+	if (focus.focused != NULL){
+		e_x = focus.focused->x ; 
+	}
 
 }

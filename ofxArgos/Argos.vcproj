@@ -207,7 +207,7 @@
 				>
 			</File>
 			<Filter
-				Name="UI Objects"
+				Name="UI"
 				>
 				<File
 					RelativePath=".\src\UI Panels\Draggables.h"
@@ -553,6 +553,10 @@
 					RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Includes.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Util.h"
+					>
+				</File>
 				<Filter
 					Name="Elements"
 					>
@@ -646,6 +650,18 @@
 					</File>
 					<File
 						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Control.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Focus"
+					>
+					<File
+						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Focus.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxArgosUI\src\ofxArgosUI_Focus.h"
 						>
 					</File>
 				</Filter>

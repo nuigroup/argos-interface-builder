@@ -72,7 +72,14 @@ void Argos::setup(){
 
 	//gui.addTextField("Text Field 1", 400, 120, 120, 20, &tester); 
 
+
 	/*
+
+	gui.addToggle("GSoC?", 400, 200, 100, 20, &b[bi++]);
+	gui.addToggle("Done?", 400, 230, 100, 20, &b[bi++]);
+	gui.addToggle("Awesome?", 400, 260, 100, 20, &b[bi++]);
+	gui.addButton("Sweet.", 400, 290, 100, 25, &b[bi++]);
+
 	// addButton(Name, X, Y, Width, Height, Value)
 	gui.addButton("Button 1", 400, 120, 200, 20, &b[bi++]);
 	gui.addButton("Button 2", 400, 150, 200, 20, &b[bi++]);
@@ -101,7 +108,7 @@ void Argos::setup(){
 void Argos::update(){
 
 	tuio.getMessage();
-	//editor.update();
+	editor.update();
 	//browser.update();
 	//menu.update(); 
 }

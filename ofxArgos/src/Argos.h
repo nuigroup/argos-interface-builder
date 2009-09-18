@@ -67,7 +67,6 @@ public:
 	
 	void keyPressed(int key);
 
-
 };
 
 #endif
