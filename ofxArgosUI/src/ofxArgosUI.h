@@ -57,7 +57,6 @@ public:
 
 	void					setVerbose(bool v);
 	
-	void					drawFocus(float x, float y);
 	void					setDraw(bool b);
 	void					toggleDraw();
 	void					draw();
@@ -84,7 +83,6 @@ public:
 	ofxArgosUI_FPSCounter	*addFPSCounter	(int x, int y, int width, int height);
 	ofxArgosUI_Icon			*addIcon		(int x, int y, int width, int height);
 	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);
-
 
 protected:
 

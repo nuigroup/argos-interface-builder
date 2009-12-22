@@ -48,6 +48,8 @@ public:
 		this->value	= value;
 		controlType = "Toggle";
 		setup(x, y, width, height);
+
+		OSCaddress = "/toggle"; 
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -81,6 +83,7 @@ public:
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
 		toggle();
+		focus.set(this); 
 	}
 
 	// ============================================= Touch

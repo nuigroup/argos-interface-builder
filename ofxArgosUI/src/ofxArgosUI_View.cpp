@@ -67,7 +67,7 @@ void ofxArgosUI_View::draw(float x, float y) {
 	setPos(0,0);
 	
 	ofSetRectMode(OF_RECTMODE_CORNER);
-	
+
 	for(int i = 0; i<controls.size(); i++) {
 
 		controls[i]->draw(controls[i]->x, controls[i]->y);
@@ -130,3 +130,7 @@ ofxArgosUI_Knob	*ofxArgosUI_View::addKnob(string name, int x, int y, int radius,
 ofxArgosUI_Icon	*ofxArgosUI_View::addIcon(int x, int y, int width, int height){
 	return (ofxArgosUI_Icon *)addControl(new ofxArgosUI_Icon(x, y, width, height));
 }
+
+void ofxArgosUI_View::mousePressed(ofMouseEventArgs &e){
+	focus.clear(); 
+} 

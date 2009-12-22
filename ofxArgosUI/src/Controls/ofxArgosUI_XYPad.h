@@ -54,6 +54,9 @@ public:
 		max.set(xmax, ymax);
 		this->value = value;
 		controlType = "XYPad";
+
+		OSCaddress = "/xypad"; 
+
 		setup(x, y, width, height);
 	}
 	
@@ -92,6 +95,7 @@ public:
 	void onPress(int x, int y, int button) {
 		lock = true;
 		point.set(x, y);
+		focus.set(this); 
 	}
 	
 	void onDragOver(int x, int y, int button) {
@@ -172,24 +176,27 @@ public:
 			setFullColor();
 
 			// Pad Area
-			ofRect(0, 0, width, height);
+			rRectangle(0, 0, width, height, 4);
 			
 			// Bottom text area
-			setTextBGColor();
-			ofRect(0, height, width, 20);
+			//setTextBGColor();
+			//ofRect(0, height, width, 20);
 
 			// Draw the text
 			setTextColor();
-			myFont.drawString("" + ofToString(value->x, 1) + " || " + ofToString(value->y, 1), 2, height + 13 );
+			myFont.drawString("" + ofToString(value->x, 1) + "/" + ofToString(value->y, 1), 2, height - 5 );
 
 			// Draw the crosshairs 
-			setTextBGColor();
-			ofLine(pointv.x - x, 0, pointv.x - x, height);
-			ofLine(0, pointv.y - y, width, pointv.y - y);
+			//setTextBGColor();
+			//ofLine(pointv.x - x, 0, pointv.x - x, height);
+			// ofLine(0, pointv.y - y, width, pointv.y - y);
 			
 			// Draw circle in middle of crosshairs
 			setTextColor();
 			ofCircle(pointv.x - x, pointv.y - y, 8);
+
+			ofSetColor(240, 240, 240); 
+			ofCircle(pointv.x - x, pointv.y - y, 6);
 
 		glPopMatrix();
 

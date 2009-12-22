@@ -45,9 +45,12 @@ public:
 	string		input;			// Stores user input internally, 
 	string		*value;			// then publishes to the external value
 
+	// For eventual callback function
+	//void		(*onApply)(string); 
+
 	ofxArgosUI_TextField(string name, int x, int y, int width, int height, string *value) : ofxArgosUI_Control(name) {
 		this->value = value; 
-		input = "Text Field"; 
+		input = ""; 
 		controlType = "TextField";
 		setup(x, y, width, height);
 	}
@@ -67,7 +70,9 @@ public:
 	void onMouseMove(int x, int y)						{}
 	void onDragOver(int x, int y, int button)			{}
 	void onDragOutside(int x, int y, int button)		{}
-	void onPress(int x, int y, int button)				{}
+	void onPress(int x, int y, int button)				{
+		if (canfocus) { textfocus.set(this); }
+	}
 	void onRelease(int x, int y, int button)			{}
 	void onReleaseOutside(int x, int y, int button)		{}
 
@@ -78,73 +83,58 @@ public:
 	void onTouchMove(float x, float y, int ID)			{}
 	void onTouchMoveOver(float x, float y, int ID)		{}
 	void onTouchMoveOutside(float x, float y, int ID)	{}
+	
+	// ============================================= 
+	/* Eventual callback stuff. 
+	void setCallback(void *callback)
+	{
+		onApply = callback; 
+	}
+	*/
+
 
 	// ============================================= Key
 	void keyPressed(int key){
+		if (textfocus.focused != NULL && textfocus.focused == this) {
+			
+			// Delete text?
+			if(key == OF_KEY_DEL || key == OF_KEY_BACKSPACE){
+				if (input.size() >= 1) input.erase( input.size() - 1);
+			} 
+			
+			// Apply Input
+			else if (key == OF_KEY_RETURN){
+				applyInput(); 
+				// editor.update? 
+			}
 
-		if(key == OF_KEY_DEL || key == OF_KEY_BACKSPACE){
-			if (input.size() >= 1) input.erase( input.size() - 1);
-		} else {
-			input += key; 
+			else if (key == OF_KEY_UP) {
+				//input = input + ofToString(atof(input.c_str() + 1), 1); 
+			}
+			
+			// Otherwise take input. 
+			else {
+				input += key; 
+			}
 		}
-
-		printf("%i \n", key); 
-		
-		cout << input  << "\n"; 
 	}
 
 	void resetInput(){
 		input.clear(); 
 	}
 
+	// Better to do this as a callback function 
 	void applyInput(){
 		*value = input; 
 	}
 
-	void update() {}
+	void update() {
+		//*value = input; 
+	}
 
-	void rRectangle(int x, int y, int w, int h, int radius){
-
-        glDisable(GL_TEXTURE_2D);
-        
-        glBegin(GL_POLYGON);
-
-        glVertex2f (x + radius, y);
-        glVertex2f (x + w - radius, y);
-			for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
-				float sx = x + w - radius + cos(t) * radius;
-				float sy = y + radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-
-        glVertex2f (x + w, y + radius);
-        glVertex2f (x + w, y + h - radius);
-			for(float t  = 0; t < PI * 0.5f; t += 0.1f){
-				float sx = x + w - radius + cos(t) * radius;
-				float sy = y + h - radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-	        
-        glVertex2f (x + w -radius, y + h);
-        glVertex2f (x + radius, y + h);
-			for(float t  = PI * 0.5f; t < PI; t += 0.1f){
-				float sx = x + radius + cos(t) * radius;
-				float sy = y + h - radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-        
-        glVertex2f (x, y + h - radius);
-        glVertex2f (x, y + radius);
-			for(float t  = PI; t < PI * 1.5f; t += 0.1f){
-				float sx = x + radius + cos(t) * radius;
-				float sy = y + radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-        
-        glEnd();
-
-        glEnable(GL_TEXTURE_2D);    
-    }
+	void setInput(string input) {
+		this->input = input; 
+	}
 
 	void draw(float x, float y) {
 
@@ -158,10 +148,10 @@ public:
 			myFont.drawString(name, -2, -5); 
 
 			ofSetColor(0x919090); 
-			rRectangle(0, 0, width, height, 4); 
+			rRectangle(0, 0, width, height, 3); 
 
 			ofSetColor(0xffffff); 
-			
+
 			if ( (input.size() * 7) < width ){
 				myFont.drawString(input, 2, (height/1.5)); 
 			}

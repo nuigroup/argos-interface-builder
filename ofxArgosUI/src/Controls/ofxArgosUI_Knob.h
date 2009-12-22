@@ -57,7 +57,7 @@ public:
 	float	lerpSpeed;
 	float	targetValue;
 	float	oldValue;
-	
+
 	ofxArgosUI_Knob(string name, int x, int y, int radius, float *value, float min, float max, float smoothing) : ofxArgosUI_Control(name) {
 
 		this->value	= value;
@@ -71,7 +71,7 @@ public:
 
 		controlType = "Knob";
 
-		OSCaddress = "/UnLabeledKnob" + ofToString((rand() % 100), 0);
+		OSCaddress = "/knob"; 
 	
 		setup(x, y, 2*radius, 2*radius);
 
@@ -135,6 +135,7 @@ public:
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
 		updateKnob(x,y);
+		focus.set(this); 
 	}
 
 	void onDragOver(int x, int y, int button){

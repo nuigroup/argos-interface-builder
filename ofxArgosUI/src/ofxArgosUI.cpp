@@ -148,22 +148,13 @@ void ofxArgosUI::saveToXML(string file) {
 	
 	XML.saveFile(file);
 
-	if(doSaveBackup) XML.saveFile(file+".bak");
+	if(doSaveBackup) XML.saveFile(file + ".bak");
 	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
 }
 
 
 void ofxArgosUI::setVerbose(bool v) {
 	verbose = v;
-}
-
-void ofxArgosUI::drawFocus(float x, float y) {
-	glPushMatrix();
-		glTranslatef(x, y, 0);
-		ofFill();
-		//ofSetColor(param.focusColor.r, param.focusColor.g, param.focusColor.b, 200);
-		ofRect(0, 0, 10, 10);
-	glPopMatrix();
 }
 
 void ofxArgosUI::update(ofEventArgs &e) {
@@ -189,8 +180,12 @@ void ofxArgosUI::draw() {
 	
 	glDisableClientState(GL_COLOR_ARRAY);
 
-	// Draw the current view
+	// Draw the current view (draws controls, including panels, which then draw their own children); 
 	views[currentView]->draw(0.0f, 0.0f);
+
+	// If a control is focused, draw a light border around it
+	focus.showFocus(); 
+	textfocus.showFocus(); 
 	
 	// Draw the header
 	//headerView->draw();	

@@ -1,3 +1,4 @@
+
 /***********************************************************************
  
  Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
@@ -43,6 +44,7 @@ class ofxArgosUI_Panel : public ofxArgosUI_Control {
 public:
 
 	bool hidden;
+
 	int oWidth; 
 	int oHeight;
 		
@@ -101,6 +103,14 @@ public:
 
 	}
 
+	void lockPanel(){
+			for(int i = 0; i < panel_children.size(); i++) {
+				panel_children[i]->canfocus = false; 
+			}
+	}
+
+
+
 	ofxArgosUI_Control *addControl(ofxArgosUI_Control *control) {
 		// Rather than glTranslate the controls every draw, 
 		// this adds them them relative to the panel's (0,0); 
@@ -149,50 +159,6 @@ public:
 	ofxArgosUI_Icon *addIcon(int x, int y, int width, int height) {
 		return (ofxArgosUI_Icon *)addControl(new ofxArgosUI_Icon(x, y, width, height));
 	}
-
-	void rRectangle(int x, int y, int w, int h, int radius){
-        glDisable(GL_TEXTURE_2D);
-
-        glLineWidth(1.0f);
-        
-        glBegin(GL_POLYGON );
-        
-        glVertex2f (x + radius, y);
-        glVertex2f (x + w - radius, y);
-			for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
-				float sx = x + w - radius + cos(t) * radius;
-				float sy = y + radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-
-        glVertex2f (x + w, y + radius);
-        glVertex2f (x + w, y + h - radius);
-			for(float t  = 0; t < PI * 0.5f; t += 0.1f){
-				float sx = x + w - radius + cos(t) * radius;
-				float sy = y + h - radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-	        
-        glVertex2f (x + w -radius, y + h);
-        glVertex2f (x + radius, y + h);
-			for(float t  = PI * 0.5f; t < PI; t += 0.1f){
-				float sx = x + radius + cos(t) * radius;
-				float sy = y + h - radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-        
-        glVertex2f (x, y + h - radius);
-        glVertex2f (x, y + radius);
-			for(float t  = PI; t < PI * 1.5f; t += 0.1f){
-				float sx = x + radius + cos(t) * radius;
-				float sy = y + radius + sin(t) * radius;
-				glVertex2f (sx, sy);
-			}
-        
-        glEnd();
-
-        glEnable(GL_TEXTURE_2D);    
-    }
 
 	void update() {
 		if(!enabled) return;

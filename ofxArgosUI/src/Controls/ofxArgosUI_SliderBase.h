@@ -62,7 +62,7 @@ public:
 
 		controlType = "SliderBase";
 
-		OSCaddress = "/UnlabeledSlider" + ofToString((rand() % 100), 0);
+		OSCaddress = "/slider"; 
 
 		setup(x, y, width, height);
 
@@ -124,6 +124,7 @@ public:
 	// ============================================= Mouse
 	void onPress(int x, int y, int button) {
 		updateSlider(x);
+		focus.set(this); 
 	}
 	
 	void onDragOver(int x, int y, int button) {

@@ -1,3 +1,4 @@
+#include "ofxArgosUI_Focus.h"
 #include "ofxArgosUI_View.h"
 #include "ofxArgosUI_Parameter.h"
 #include "ofxArgosUI_Button.h"

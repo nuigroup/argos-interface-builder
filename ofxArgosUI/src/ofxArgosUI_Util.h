@@ -3,12 +3,6 @@
  Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
  === Google Summer of Code 2009 - NUI Group === 
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
- -> Based on ofxSimpleGuiToo
- 
- Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
- -> Inspired by ofxSimpleGui API
-
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
 
@@ -36,15 +30,13 @@
 *************************************************************************/ 
 #pragma once
 
-inline void rRectangle(int x, int y, int w, int h, int radius){
-
-    glDisable(GL_TEXTURE_2D);
+inline void drawrRectangle(int x, int y, int w, int h, int radius){
 
     glBegin(GL_POLYGON);
 
     glVertex2f (x + radius, y);
     glVertex2f (x + w - radius, y);
-		for(float t  = PI * 1.5f; t < PI * 2; t += 0.1f){
+		for(float t  = PI * 1.5f; t < TWO_PI; t += 0.1f){
 			float sx = x + w - radius + cos(t) * radius;
 			float sy = y + radius + sin(t) * radius;
 			glVertex2f (sx, sy);
@@ -74,7 +66,33 @@ inline void rRectangle(int x, int y, int w, int h, int radius){
 			glVertex2f (sx, sy);
 		}
     
-    glEnd();
+    glEnd();  
+
+}
+
+// Draw a rounded rectangle with corners rounded around a specific radius. 
+inline void rRectangle(int x, int y, int w, int h, int radius){
+	
+    glDisable(GL_TEXTURE_2D);
+
+	glEnable( GL_POLYGON_OFFSET_FILL );
+	glPolygonOffset( .5, .5 );
+
+	drawrRectangle(x, y, w, h, radius);
+
+	glDisable( GL_POLYGON_OFFSET_FILL );
+
+	glEnable( GL_BLEND );
+	glEnable( GL_LINE_SMOOTH );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+
+	drawrRectangle(x, y, w, h, radius); 
+
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	glDisable( GL_LINE_SMOOTH );
+	glDisable( GL_BLEND );
 
     glEnable(GL_TEXTURE_2D);    
+
 }

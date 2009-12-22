@@ -41,6 +41,7 @@
 #include "ofxXmlSettings.h"
 #include "OSCHandler.h"
 
+
 class ofxArgosUI_Control : public ofxTouchAPI_IO {
 
 public:
@@ -54,24 +55,24 @@ public:
 	bool		lock;			// ... 
 
 	bool		dragging;		// Is the control currently being dragged?
+	
+	int			dragX;
+	int			dragY; 
 
-	bool		selected;		// Is the control currently being selected?
-	bool		selectable;		// Can the control be selected?
+	bool		canfocus;		// Can the control be selected?
 
 	string		OSCaddress;		// OSC address
 
-	int			dragX;
-	int			dragY; 
 	
 	// ========================================= Constructor
 	ofxArgosUI_Control(string name);
 
-	// ========================================= Basic Settings
+	// ========================================= Basic
 	void setName(string newName);
 	void setKey(string newKey);
 	void setConfig(ofxArgosUI_Parameter *config);
 
-	// ========================================= Visual Settings
+	// ========================================= Color
 	void setTextColor(bool clickable = true);
 	void setTextBGColor(bool clickable = true);
 	void setFullColor(bool forceActive = false);

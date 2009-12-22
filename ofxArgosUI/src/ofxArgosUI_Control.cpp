@@ -45,7 +45,9 @@ ofxArgosUI_Control::ofxArgosUI_Control(string name) {
 	setName(name);
 	setKey(key);
 
-	myFont.loadFont("verdana.ttf", 10);
+	canfocus = true; 
+
+	myFont.loadFont("segoeui.ttf", 10);
 
 	setup();
 	enableAllEvents(); 

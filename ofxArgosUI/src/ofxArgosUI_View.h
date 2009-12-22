@@ -66,6 +66,9 @@ public:
 	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);
 	
 	void update(ofEventArgs &e);
+
+	void mousePressed(ofMouseEventArgs &e);
+
 	
 protected:
 	vector <ofxArgosUI_Control*> controls;
