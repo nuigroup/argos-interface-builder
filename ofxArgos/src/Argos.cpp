@@ -59,49 +59,24 @@ void Argos::setup(){
 	WindowHeight = ofGetHeight();
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
-	ofBackground(0, 0, 0);
+	ofBackground(20, 20, 20);
 	
 	tuio.start(3333);			// Declared in ofxTouchAPI.h
 	oschandler.start(3335);		// Declared in OSCHandler.h
-	oschandler.setDebug(true); 
+	oschandler.setVerbose(false); 
 
 	string tester; 
 
-	// addFPSCounter(X, Y, Width, Height)
+	
 	gui.addFPSCounter((WindowWidth - 100), (WindowHeight - 20), 100, 20); 
 
-	//gui.addTextField("Text Field 1", 400, 120, 120, 20, &tester); 
-
-
-	/*
-
-	gui.addToggle("GSoC?", 400, 200, 100, 20, &b[bi++]);
-	gui.addToggle("Done?", 400, 230, 100, 20, &b[bi++]);
-	gui.addToggle("Awesome?", 400, 260, 100, 20, &b[bi++]);
-	gui.addButton("Sweet.", 400, 290, 100, 25, &b[bi++]);
-
-	// addButton(Name, X, Y, Width, Height, Value)
-	gui.addButton("Button 1", 400, 120, 200, 20, &b[bi++]);
-	gui.addButton("Button 2", 400, 150, 200, 20, &b[bi++]);
-	gui.addButton("Button 3", 400, 180, 200, 20, &b[bi++]);
-
-	// addToggle(Name, X, Y, Width, Height, Value)
-	gui.addToggle("Toggle 1", 400, 210, 100, 20, &b[bi++]);
-	gui.addToggle("Toggle 2", 500, 210, 100, 20, &b[bi++]);
-
-	// addSlider(Name, X, Y, Width, Height, Value, Min, Max, Smoothing)
-	gui.addSlider("Slider 1", 400, 240, 200, 30, &f[fi++], 0, 100, 0.85); 
-
-	// addSlider(Name, X, Y, Width, Height, Value, Min, Max, Smoothing)
-	gui.addSlider("Slider 2", 400, 280, 200, 30, &f[fi++], 0, 100, 0.85); 
-
-	// addKnob(Name, X, Y, Width, Radius, Value, Min, Max, Smoothing)
-	gui.addKnob("Knob 1", 420, 35, 30, &f[fi++], 0, 100, .85);
-	gui.addKnob("Knob 2", 490, 35, 30, &f[fi++], 0, 100, .85); 
-	
-	// addXYPad(Name, X, Y, Width, Height, Value, XMin, XMax, YMin, YMax); 
-	gui.addXYPad("XYPad 1", 620, 120, 120, 120, &v[vi++], 0, 20, 0, 20); 
-	*/ 
+	// addFPSCounter(X, Y, Width, Height)
+	// addButton(Name, X, Y, Width, Height, &Value)
+	// addToggle(Name, X, Y, Width, Height, &Value)
+	// addSlider(Name, X, Y, Width, Height, &Value, Min, Max, Smoothing)
+	// addSlider(Name, X, Y, Width, Height, &Value, Min, Max, Smoothing)
+	// addKnob(Name, X, Y, Width, Radius, &Value, Min, Max, Smoothing)
+	// addXYPad(Name, X, Y, Width, Height, &Value, XMin, XMax, YMin, YMax); 
 }
 
 // ========================================================== Update 
@@ -121,7 +96,7 @@ void Argos::draw(){
 	gui.draw();
 
 	ofSetColor(0xffffff); 
-	argos_tag.draw(900,700); 
+	//argos_tag.draw(900,460); 
 
 }
 
@@ -134,8 +109,7 @@ void Argos::resized(int w, int h){
 void Argos::keyPressed (int key){ 
 
 	if(key == '-') gui.toggleDraw();
-
-	//if(key == '-') editor.editor->toggleDraw();
 	if(key == '=') browser.browser->toggleDraw();
+    //if(key == '-') editor.editor->toggleDraw();
 
 }

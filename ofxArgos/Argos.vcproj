@@ -209,10 +209,6 @@
 			<Filter
 				Name="UI"
 				>
-				<File
-					RelativePath=".\src\UI Panels\Draggables.h"
-					>
-				</File>
 				<Filter
 					Name="Menu"
 					>
@@ -236,6 +232,10 @@
 						RelativePath=".\src\UI Panels\Editor.h"
 						>
 					</File>
+					<File
+						RelativePath=".\src\UI Panels\Editor_Actions.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Browser"
@@ -246,6 +246,10 @@
 					</File>
 					<File
 						RelativePath=".\src\UI Panels\Browser.h"
+						>
+					</File>
+					<File
+						RelativePath=".\src\UI Panels\Draggables.h"
 						>
 					</File>
 				</Filter>

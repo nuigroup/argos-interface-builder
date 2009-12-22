@@ -37,7 +37,7 @@ void Argos_browser::init(ofxArgosUI &gui) {
 
 		this->gui = &gui; 
 
-		browser = gui.addPanel("Element Browser", 280, 670, 570, 90); 
+		browser = gui.addPanel("Element Browser", 280, 400, 570, 90); 
 
 		// +++ List of icons in the browser
 		browser->addControl(new Draggable_Button(gui, 10, 10, 70, 70)); 

@@ -37,50 +37,53 @@ class OSCHandler {
 
 public:
 
-	bool debug; 
+	bool verbose; 
 
 	void start(int port){
 		sender.setup("127.0.0.1", port); 
-		printf("====> OSCHandler sucessfully started at localost on port %i \n", port);
-		debug = false; 
+		printf("OSCHandler initalised at localhost on port %i \n", port);
+		verbose = false; 
 	}
 
-	void setDebug(bool x){
-		debug = x; 
+	void setVerbose(bool x){
+		verbose = x; 
 	}
-
 
 	void sendOSC(const int &value, string address){
+		if (verbose) printf("OSCHandler::sendOSC:int\n");
+
 		ofxOscMessage message;
 		message.setAddress(address);
 		message.addIntArg(value);
 		sender.sendMessage(message); 
-		if (debug) printf("OSCHandler::sendOSC:int\n");
 	}
 
 	void sendOSC(const float &value, string address){
+		if (verbose) printf("OSCHandler::sendOSC:float\n");
+
 		ofxOscMessage message;
 		message.setAddress(address);
 		message.addFloatArg(value);
 		sender.sendMessage(message); 
-		if (debug) printf("OSCHandler::sendOSC:float\n");
 	}
 
 	void sendOSC(const bool &value, string address){
+		if (verbose) printf("OSCHandler::sendOSC:bool\n");
+
 		ofxOscMessage message;
 		message.setAddress(address);
 		message.addIntArg(value);
 		sender.sendMessage(message); 
-		if (debug) printf("OSCHandler::sendOSC:bool\n");
 	}
 
 	void sendOSC(const ofPoint &value, string address){
+		if (verbose) printf("OSCHandler::sendOSC:ofPoint\n");
+
 		ofxOscMessage message;
 		message.setAddress(address);
 		message.addFloatArg(value.x);
 		message.addFloatArg(value.y);
 		sender.sendMessage(message); 
-		if (debug) printf("OSCHandler::sendOSC:ofPoint\n");
 	}
 	
 private:
@@ -89,4 +92,3 @@ private:
 };
 
 extern OSCHandler oschandler;
-

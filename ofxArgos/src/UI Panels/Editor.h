@@ -32,6 +32,7 @@
 // Argos editor panel; singleton.
 
 #include "ofxArgosUI.h"
+#include "Editor_Actions.h"
 
 class Argos_editor{
 
@@ -39,11 +40,38 @@ public:
 
 	Argos_editor();
 
+	std::ostringstream ostr;
+
 	ofxArgosUI			*gui; 
 	ofxArgosUI_Panel	*editor;
 
+	//moveControl			mControl; 
+	//resizeControl			rControl; 
+
+	ofxArgosUI_Button		*apply;
+	ofxArgosUI_Button		*cancel;
+	ofxArgosUI_Button		*reset;
+	ofxArgosUI_TextField	*label;
+	ofxArgosUI_TextField	*x;
+	ofxArgosUI_TextField	*y;
+	ofxArgosUI_TextField	*w;
+	ofxArgosUI_TextField	*h;
+	ofxArgosUI_TextField	*osc; 
+
 	void init(ofxArgosUI &gui); 
 
+	void populate(); 
+
 	void update(); 
+
+	void loadProperties();
+	void setProperties();
+	void updateProperties(); 
+
+	
+
+	string toStr(float input);
+
+
 
 };

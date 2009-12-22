@@ -37,9 +37,9 @@
 
 //======================================================================== Main ()
 int main( ){
-
+	
 	// Set up the openGL context
-	ofSetupOpenGL(1024, 768, OF_WINDOW);
+	ofSetupOpenGL(1024, 520, OF_WINDOW);
 	
 	// Title the window
 	ofSetWindowTitle("Argos Interface Builder");

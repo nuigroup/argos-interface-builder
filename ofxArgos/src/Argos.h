@@ -36,8 +36,8 @@
 
 #include "ofxArgosUI.h"	// Argos UI Toolkit
 
-#include "Editor.h"		// Control/Element Editor.
-#include "Browser.h"	// Control/Eement Browser (for Drag n' Drop). 
+#include "Editor.h"		// Control Editor
+#include "Browser.h"	// Control Browser
 #include "Menu.h"		// Context Menu
 
 #include "OSCHandler.h" // OSC Controller
