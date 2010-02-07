@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxMSAInteractiveObject
 
 	Redistribution and use in source and binary forms, with or without modification, 
@@ -36,6 +36,7 @@
 
 #include "ofMain.h"
 #include "ofxTouchAPI.h"
+#include "StateManager.h"
 
 class ofxTouchAPI_IO : public ofRectangle {
 
@@ -50,6 +51,9 @@ public:
 	// ================================================================= Event Enable/Disable
 	void enableAllEvents();				// enable all event callbacks (default) 
 	void disableAllEvents();			// disable all event callbacks
+	
+	void enableAllInput();				// ...
+	void disableAllInput();				// ...
 	
 	void enableMouseEvents();			// call this if object should receive mouse events
 	void disableMouseEvents();			// call this if object doesn't need to receive mouse events
@@ -97,6 +101,9 @@ public:
 	virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
 	virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
 
+	virtual void focusActive()								{}		// called when all input is disabled but we still want to focus the control
+
+
 	// ================================================================= Key States
 	virtual void keyPressed(int key)	{}
 	virtual void keyReleased(int key)	{}
@@ -114,6 +121,8 @@ public:
 	void _update(ofEventArgs &e);
     void _draw(ofEventArgs &e);
 	void _exit(ofEventArgs &e);
+
+	void _focusActive(ofMouseEventArgs &e);
 
 	void _mouseMoved(ofMouseEventArgs &e);
 	void _mousePressed(ofMouseEventArgs &e);	

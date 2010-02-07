@@ -1,7 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
+
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:

@@ -1,9 +1,8 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxMSAInteractiveObject
 
 	Redistribution and use in source and binary forms, with or without modification, 
@@ -57,7 +56,7 @@ void ofxTouchAPI_IO::killMe() {
 }
 
 
-// ================================================================= Events Enablers/Disablers
+// ================================================================= Event Enablers/Disablers
 void ofxTouchAPI_IO::enableAllEvents() {
 	enableMouseEvents();
 	enableKeyEvents();
@@ -72,6 +71,19 @@ void ofxTouchAPI_IO::disableAllEvents() {
 	disableTouchEvents(); 
 }
 
+void ofxTouchAPI_IO::enableAllInput() {
+	ofRemoveListener(ofEvents.mousePressed, this, &ofxTouchAPI_IO::_focusActive);
+	enableMouseEvents();
+	enableKeyEvents();
+	enableTouchEvents(); 
+}
+
+void ofxTouchAPI_IO::disableAllInput() {
+	disableMouseEvents();
+	disableKeyEvents();
+	disableTouchEvents(); 
+	ofAddListener(ofEvents.mousePressed, this, &ofxTouchAPI_IO::_focusActive);
+}
 
 void ofxTouchAPI_IO::enableMouseEvents() {
 	ofAddListener(ofEvents.mousePressed, this, &ofxTouchAPI_IO::_mousePressed);
@@ -162,7 +174,9 @@ int ofxTouchAPI_IO::getTouches(){
 
 bool ofxTouchAPI_IO::isBeingTouched(){
 	if (touchList.size() >= 1)
-		return true; 
+		return true;
+	else
+		return false; 
 }
 
 
@@ -207,6 +221,26 @@ void ofxTouchAPI_IO::_exit(ofEventArgs &e) {
 }
 
 // ================================================================= Events
+void ofxTouchAPI_IO::_focusActive(ofMouseEventArgs &e) {
+
+	int x = e.x;
+	int y = e.y;
+	int button = e.button;
+	if(verbose) printf("ofxTouchAPI_IO::_focusActive(x: %i, y: %i)\n", x, y);
+
+	if(!enabled) return;
+
+	_mouseX = x;
+	_mouseY = y;
+	_mouseButton = button;
+	
+	// If the mouse is over the object
+	if(HitTest::rectangle(x, y, this->width, this->height, this->x, this->y)) {
+			focusActive();
+	}
+}
+
+
 void ofxTouchAPI_IO::_mouseMoved(ofMouseEventArgs &e) {
 	int x = e.x;
 	int y = e.y;
@@ -233,7 +267,6 @@ void ofxTouchAPI_IO::_mouseMoved(ofMouseEventArgs &e) {
 	}
 }
 
-
 void ofxTouchAPI_IO::_mousePressed(ofMouseEventArgs &e) {
 	int x = e.x;
 	int y = e.y;
@@ -258,6 +291,7 @@ void ofxTouchAPI_IO::_mousePressed(ofMouseEventArgs &e) {
 	// If the mouse is not over the object... do nothing. 
 	else {}
 }
+
 
 void ofxTouchAPI_IO::_mouseDragged(ofMouseEventArgs &e) {
 	int x = e.x;
@@ -377,6 +411,7 @@ void ofxTouchAPI_IO::_tuioRemoved(ofxTuioCursor &tuioCursor){
 		std::list<int>::iterator touchid;
 		touchid = find(touchList.begin(), touchList.end(), ID);
 		if(touchid != touchList.end()) touchList.remove(ID);
+
 	}
 }
 
