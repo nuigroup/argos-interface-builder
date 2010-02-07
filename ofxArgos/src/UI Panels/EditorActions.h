@@ -32,8 +32,8 @@
 #include "ofxArgosUI.h"
 
 
-// resizeControl and moveControl need to inherit from a draggable class...silly
-// that drag operations are being computed in separate places. 
+// resizeControl and moveControl need to inherit from a draggable class... silly
+// that drag operations are being done in separate places. 
 
 /***********************************************************************
 *	resizeControl: draws a little square at the bottom right of a control
@@ -83,6 +83,7 @@ public:
 
 	void onRollOver(int x, int y);
 	void onRollOut();
+	void onDragOver(int x, int y, int button);
 	void onDragOutside(int x, int y, int button);
 	void onRelease(int x, int y, int button);
 	void onReleaseOutside(int x, int y, int button);

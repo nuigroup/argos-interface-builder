@@ -69,16 +69,26 @@ void EditorPanel::update(){
 				loadProperties();
 				setProperties();
 			}
+
 			updateProperties(); 
+
 			rControl->enableAppEvents(); 
 			rControl->draw(); 
-			mControl->enableAppEvents(); 
-			mControl->draw(); 
+
+			if (!rControl->dragging) {
+				mControl->enableAppEvents(); 
+				mControl->draw(); 
+				
+			}
+			else {
+				mControl->disableAppEvents();
+			}
+
 		}	
 	}
 
 	else {
-		// Find out why resizeControl is being drawn elsewhere... 
+		// Find out why these are being drawn elsewhere
 		rControl->disableAppEvents();
 		mControl->disableAppEvents();
 		clearProperties();

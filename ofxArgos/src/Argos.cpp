@@ -55,7 +55,7 @@ void Argos::setup(){
 	ofSetVerticalSync(false);
 	ofSetFrameRate(30);
 
-	ofSetBackgroundAuto(false); 
+	ofSetBackgroundAuto(true); 
 
 	ofBackground(40, 40, 40);
 	

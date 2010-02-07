@@ -144,6 +144,16 @@ void moveControl::onRollOut() {
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 }
 
+void moveControl::onDragOver(int x, int y, int button) {
+	
+	glutSetCursor(GLUT_CURSOR_INFO); 
+
+	dragging = true; 
+
+	dragX = (floor(((float) x / 20)) * 20);
+	dragY = (floor(((float) y / 20)) * 20);
+}
+
 void moveControl::onDragOutside(int x, int y, int button) {
 	
 	glutSetCursor(GLUT_CURSOR_INFO); 
@@ -152,17 +162,21 @@ void moveControl::onDragOutside(int x, int y, int button) {
 
 	dragX = (floor(((float) x / 20)) * 20);
 	dragY = (floor(((float) y / 20)) * 20);
-
 }
 
 void moveControl::onRelease(int x, int y, int button) {
+
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 
-	dragging = false; 
+	if (focus.focused != NULL && dragging == true){
+		editor->updateLocation(newX, newY); 
+	}
 
+	dragging = false; 
 }
 
 void moveControl::onReleaseOutside(int x, int y, int button) {
+
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 
 	dragging = false; 
@@ -170,7 +184,6 @@ void moveControl::onReleaseOutside(int x, int y, int button) {
 	if (focus.focused != NULL){
 		editor->updateLocation(newX, newY); 
 	}
-
 }
 
 void moveControl::update() {}
