@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -133,9 +133,11 @@ public:
 	}
 
 	// ============================================= Mouse
+
+	void focusActive() { if (canfocus) focus.set(this); }
+
 	void onPress(int x, int y, int button) {
 		updateKnob(x,y);
-		focus.set(this); 
 	}
 
 	void onDragOver(int x, int y, int button){
@@ -241,20 +243,20 @@ public:
 					//ofSetColor(0x22234c);
 					drawArc(0.0f, 0.0f, radius, 45, 135);
 				// Draw donut center
-					setTextColor();
+					ofSetColor(0x282828);
 					ofCircle(0.f, 0.f, (radius * 0.5));
 
 				// Draw the outside and center again as outlines (for anti-aliasing)
 				ofNoFill();
 					ofSetColor(0x363895);
-					ofSetColor(0x000000);
+					ofSetColor(0x282828);
 					ofCircle(0.f, 0.f, radius);
 					ofCircle(0.f, 0.f, (radius * 0.5));
 			ofDisableSmoothing();
 
 			// ToDo: Reposition the knob value somewhere other than the center
 			ofSetColor(0xffffff);
-			myFont.drawString(ofToString((*value), 2), -15 , (radius + 10 ));
+			argosText::font.drawString(ofToString((*value), 2), -15 , (radius + 10 ));
 
 		glPopMatrix();
 

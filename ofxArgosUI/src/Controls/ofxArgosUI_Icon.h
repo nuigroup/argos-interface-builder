@@ -1,7 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://argos.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://argos.dimitridiakopoulos.com/
+
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
@@ -53,10 +53,6 @@ public:
 	}
 
 	// ============================================= Mouse
-	void onRollOver(int x, int y)						{}
-	void onRollOut()									{}
-	void onMouseMove(int x, int y)						{}
-	void onDragOver(int x, int y, int button)			{}
 	void onDragOutside(int x, int y, int button){
 			dragging = true; 
 			dragX = (floor(((float) x / 20)) * 20);
@@ -73,17 +69,14 @@ public:
 		dropControl(dragX, dragY); 
 	}
 
-	// ============================================= Touch
-	void onTouchDown(float x, float y, int ID)			{}
-	void onTouchUp(float x, float y, int ID)			{}
-	void onTouchUpOutside(float x, float y, int ID)		{}
-	void onTouchMove(float x, float y, int ID)			{}
-	void onTouchMoveOver(float x, float y, int ID)		{}
-	void onTouchMoveOutside(float x, float y, int ID)	{}
-
-	void update() {}
+	void update() {
+		if(!enabled) return;
+		//enabled = false; 
+	}
 
 	void draw() {
+
+		//enabled = true; 
 
 		setPos(x, y);
 

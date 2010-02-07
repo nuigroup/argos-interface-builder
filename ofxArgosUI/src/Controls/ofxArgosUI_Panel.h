@@ -1,10 +1,8 @@
-
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -44,6 +42,7 @@ class ofxArgosUI_Panel : public ofxArgosUI_Control {
 public:
 
 	bool hidden;
+	bool isprotected;
 
 	int oWidth; 
 	int oHeight;
@@ -52,10 +51,12 @@ public:
 
 		disableAllEvents();
 
-		hidden = false; 
 		oHeight = height; 
 		controlType = "Panel";
 		setup(x, y, width, height);
+
+		isprotected = false;
+		hidden = false; 
 
 	}
 	
@@ -174,10 +175,11 @@ public:
 		ofEnableAlphaBlending();
 
 		ofSetColor(0x363636);
+
 		rRectangle(x, y, width, height, 13);
 
 		ofSetColor(0xf0f0f0);
-		myFont.drawString(name, x + 5, y - 3);
+		argosText::font.drawString(name, x + 5, y - 3);
 
 
 		for(int i = 0; i < panel_children.size(); i++) {

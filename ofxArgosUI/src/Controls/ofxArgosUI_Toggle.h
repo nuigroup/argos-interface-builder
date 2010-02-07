@@ -1,9 +1,8 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -81,9 +80,11 @@ public:
 	}
 
 	// ============================================= Mouse
+
+	void focusActive() { if (canfocus) focus.set(this); }
+
 	void onPress(int x, int y, int button) {
 		toggle();
-		focus.set(this); 
 	}
 
 	// ============================================= Touch
@@ -128,7 +129,7 @@ public:
 			ofFill();
 
 			ofSetColor(0xdfdfdf); 
-			myFont.drawString(name, height + 3, 14);
+			argosText::font.drawString(name, height + 3, 14);
 
 		glPopMatrix();
 

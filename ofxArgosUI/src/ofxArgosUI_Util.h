@@ -1,7 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
+
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
@@ -75,24 +75,20 @@ inline void rRectangle(int x, int y, int w, int h, int radius){
 	
     glDisable(GL_TEXTURE_2D);
 
-	glEnable( GL_POLYGON_OFFSET_FILL );
-	glPolygonOffset( .5, .5 );
+		glEnable( GL_POLYGON_OFFSET_FILL );
+			glPolygonOffset( 2.5, 2.5 );
+			drawrRectangle(x, y, w, h, radius);
+		glDisable( GL_POLYGON_OFFSET_FILL );
 
-	drawrRectangle(x, y, w, h, radius);
+		glEnable( GL_BLEND );
+			glEnable( GL_LINE_SMOOTH );
+				glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+					drawrRectangle(x, y, w, h, radius); 
+				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+			glDisable( GL_LINE_SMOOTH );
+		glDisable( GL_BLEND );
 
-	glDisable( GL_POLYGON_OFFSET_FILL );
-
-	glEnable( GL_BLEND );
-	glEnable( GL_LINE_SMOOTH );
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-
-	drawrRectangle(x, y, w, h, radius); 
-
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glDisable( GL_LINE_SMOOTH );
-	glDisable( GL_BLEND );
-
-    glEnable(GL_TEXTURE_2D);    
+    glEnable(GL_TEXTURE_2D);
 
 }

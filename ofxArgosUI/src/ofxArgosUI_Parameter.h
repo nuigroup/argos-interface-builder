@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -64,16 +64,16 @@ public:
 		textColor			= 0x000000;
 		textOverColor		= 0x000000;
 
-		textBGColor			= 0xc0f400;
-		textBGOverColor		= 0xe3f992;
+		textBGColor			= 0x4d5bc6;
+		textBGOverColor		= 0x3647c7;
 
-		fullColor			= 0xff4e40;
-		fullOverColor		= 0xff4e40;
-		fullActiveColor		= 0xff4e40;
+		fullColor			= 0xefefef;
+		fullOverColor		= 0xefefef;
+		fullActiveColor		= 0xefefef;
 
-		emptyColor			= 0x363636;		
+		emptyColor			= 0x2a2f39;		
 		
-		borderColor			= 0xd0f05a;
+		borderColor			= 0xe3e3e3;
 
 	}
 

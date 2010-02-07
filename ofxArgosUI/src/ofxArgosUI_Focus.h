@@ -33,8 +33,6 @@ public:
 			ofNoFill(); 
 			ofSetColor(255, 255, 255); 
 			ofSetLineWidth(1.0);
-
-			//ofRect(focused->x - 4, focused->y - 4 , focused->width + 8 , focused->height + 8);
 				
 			// Top Left
 			ofLine((focused->x-4), (focused->y-4), (focused->x+8), (focused->y-4));
@@ -51,8 +49,6 @@ public:
 			// Bottom Right
 			ofLine(((focused->x + focused->width)+4), ((focused->y + focused->height)+4), ((focused->x + focused->width)-8), ((focused->y + focused->height)+4));
 			ofLine(((focused->x + focused->width)+4), ((focused->y + focused->height)+4), ((focused->x + focused->width)+4), ((focused->y + focused->height)-8));
-
-
 
 		}
 	}

@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -240,6 +240,14 @@ ofxArgosUI_View *ofxArgosUI::addView(string name) {
 	//if(views.size() > 1) newView->addTitle(newView->name, &changeView);		// if this isn't the first view, add to header
 	setView(views.size() - 1);
 	return newView;
+}
+
+ofxArgosUI_Control *ofxArgosUI::addSystemControl(ofxArgosUI_Control* control) {
+	return views[currentView]->addSystemControl(control);
+}
+
+ofxArgosUI_Panel *ofxArgosUI::addSystemPanel(string name, int x, int y, int width, int height) {
+	return views[currentView]->addSystemPanel(name, x, y, width, height); 
 }
 
 ofxArgosUI_Control *ofxArgosUI::addControl(ofxArgosUI_Control* control) {

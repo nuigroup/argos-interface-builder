@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -45,11 +45,13 @@ public:
 	Type		min, max;
 	
 	float		barwidth;
-	float		pct;		
+	float		pct;
 	
 	float		lerpSpeed;
 	Type		targetValue;
 	Type		oldValue;
+
+	float		alphafill; 
 	
 	ofxArgosUI_SliderBase(string name, int x, int y, int width, int height, Type *value, Type min, Type max, float smoothing = 0) : ofxArgosUI_Control(name) {
 		this->value = value;
@@ -60,12 +62,13 @@ public:
 		targetValue	= *value;
 		oldValue	= targetValue;
 
+		alphafill = 0; 
+
 		controlType = "SliderBase";
 
 		OSCaddress = "/slider"; 
 
 		setup(x, y, width, height);
-
 
 	}
 	
@@ -122,9 +125,10 @@ public:
 	}
 	
 	// ============================================= Mouse
+	void focusActive() { if (canfocus) focus.set(this); }
+
 	void onPress(int x, int y, int button) {
 		updateSlider(x);
-		focus.set(this); 
 	}
 	
 	void onDragOver(int x, int y, int button) {
@@ -173,20 +177,24 @@ public:
 		
 		ofEnableAlphaBlending();
 
-		glPushMatrix();
-			glTranslatef(x, y, 0);
-			ofFill();
-			
-			setFullColor();
-			ofRect(0, 0, width, height);
-			
-			setTextBGColor();
-			ofRect(0, 0, barwidth, height);	
+			glPushMatrix();
 
-			setTextColor();
-			myFont.drawString(ofToString((*value), 2), 3, height - 4);
-			
-		glPopMatrix();
+				glTranslatef(x, y, 0);
+				ofFill();
+				
+				setFullColor();
+
+				ofRect(0, 0, width, height);
+
+				int sliderAlpha = (int) ofMap(barwidth, 0, width, 80, 255);  
+				ofSetColor(77, 91, 198, sliderAlpha); 
+
+				ofRect(0, 0, barwidth, height);	
+
+				setTextColor();
+				argosText::font.drawString(ofToString((*value), 2), 3, height - 4);
+				
+			glPopMatrix();
 
 		ofDisableAlphaBlending();
 	}

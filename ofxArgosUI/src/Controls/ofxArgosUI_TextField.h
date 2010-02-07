@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -43,6 +43,7 @@ class ofxArgosUI_TextField : public ofxArgosUI_Control {
 public:
 	
 	string		input;			// Stores user input internally, 
+	string		output;			// Applied output
 	string		*value;			// then publishes to the external value
 
 	// For eventual callback function
@@ -65,8 +66,14 @@ public:
 	void saveToXML(ofxXmlSettings &XML) {}
 	
 	// ============================================= Mouse
-	void onRollOver(int x, int y)						{}
-	void onRollOut()									{}
+	void onRollOver(int x, int y)						{
+		glutSetCursor(GLUT_CURSOR_TEXT);
+	}
+
+	void onRollOut()									{
+		glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+	}
+
 	void onMouseMove(int x, int y)						{}
 	void onDragOver(int x, int y, int button)			{}
 	void onDragOutside(int x, int y, int button)		{}
@@ -98,20 +105,20 @@ public:
 		if (textfocus.focused != NULL && textfocus.focused == this) {
 			
 			// Delete text?
-			if(key == OF_KEY_DEL || key == OF_KEY_BACKSPACE){
+			if(key == OF_KEY_BACKSPACE){
 				if (input.size() >= 1) input.erase( input.size() - 1);
 			} 
 			
 			// Apply Input
 			else if (key == OF_KEY_RETURN){
 				applyInput(); 
-				// editor.update? 
 			}
 
-			else if (key == OF_KEY_UP) {
-				//input = input + ofToString(atof(input.c_str() + 1), 1); 
+			// Input we don't want
+			else if (key == OF_KEY_UP || key ==  OF_KEY_DOWN || key == OF_KEY_LEFT || key == OF_KEY_RIGHT || key == OF_KEY_DEL) {
+				// Do nothing. 
 			}
-			
+
 			// Otherwise take input. 
 			else {
 				input += key; 
@@ -129,7 +136,7 @@ public:
 	}
 
 	void update() {
-		//*value = input; 
+		enabled = false;
 	}
 
 	void setInput(string input) {
@@ -138,27 +145,30 @@ public:
 
 	void draw(float x, float y) {
 
+		enabled = true;
+
 		setPos(x, y);
 
-		ofEnableAlphaBlending();
+		//ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 			
-			myFont.drawString(name, -2, -5); 
+			argosText::font.drawString(name, -2, -5); 
 
-			ofSetColor(0x919090); 
+			ofSetColor(0x767676); 
+
 			rRectangle(0, 0, width, height, 3); 
 
 			ofSetColor(0xffffff); 
 
 			if ( (input.size() * 7) < width ){
-				myFont.drawString(input, 2, (height/1.5)); 
+				argosText::font.drawString(input, 2, (height/1.5)); 
 			}
 
 		glPopMatrix();
 
-		ofDisableAlphaBlending();
+		//ofDisableAlphaBlending();
 
 	}
 	

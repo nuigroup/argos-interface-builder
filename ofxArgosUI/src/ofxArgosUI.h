@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -47,6 +47,9 @@
 // ================================================================= ofxArgosUI
 class ofxArgosUI {
 
+// let editor access protected controls
+friend class EditorPanel; 
+
 public:
 	
 	ofxArgosUI();
@@ -70,8 +73,10 @@ public:
 	ofxArgosUI_View			*view(string name);
 	ofxArgosUI_View			*addView(string name = "");
 
-	ofxArgosUI_Control		*addControl		(ofxArgosUI_Control *control);
+	ofxArgosUI_Control		*addSystemControl		(ofxArgosUI_Control *control);
+	ofxArgosUI_Panel		*addSystemPanel			(string name, int x, int y, int width, int height); 
 
+	ofxArgosUI_Control		*addControl		(ofxArgosUI_Control *control);
 	ofxArgosUI_Panel		*addPanel		(string name, int x, int y, int width, int height); 
 	ofxArgosUI_Button		*addButton		(string name, int x, int y, int width, int height, bool *value);
 	ofxArgosUI_Toggle		*addToggle		(string name, int x, int y, int width, int height, bool *value);
@@ -101,6 +106,7 @@ protected:
 
 	// ============================ List of Views
 	ofxArgosUI_View					*headerView;
+
 	vector <ofxArgosUI_View*>		views;				// 0 is for headerView
 	
 	void drawHeader(); 

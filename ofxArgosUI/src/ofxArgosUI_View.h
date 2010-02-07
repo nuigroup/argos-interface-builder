@@ -1,9 +1,8 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -37,6 +36,8 @@
 #pragma once
 
 #include "ofxArgosUI_Includes.h"
+#include "ofxArgosUI_Focus.h"
+#include "StateManager.h"
 
 class ofxArgosUI_View : public ofxArgosUI_Control {
 
@@ -51,8 +52,10 @@ public:
 	void					loadFromXML(ofxXmlSettings &XML);
 	void					saveToXML(ofxXmlSettings &XML);
 	
+	ofxArgosUI_Control		*addSystemControl		(ofxArgosUI_Control *control);
+	ofxArgosUI_Panel		*addSystemPanel			(string name, int x, int y, int width, int height); 
+	
 	ofxArgosUI_Control		*addControl		(ofxArgosUI_Control *control);
-
 	ofxArgosUI_Panel		*addPanel		(string name, int x, int y, int width, int height); 
 	ofxArgosUI_Button		*addButton		(string name, int x, int y, int width, int height, bool *value);
 	ofxArgosUI_Toggle		*addToggle		(string name, int x, int y, int width, int height, bool *value);
@@ -63,14 +66,11 @@ public:
 	ofxArgosUI_TextField	*addTextField	(string name, int x, int y, int width, int height, string *value);
 	ofxArgosUI_FPSCounter	*addFPSCounter	(int x, int y, int width, int height);
 	ofxArgosUI_Icon			*addIcon		(int x, int y, int width, int height);
-	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);
-	
+	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);	
+
 	void update(ofEventArgs &e);
 
-	void mousePressed(ofMouseEventArgs &e);
-
-	
-protected:
 	vector <ofxArgosUI_Control*> controls;
+	vector <ofxArgosUI_Control*> systemcontrols;
 
 };

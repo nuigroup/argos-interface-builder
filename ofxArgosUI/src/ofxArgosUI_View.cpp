@@ -1,9 +1,8 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -65,21 +64,39 @@ void ofxArgosUI_View::update(ofEventArgs &e) {
 void ofxArgosUI_View::draw(float x, float y) {
 
 	setPos(0,0);
+	setSize(ofGetWidth(), ofGetHeight()); 
 	
 	ofSetRectMode(OF_RECTMODE_CORNER);
 
-	for(int i = 0; i<controls.size(); i++) {
+	for (int i = 0; i<systemcontrols.size(); i++){
+		//systemcontrols[i]->draw(systemcontrols[i]->x, systemcontrols[i]->y);
+	}
 
-		controls[i]->draw(controls[i]->x, controls[i]->y);
+	if (stateManager::editing){
 
-		// Draws a border around the controls 
-		/*
-		ofNoFill();
-		ofSetColor(param.borderColor);
-		glLineWidth(0.0f);
-		ofRect(controls[i]->x, controls[i]->y-1, controls[i]->width, controls[i]->height);
-		*/ 
-	}	
+		for(int i = 0; i<controls.size(); i++) {
+			controls[i]->disableAllInput(); 
+			controls[i]->draw(controls[i]->x, controls[i]->y);
+		}
+	}
+
+	else {
+		focus.clear(); 
+		for(int i = 0; i<controls.size(); i++) {
+			controls[i]->enableAllInput(); 
+			controls[i]->draw(controls[i]->x, controls[i]->y);
+		}
+	}
+
+}
+
+ofxArgosUI_Control *ofxArgosUI_View::addSystemControl(ofxArgosUI_Control* control) {
+	systemcontrols.push_back(control);
+	return control;
+}
+
+ofxArgosUI_Panel *ofxArgosUI_View::addSystemPanel(string name, int x, int y, int width, int height) {
+	return (ofxArgosUI_Panel *)addSystemControl(new ofxArgosUI_Panel(name, x, y, width, height));
 }
 
 ofxArgosUI_Control *ofxArgosUI_View::addControl(ofxArgosUI_Control* control) {
@@ -130,7 +147,3 @@ ofxArgosUI_Knob	*ofxArgosUI_View::addKnob(string name, int x, int y, int radius,
 ofxArgosUI_Icon	*ofxArgosUI_View::addIcon(int x, int y, int width, int height){
 	return (ofxArgosUI_Icon *)addControl(new ofxArgosUI_Icon(x, y, width, height));
 }
-
-void ofxArgosUI_View::mousePressed(ofMouseEventArgs &e){
-	focus.clear(); 
-} 

@@ -1,9 +1,8 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -36,17 +35,16 @@
 *************************************************************************/ 
 #pragma once
 
+#include "ofxXmlSettings.h"
 #include "ofxTouchAPI_IO.h"
 #include "ofxArgosUI_Parameter.h"
-#include "ofxXmlSettings.h"
+#include "StaticFont.h"
 #include "OSCHandler.h"
-
 
 class ofxArgosUI_Control : public ofxTouchAPI_IO {
 
 public:
 
-	ofTrueTypeFont			myFont;
 	ofxArgosUI_Parameter	param;  
 
 	string		name;			// Human readable name
@@ -54,15 +52,13 @@ public:
 	string		controlType;	// ...
 	bool		lock;			// ... 
 
+	bool		canfocus;		// Can the control be selected?
 	bool		dragging;		// Is the control currently being dragged?
 	
 	int			dragX;
 	int			dragY; 
 
-	bool		canfocus;		// Can the control be selected?
-
 	string		OSCaddress;		// OSC address
-
 	
 	// ========================================= Constructor
 	ofxArgosUI_Control(string name);
@@ -83,7 +79,7 @@ public:
 	virtual void draw(float x, float y) {}
 	virtual void draw() { draw(x, y); }	
 
-	// ========================================= Drag/Drop
+	// ========================================= Dragging
 	virtual void dropControl(int x, int y) {}
 
 	// ========================================= XML Settings (deprecated)

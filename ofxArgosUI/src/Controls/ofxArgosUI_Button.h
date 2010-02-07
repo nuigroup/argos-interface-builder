@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -96,12 +96,13 @@ public:
 	}
 	
 	// ============================================= Mouse
+
+	void focusActive() { if (canfocus) focus.set(this); }
+
 	void onPress(int x, int y, int button) {
 		beenPressed = true;	
 		if(beToggle) (*value) = !(*value); 
 		else (*value) = true;
-
-		if (canfocus) { focus.set(this); }
 
 		oschandler.sendOSC(1, OSCaddress);
 	}
@@ -137,7 +138,7 @@ public:
 
 		setPos(x, y);
 
-		ofEnableAlphaBlending();
+		//ofEnableAlphaBlending();
 
 		glPushMatrix();
 
@@ -146,19 +147,18 @@ public:
 			ofFill();
 			setTextBGColor();
 
+			if((*value) && beToggle) {
+				ofSetColor(0x7d87d7);
+			}
+
 			rRectangle(0, 0, width, height, 8); 
 
-			if((*value) && beToggle) {
-				setTextColor();
-			}
-			
 			setTextColor();
-
-			myFont.drawString(name, ((width/2) - (name.length() * 4)), (height/2) + 2);
+			argosText::font.drawString(name, ((width/2) - (name.length() * 4)), (height/2) + 2);
 
 		glPopMatrix();
 
-		ofDisableAlphaBlending();
+		//ofDisableAlphaBlending();
 	}
-	
+
 };

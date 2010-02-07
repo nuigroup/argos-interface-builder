@@ -1,9 +1,9 @@
 /***********************************************************************
  
- Copyright (c) 2009 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
- === Google Summer of Code 2009 - NUI Group === 
+ Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
- Portions Copyright (c) 2008, 2009 Memo Atkens, http://www.memo.tv/
+
+ Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
@@ -92,10 +92,11 @@ public:
 	}	
 	
 	// ============================================= Mouse
+	void focusActive() { if (canfocus) focus.set(this); }
+
 	void onPress(int x, int y, int button) {
 		lock = true;
 		point.set(x, y);
-		focus.set(this); 
 	}
 	
 	void onDragOver(int x, int y, int button) {
@@ -177,26 +178,29 @@ public:
 
 			// Pad Area
 			rRectangle(0, 0, width, height, 4);
-			
-			// Bottom text area
-			//setTextBGColor();
-			//ofRect(0, height, width, 20);
 
 			// Draw the text
 			setTextColor();
-			myFont.drawString("" + ofToString(value->x, 1) + "/" + ofToString(value->y, 1), 2, height - 5 );
+			argosText::font.drawString("" + ofToString(value->x, 1) + "/" + ofToString(value->y, 1), 2, height - 5 );
+	
+			// Draw once filled
+			ofEnableSmoothing();
+				ofFill();
+					setTextColor();
+					ofCircle(pointv.x - x, pointv.y - y, 8);
 
-			// Draw the crosshairs 
-			//setTextBGColor();
-			//ofLine(pointv.x - x, 0, pointv.x - x, height);
-			// ofLine(0, pointv.y - y, width, pointv.y - y);
-			
-			// Draw circle in middle of crosshairs
-			setTextColor();
-			ofCircle(pointv.x - x, pointv.y - y, 8);
+					ofSetColor(240, 240, 240); 
+					ofCircle(pointv.x - x, pointv.y - y, 6);
 
-			ofSetColor(240, 240, 240); 
-			ofCircle(pointv.x - x, pointv.y - y, 6);
+				// Draw the outside and center again as outlines (for anti-aliasing)
+				ofNoFill();
+					setTextColor();
+					ofCircle(pointv.x - x, pointv.y - y, 8);
+
+					ofSetColor(240, 240, 240); 
+					ofCircle(pointv.x - x, pointv.y - y, 6);
+
+			ofDisableSmoothing();
 
 		glPopMatrix();
 
