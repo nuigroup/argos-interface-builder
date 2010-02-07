@@ -30,7 +30,7 @@
 *************************************************************************/ 
 
 // Hide the console window
-// #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"") 
+//#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"") 
 
 #include "ofMain.h"
 #include "Argos.h"
@@ -39,7 +39,7 @@
 int main( ){
 	
 	ofSetupOpenGL(830, 400, OF_WINDOW);
-	ofSetWindowTitle("Argos Interface Builder v0.20");
+	ofSetWindowTitle("Argos Interface Builder v0.22");
 	ofRunApp(new Argos);
 
 }

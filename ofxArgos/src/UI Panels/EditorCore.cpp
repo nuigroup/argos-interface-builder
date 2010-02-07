@@ -41,6 +41,7 @@ void EditorPanel::init(ofxArgosUI &gui){
 
 		// Give actions access to the edtior
 		rControl = new resizeControl(this); 
+		mControl = new moveControl(this); 
 
 		// Add a panel to the GUI for the editor 
 		editor = gui.addPanel("Widget Editor", 10, 20, 210, 180); 
@@ -71,12 +72,15 @@ void EditorPanel::update(){
 			updateProperties(); 
 			rControl->enableAppEvents(); 
 			rControl->draw(); 
+			mControl->enableAppEvents(); 
+			mControl->draw(); 
 		}	
 	}
 
 	else {
 		// Find out why resizeControl is being drawn elsewhere... 
 		rControl->disableAppEvents();
+		mControl->disableAppEvents();
 		clearProperties();
 	}
 }
@@ -201,6 +205,14 @@ void EditorPanel::updateSize(int width, int height){
 	if (stateManager::editing) {
 		e_w = toStr(atof(e_w.c_str()) + width);
 		e_h = toStr(atof(e_h.c_str()) + height);
+		setProperties();
+	}
+}
+
+void EditorPanel::updateLocation(int width, int height){
+	if (stateManager::editing) {
+		e_x = toStr(width);
+		e_y = toStr(height);
 		setProperties();
 	}
 }

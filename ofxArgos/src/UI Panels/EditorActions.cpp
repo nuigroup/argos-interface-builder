@@ -31,6 +31,10 @@
 #include "EditorActions.h"
 #include "EditorCore.h"
 
+// ===========================================================================
+// ===========================================================================
+// ===========================================================================
+
 resizeControl::resizeControl(EditorPanel *ed) : ofxArgosUI_Control("resizeControl") {
 	controlType = "resizeControl";
 	editor = ed;
@@ -107,6 +111,95 @@ void resizeControl::draw() {
 			ofFill(); 
 				ofSetColor(0xe3e3e3); 
 				ofRect(x, y, 5, 5); 
+			ofNoFill(); 
+
+		glPopMatrix();
+
+	ofDisableAlphaBlending();
+
+}
+
+// ===========================================================================
+// ===========================================================================
+// ===========================================================================
+
+moveControl::moveControl(EditorPanel *ed) : ofxArgosUI_Control("moveControl") {
+	controlType = "moveControl";
+	editor = ed;
+	dragging = false; 
+}
+
+void moveControl::setControl() {
+	if (focus.focused != NULL){
+		setPos(focus.focused->x, focus.focused->y); 
+		setSize(focus.focused->width, focus.focused->height);
+	}
+}
+
+void moveControl::onRollOver(int x, int y) {
+	glutSetCursor(GLUT_CURSOR_INFO); 	
+}
+
+void moveControl::onRollOut() {
+	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+}
+
+void moveControl::onDragOutside(int x, int y, int button) {
+	
+	glutSetCursor(GLUT_CURSOR_INFO); 
+
+	dragging = true; 
+
+	dragX = (floor(((float) x / 20)) * 20);
+	dragY = (floor(((float) y / 20)) * 20);
+
+}
+
+void moveControl::onRelease(int x, int y, int button) {
+	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+
+	dragging = false; 
+
+}
+
+void moveControl::onReleaseOutside(int x, int y, int button) {
+	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+
+	dragging = false; 
+
+	if (focus.focused != NULL){
+		editor->updateLocation(newX, newY); 
+	}
+
+}
+
+void moveControl::update() {}
+
+void moveControl::draw() {
+
+	setControl(); 
+
+	if (dragging) {
+
+		if (focus.focused != NULL){
+			ofNoFill(); 
+			ofSetColor(255, 255, 255); ;
+
+			newX = dragX;
+			newY = dragY; 
+
+			ofRect(newX, newY, width, height); 
+
+		}
+	}
+
+	ofEnableAlphaBlending();
+
+		glPushMatrix();
+
+			ofFill(); 
+				ofSetColor(0xe3e3e3); 
+				//ofRect(x, y, 5, 5); 
 			ofNoFill(); 
 
 		glPopMatrix();

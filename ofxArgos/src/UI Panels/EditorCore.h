@@ -45,6 +45,7 @@ public:
 	ofxArgosUI_Panel		*editor;
 
 	resizeControl			*rControl; 
+	moveControl				*mControl; 
 
 	ofxArgosUI_Button		*editing; 
 	ofxArgosUI_Button		*cancel;
@@ -77,9 +78,12 @@ public:
 
 	void removeControl();
 
+	// Keyboard Arrows
 	void updateX(int direction);
 	void updateY(int direction);
 
+	// Mouse Conrol
+	void updateLocation(int x, int y); 
 	void updateSize(int width, int height);
 
 	string toStr(float input);

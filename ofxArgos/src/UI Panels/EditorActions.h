@@ -31,6 +31,14 @@
 
 #include "ofxArgosUI.h"
 
+
+// resizeControl and moveControl need to inherit from a draggable class...silly
+// that drag operations are being computed in separate places. 
+
+/***********************************************************************
+*	resizeControl: draws a little square at the bottom right of a control
+*	and to let the user click + drag to resize. 
+*************************************************************************/ 
 class resizeControl : public ofxArgosUI_Control {
 	
 public:
@@ -39,6 +47,37 @@ public:
 
 	int newWidth;
 	int newHeight; 
+
+	void setControl();
+
+	void onRollOver(int x, int y);
+	void onRollOut();
+	void onDragOutside(int x, int y, int button);
+	void onRelease(int x, int y, int button);
+	void onReleaseOutside(int x, int y, int button);
+
+	void update();
+
+	void draw();
+
+protected:
+	EditorPanel *editor; 
+	
+};
+
+/***********************************************************************
+*	moveControl: a meta-control that masks the currently focused control
+*	(but does not draw anything) letting the user choose a new X/Y
+*************************************************************************/ 
+
+class moveControl : public ofxArgosUI_Control {
+	
+public:
+
+	moveControl(EditorPanel *ed); 
+
+	int newX;
+	int newY;
 
 	void setControl();
 
