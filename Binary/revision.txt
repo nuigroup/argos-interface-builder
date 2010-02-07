@@ -1,2 +1,0 @@
-Argos Interface Builder [Version 0.21]
-(C) 2009, 2010 Dimitri Diakopoulos
