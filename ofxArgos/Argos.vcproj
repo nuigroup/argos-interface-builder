@@ -125,7 +125,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxArgosUI\src;..\..\..\addons\ofxArgosUI\src\Controls;..\..\..\addons\ofxTuio\src;..\..\..\addons\ofxTouchAPI\src;.\src;&quot;.\src\UI Panels&quot;;.\src\OSCHandler"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxArgosUI\src;..\..\..\addons\ofxArgosUI\src\Controls;..\..\..\addons\ofxTuio\src;..\..\..\addons\ofxTouchAPI\src;.\src;.\src\ArgosCore"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;POCO_STATIC"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -199,6 +199,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\glut.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\src\glut.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\glut2.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\src\main.cpp"
 				>
 			</File>
@@ -213,39 +225,87 @@
 					Name="Editor Panel"
 					>
 					<File
-						RelativePath=".\src\UI Panels\EditorActions.cpp"
+						RelativePath=".\src\ArgosCore\EditorCore.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\EditorActions.h"
+						RelativePath=".\src\ArgosCore\EditorCore.h"
 						>
 					</File>
-					<File
-						RelativePath=".\src\UI Panels\EditorCore.cpp"
+					<Filter
+						Name="WidgetTypeHandler"
 						>
-					</File>
-					<File
-						RelativePath=".\src\UI Panels\EditorCore.h"
+						<File
+							RelativePath=".\src\ArgosCore\WidgetTypeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\src\ArgosCore\WidgetTypeHandler.h"
+							>
+						</File>
+						<Filter
+							Name="Handlers"
+							>
+							<File
+								RelativePath=".\src\ArgosCore\ButtonHandler.h"
+								>
+							</File>
+							<File
+								RelativePath=".\src\ArgosCore\HandlerIncludes.h"
+								>
+							</File>
+							<File
+								RelativePath=".\src\ArgosCore\KnobHandler.h"
+								>
+							</File>
+							<File
+								RelativePath=".\src\ArgosCore\SliderHandler.h"
+								>
+							</File>
+						</Filter>
+					</Filter>
+					<Filter
+						Name="Actions"
 						>
-					</File>
+						<File
+							RelativePath=".\src\ArgosCore\ActionIncludes.h"
+							>
+						</File>
+						<File
+							RelativePath=".\src\ArgosCore\ActionMove.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\src\ArgosCore\ActionMove.h"
+							>
+						</File>
+						<File
+							RelativePath=".\src\ArgosCore\ActionResize.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\src\ArgosCore\ActionResize.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Browser Panel"
 					>
 					<File
-						RelativePath=".\src\UI Panels\BrowserCore.cpp"
+						RelativePath=".\src\ArgosCore\BrowserCore.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\BrowserCore.h"
+						RelativePath=".\src\ArgosCore\BrowserCore.h"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\BrowserDraggable.h"
+						RelativePath=".\src\ArgosCore\BrowserDraggable.h"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\BrowserDraggableList.h"
+						RelativePath=".\src\ArgosCore\BrowserDraggableList.h"
 						>
 					</File>
 				</Filter>
@@ -253,23 +313,23 @@
 					Name="Text"
 					>
 					<File
-						RelativePath=".\src\UI Panels\StaticFont.cpp"
+						RelativePath=".\src\ArgosCore\StaticFont.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\StaticFont.h"
+						RelativePath=".\src\ArgosCore\StaticFont.h"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="OSCHandler"
+					Name="OSC Handler"
 					>
 					<File
-						RelativePath=".\src\OSCHandler\OSCHandler.cpp"
+						RelativePath=".\src\ArgosCore\OSCHandler.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\src\OSCHandler\OSCHandler.h"
+						RelativePath=".\src\ArgosCore\OSCHandler.h"
 						>
 					</File>
 				</Filter>
@@ -277,15 +337,47 @@
 					Name="Utility"
 					>
 					<File
-						RelativePath=".\src\UI Panels\GridManager.h"
+						RelativePath=".\src\ArgosCore\GridManager.h"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\StateManager.cpp"
+						RelativePath=".\src\ArgosCore\StateManager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\src\UI Panels\StateManager.h"
+						RelativePath=".\src\ArgosCore\StateManager.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Main Menu"
+					>
+					<File
+						RelativePath=".\src\ArgosCore\MainMenu.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\ArgosCore\MainMenu.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Layout Handler"
+					>
+					<File
+						RelativePath=".\src\ArgosCore\LayoutHandler.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\src\ArgosCore\LayoutHandler.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Mode Panel"
+					>
+					<File
+						RelativePath=".\src\ArgosCore\ModeCore.h"
 						>
 					</File>
 				</Filter>

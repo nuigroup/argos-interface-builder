@@ -35,11 +35,11 @@
 #include "ofMain.h"
 #include "Argos.h"
 
+
 //======================================================================== Main ()
 int main( ){
 	
 	ofSetupOpenGL(830, 400, OF_WINDOW);
-	ofSetWindowTitle("Argos Interface Builder v0.22");
 	ofRunApp(new Argos);
 
 }

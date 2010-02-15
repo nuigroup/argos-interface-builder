@@ -50,6 +50,8 @@ int WindowHeight;
 // ========================================================== Setup
 void Argos::setup(){	
 	
+	ofSetWindowTitle("Argos Interface Builder " + version); 
+
 	WindowWidth = ofGetWidth();
 	WindowHeight = ofGetHeight();
 	ofSetVerticalSync(false);
@@ -63,10 +65,6 @@ void Argos::setup(){
 	oschandler.start(3335);
 
 	gui.addFPSCounter((WindowWidth - 100), (WindowHeight - 20), 100, 20);
-
-	//glutSetCursor(GLUT_CURSOR_CROSSHAIR);
-	//glutSetCursor(GLUT_CURSOR_TEXT);
-
 
 }
 
@@ -84,7 +82,6 @@ void Argos::draw(){
 	gui.draw();
 
 	ofSetColor(0xffffff); 
-
 }
 
 // ========================================================== Resized
@@ -95,15 +92,21 @@ void Argos::resized(int w, int h){
 // ========================================================== Key Pressed
 void Argos::keyPressed (int key){ 
 
-	// Eventually forward these directly to editor... 
-	if (key == OF_KEY_DEL) editor.removeControl(); 
-	if (key == OF_KEY_UP) editor.updateY(1); 
-	if (key == OF_KEY_DOWN) editor.updateY(0); 
-	if (key == OF_KEY_LEFT) editor.updateX(1); 
-	if (key == OF_KEY_RIGHT) editor.updateX(0); 
 
-	if (key == '-') gui.toggleDraw();
-	if (key == '=') browser.browser->toggleDraw();
+	// Eventually forward these directly to editor... 
+	if (key == OF_KEY_DEL) editor.deleteControl(); 
+
+	if (key == OF_KEY_LEFT) editor.moveXY_Arrows("x", "left"); 
+	if (key == OF_KEY_RIGHT) editor.moveXY_Arrows("x", "right"); 
+	if (key == OF_KEY_UP) editor.moveXY_Arrows("y", "up"); 
+	if (key == OF_KEY_DOWN) editor.moveXY_Arrows("y", "down"); 
+
+
+	//if (key == '-') gui.toggleDraw();
+	//if (key == '=') browser.browser->toggleDraw();
+
+	//if (key == 's') gui.saveToXML(gui.xmlFile); 
+	//if (key == 'l') gui.loadFromXML(gui.xmlFile); 
     //if(key == '-') editor.editor->toggleDraw();
 
 }

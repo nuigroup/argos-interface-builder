@@ -36,9 +36,11 @@
 #include "ofxArgosUI.h"			// Argos UI Toolkit
 #include "EditorCore.h"			// Widget Editor
 #include "BrowserCore.h"		// Widget Browser
+#include "ModeCore.h"			// Mode Changer
 #include "StaticFont.h"			// Text @ Static Size
-#include "OSCHandler.h"			// OSC Controller
+#include "OSCHandler.h"			// OSC Handler
 #include "StateManager.h"		// Global Flags
+
 
 class Argos : public ofSimpleApp{ 
 	
@@ -47,14 +49,20 @@ public:
 	ofxArgosUI		gui;
 	EditorPanel		editor;  
 	BrowserPanel	browser;
+	ModePanel		mode;
+
+	string			version; 
 
 
 	Argos() {
 
+
 		editor.init(gui); 
 		browser.init(gui); 
+		mode.init(gui); 
 	
 		argosText::setFont("verdana.ttf", 10);
+		version = "v0.21"; 
 
 	}
 

@@ -17,4 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		AMDCaProjectFile = E:\Desktop\Programming\OpenFrameworks\of_preRelease_v0.06_windows_VS2008_FAT\apps\examples\ofxArgos\CodeAnalyst\Argos.caw
+	EndGlobalSection
 EndGlobal
