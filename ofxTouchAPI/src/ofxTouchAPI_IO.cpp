@@ -310,6 +310,7 @@ void ofxTouchAPI_IO::_mouseDragged(ofMouseEventArgs &e) {
 		if(!_mouseOver) {						// if wasn't over previous frame
 			//onPress(x, y);					// call onPress - alternate behavior
 			_mouseOver = true;					// update flag
+			_mouseDown = true; 
 		}
 		onDragOver(x, y, button);				// and trigger onDragOver
 	} 
