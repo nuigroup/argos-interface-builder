@@ -41,6 +41,16 @@
 class ofxArgosUI_Parameter {
 
 public:	
+	
+	/*
+	typedef map<string, string> properties; 
+
+	properties p; 
+
+	void addProperty(string key, string defValue){
+		  p.insert (pair<string,string>(key,defValue) );
+	}
+	*/
 
 	int		textColor;
 	int		textOverColor;

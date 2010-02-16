@@ -44,14 +44,21 @@ ofxArgosUI_View::~ofxArgosUI_View() {
 }
 
 void ofxArgosUI_View::loadFromXML(ofxXmlSettings &XML) {
-	for(int i=0; i < controls.size(); i++) {
+	for(int i = 0; i < controls.size(); i++) {
 		controls[i]->loadFromXML(XML);
 	}
 }
 
 void ofxArgosUI_View::saveToXML(ofxXmlSettings &XML) {
-	for(int i=0; i < controls.size(); i++) {
-		controls[i]->saveToXML(XML);
+	for(int i = 3; i < controls.size(); i++) {
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controls[i]->controlType + ":" + "name", controls[i]->name, tagNum);
+			XML.setValue(controls[i]->controlType + ":" + "x", controls[i]->x, tagNum);
+			XML.setValue(controls[i]->controlType + ":" + "y", controls[i]->y, tagNum);
+			XML.setValue(controls[i]->controlType + ":" + "width", controls[i]->width, tagNum);
+			XML.setValue(controls[i]->controlType + ":" + "height", controls[i]->height, tagNum);
+			XML.setValue(controls[i]->controlType + ":" + "OSC", controls[i]->OSCaddress, tagNum);
+		XML.popTag();
 	}
 }
 

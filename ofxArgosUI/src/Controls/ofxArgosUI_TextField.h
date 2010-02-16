@@ -51,7 +51,7 @@ public:
 
 	ofxArgosUI_TextField(string name, int x, int y, int width, int height, string *value) : ofxArgosUI_Control(name) {
 		this->value = value; 
-		input = ""; 
+		input = *value; 
 		controlType = "TextField";
 		setup(x, y, width, height);
 	}
@@ -91,15 +91,6 @@ public:
 	void onTouchMoveOver(float x, float y, int ID)		{}
 	void onTouchMoveOutside(float x, float y, int ID)	{}
 	
-	// ============================================= 
-	/* Eventual callback stuff. 
-	void setCallback(void *callback)
-	{
-		onApply = callback; 
-	}
-	*/
-
-
 	// ============================================= Key
 	void keyPressed(int key){
 		if (textfocus.focused != NULL && textfocus.focused == this) {
@@ -130,7 +121,6 @@ public:
 		input.clear(); 
 	}
 
-	// Better to do this as a callback function 
 	void applyInput(){
 		*value = input; 
 	}
@@ -139,17 +129,11 @@ public:
 		enabled = false;
 	}
 
-	void setInput(string input) {
-		this->input = input; 
-	}
-
 	void draw(float x, float y) {
 
 		enabled = true;
 
 		setPos(x, y);
-
-		//ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
@@ -162,13 +146,11 @@ public:
 
 			ofSetColor(0xffffff); 
 
-			if ( (input.size() * 7) < width ){
+			if ( (input.size() * 6) < width ){
 				argosText::font.drawString(input, 2, (height/1.5)); 
 			}
 
 		glPopMatrix();
-
-		//ofDisableAlphaBlending();
 
 	}
 	

@@ -2,7 +2,6 @@
  
  Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
-
  Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
@@ -70,10 +69,12 @@ public:
 		oldValue	= targetValue;
 
 		controlType = "Knob";
-
 		OSCaddress = "/knob"; 
 	
 		setup(x, y, 2*radius, 2*radius);
+
+		createProperties();
+		updateProperties(); 
 
 	}
 	
@@ -84,6 +85,27 @@ public:
 		pct = ofMap((*value), min, max, 0.0, width);
 		knobY = pct;
 	}
+
+	void createProperties() {
+		ofxArgosUI_Control::createProperties(); 
+		createPropertyFloat("min", min);
+		createPropertyFloat("max", max);
+	}
+
+	void updateProperties(){
+		name = getPropertyString("name", name);
+		x = getPropertyInt("x", x);
+		y = getPropertyInt("y", y);
+		width = getPropertyInt("w", width);
+		height = getPropertyInt("h", height);
+		OSCaddress = getPropertyString("osc", OSCaddress);
+
+		// Todo: Knob Specific Stuff: 
+
+		// Todo: Fix radius problems... 
+		radius = getPropertyInt("w", width) * 0.5;
+	}
+
 	
 	void loadFromXML(ofxXmlSettings &XML) {
 		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0));
@@ -93,10 +115,13 @@ public:
 		XML.addTag(controlType + "_" + key);
 			XML.pushTag(controlType + "_" + key);
 				XML.addValue("name", name);
-				XML.addValue("value", getValue());
+				XML.addValue("x", x);
+				XML.addValue("y", y);
+				XML.addValue("width", width);
+				XML.addValue("height", height);
+				XML.addValue("OSC", OSCaddress);
 		XML.popTag();
 	}
-	
 	
 	bool getValue() {
 		return (*value);
@@ -197,6 +222,8 @@ public:
 	void update() {
 		if(!enabled) return;
 		enabled = false;
+
+		updateProperties();
 	}
 	 
 	void draw(float x, float y) {
@@ -218,6 +245,7 @@ public:
 		// Scales between 0 and 270 degrees
 		knobDisplay = (( 270 / height) * knobY);
 
+		// Clamps between 0 and 270 degrees. 
 		if(knobY >= height)	
 			knobDisplay = 270; 
 		else if(knobY <= 0)	
@@ -236,7 +264,6 @@ public:
 					ofCircle(0.f, 0.f, radius);
 				// Draw knob arcs
 					setTextBGColor();
-					//ofSetColor(0xdddddd);
 					drawArc(0.0f, 0.0f, radius, 135, 135 + knobDisplay);
 				// Draw bottom arc
 					setEmptyColor(); 
@@ -254,7 +281,6 @@ public:
 					ofCircle(0.f, 0.f, (radius * 0.5));
 			ofDisableSmoothing();
 
-			// ToDo: Reposition the knob value somewhere other than the center
 			ofSetColor(0xffffff);
 			argosText::font.drawString(ofToString((*value), 2), -15 , (radius + 10 ));
 

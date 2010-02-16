@@ -62,8 +62,6 @@ public:
 		enabled = true; 
 
 		setPos(x, y);
-		
-		ofEnableAlphaBlending();
 
 		glPushMatrix();
 			glTranslatef(x, y, 0);
@@ -72,7 +70,6 @@ public:
 			argosText::font.drawString("FPS: " + ofToString(ofGetFrameRate(), 2), 0, 5);
 		glPopMatrix();
 
-		ofDisableAlphaBlending();
 	}
 	
 };

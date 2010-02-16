@@ -7,26 +7,29 @@ class ofxArgosUI_Focus {
 public: 
 
 	bool verbose; 
-
 	bool loaded; 
 
 	ofxArgosUI_Control *focused; 
 
 	ofxArgosUI_Focus() {
-		verbose = true; 
+		verbose = false; 
 		loaded = false; 
 	}
 
 	void set(ofxArgosUI_Control *ctrl){
+
 		if (verbose) printf("ofxArgosUI_Focus::set\n");
-		loaded = false; 
+
+		loaded = false;
+
 		focused = ctrl;
+
 	}
 
 	void clear(){
 		if (verbose) printf("ofxArgosUI_Focus::clear\n"); 
 		focused = NULL; 
-	}	
+	}		
 
 	void showFocus(){
 		if ((focused != NULL) && (focused->canfocus == true)){

@@ -35,55 +35,136 @@
 *************************************************************************/ 
 #include "ofxArgosUI_Control.h"
 
-ofxArgosUI_Control::ofxArgosUI_Control(string name) {
-                                     
-	lock = false; 
 
+//==============================================================================
+ofxArgosUI_Control::ofxArgosUI_Control(string name) {
+      
+	setName(name);
 	controlType = "";
 
-	setName(name);
-	setKey(key);
-
+	lock = false; 
 	canfocus = true; 
 
 	setup();
 
-	enableAllEvents(); 
+	enableAllEvents(); 	
 
 }
 
+//==============================================================================
 void ofxArgosUI_Control::setName(string newName) {
 	name = newName;
-	if(key.compare("") == 0) setKey("");
 }
 
-
-void ofxArgosUI_Control::setKey(string newKey) {
-	if(newKey.compare("") == 0) key = name;
-	else key = newKey;
-	for(int i=0; i<key.size(); i++) {
-		if(key[i] == ' ') key[i] = '_';
-	}
-}
-
+//==============================================================================
 void ofxArgosUI_Control::setTextColor(bool clickable) {
 	if (isMouseOver() && clickable) ofSetColor(param.textOverColor);
+
 	else if (isBeingTouched()) ofSetColor(param.textOverColor);
+
 	else ofSetColor(param.textColor);
 }
 
 void ofxArgosUI_Control::setTextBGColor(bool clickable) {
-	if(isMouseOver() && clickable) ofSetColor(param.textBGOverColor);
+	if (isMouseOver() && clickable) ofSetColor(param.textBGOverColor);
+
 	else if (isBeingTouched()) ofSetColor(param.textBGOverColor);
+
 	else ofSetColor(param.textBGColor);
 }
 
 void ofxArgosUI_Control::setFullColor(bool forceActive) {
-	if(isMouseDown() || forceActive) ofSetColor(param.fullActiveColor);
-	else if(isMouseOver()) ofSetColor(param.fullOverColor);
+	if (isMouseDown() || forceActive) ofSetColor(param.fullActiveColor);
+
+	else if (isMouseOver()) ofSetColor(param.fullOverColor);
+
 	else ofSetColor(param.fullColor);
 }
 
 void ofxArgosUI_Control::setEmptyColor() {
 	ofSetColor(param.emptyColor);
 }
+
+
+//==============================================================================
+
+string *ofxArgosUI_Control::getPropertyRef(const string keyVal) throw(){
+	if (properties.count(keyVal) != 0)
+		return &properties.find(keyVal)->second;
+}
+
+string ofxArgosUI_Control::getPropertyString(const string keyVal, string defaultValue) throw(){
+	if (properties.count(keyVal) != 0)
+		return properties[keyVal]; 
+	else 
+		return defaultValue; 
+}
+
+float ofxArgosUI_Control::getPropertyFloat( string keyVal, float defaultValue)  throw(){
+	if (properties.count(keyVal) != 0)
+		return (float) atof(properties[keyVal].c_str()) ;
+	else 
+		return defaultValue; 
+}
+
+bool ofxArgosUI_Control::getPropertyBool( string keyVal, bool defaultValue)  throw(){
+	if (properties.count(keyVal) != 0)
+		return (bool) atof(properties[keyVal].c_str()) ;
+	else 
+		return defaultValue; 
+
+}
+
+int ofxArgosUI_Control::getPropertyInt( string keyVal, int defaultValue)  throw(){
+	if (properties.count(keyVal) != 0)
+		return (int) atof(properties[keyVal].c_str()) ;
+	else 
+		return defaultValue; 
+
+}
+
+//==============================================================================
+void ofxArgosUI_Control::setPropertyString(string keyVal, string value) throw() {
+	properties.find(keyVal)->second = value; 
+}
+
+void ofxArgosUI_Control::setPropertyFloat(string keyVal, float value) throw() {
+	properties.find(keyVal)->second = ofToString(value); 
+}
+
+void ofxArgosUI_Control::setPropertyBool(string keyVal, bool value) throw() {
+	properties.find(keyVal)->second = ofToString(value); 
+}
+
+void ofxArgosUI_Control::setPropertyInt(string keyVal, int value) throw() {
+	properties.find(keyVal)->second = ofToString(value); 
+}
+
+
+//==============================================================================
+void ofxArgosUI_Control::createPropertyString(string keyVal, string value) throw() {
+	properties.insert(std::pair<string,string>(keyVal, string (value)));
+}
+
+void ofxArgosUI_Control::createPropertyFloat(string keyVal, float value) throw() {
+	properties.insert(std::pair<string,string>(keyVal, ofToString(value) ));
+}
+
+void ofxArgosUI_Control::createPropertyBool(string keyVal, bool value) throw() {
+	properties.insert(std::pair<string,string>(keyVal, string ( (value) ? ("1") : ("0") ))); 
+}
+
+void ofxArgosUI_Control::createPropertyInt(string keyVal, int value) throw() {
+	properties.insert(std::pair<string,string>(keyVal, ofToString(value)));
+}
+
+//==============================================================================
+void ofxArgosUI_Control::createProperties(){
+	createPropertyString("name", name);
+	createPropertyInt("x", x);
+	createPropertyInt("y", y);
+	createPropertyInt("w", width);
+	createPropertyInt("h", height);
+	createPropertyString("osc", OSCaddress);
+}
+

@@ -105,12 +105,23 @@ public:
 	}
 
 	void lockPanel(){
-			for(int i = 0; i < panel_children.size(); i++) {
-				panel_children[i]->canfocus = false; 
-			}
+		this->canfocus = false; 
+	}
+	
+	void resetPanel(string nN, int nW, int nH){
+		setName(nN);
+		setSize(nW,nH); 
+
+		for(int i = 0; i < panel_children.size(); i++) {
+			panel_children[i]->killMe();  
+		}	
+
+		panel_children.clear(); 
 	}
 
-
+	int numControls(){
+		return panel_children.size(); 
+	}
 
 	ofxArgosUI_Control *addControl(ofxArgosUI_Control *control) {
 		// Rather than glTranslate the controls every draw, 

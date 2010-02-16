@@ -17,7 +17,7 @@
 
 	2. Redistributions in binary form must reproduce the above copyright notice, 
 	this list of conditions and the following disclaimer in the documentation and/or 
-	other materials provided with the distribution.
+	other materials provided with the distribution
 
 	3. The name of the author may not be used to endorse or promote products derived 
 	from this software without specific prior written permission.
@@ -44,6 +44,6 @@ class ofxArgosUI_SliderFloat : public ofxArgosUI_SliderBase<float> {
 	
 public:
 	ofxArgosUI_SliderFloat(string name, int x, int y, int width, int height, float *value, float min, float max, float smoothing = 0) : ofxArgosUI_SliderBase<float>(name, x, y, width, height, value, min, max, smoothing) {
-		controlType = "SliderFloat";
+		controlType = "Slider";
 	}
 };

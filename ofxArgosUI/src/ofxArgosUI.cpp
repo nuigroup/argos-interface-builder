@@ -102,7 +102,8 @@ void ofxArgosUI::setAutoSave(bool b) {
 
 
 void ofxArgosUI::loadFromXML(string file) {
-	if(verbose) printf("ofxArgosUI::loadFromXML( %s )\n", file.c_str());
+
+	printf("ofxArgosUI::loadFromXML( %s )\n", file.c_str());
 	
 	if(file.compare("NULL") != 0) xmlFile = file;
 	else {
@@ -113,43 +114,49 @@ void ofxArgosUI::loadFromXML(string file) {
 		if(verbose) printf("Error loading XMLFile: %s\n", xmlFile.c_str());
 		return;	
 	}
+
+	int numControls = XML.getNumTags("Button");
+
+	cout << numControls << "\n"; 
 	
-	doDraw		= XML.getValue("options:doDraw", true);
-	doAutoSave	= XML.getValue("options:doAutoSave", false);
-	currentView	= XML.getValue("options:currentView", 1);
-	
-	for(int i=1; i < views.size(); i++) {
-		views[i]->loadFromXML(XML);
+
+	for(int i=0; i <= numControls; i++) {
+
+		bool value = 0; 
+
+		addButton(
+			XML.getValue("Button:name", "No Name", i),
+			XML.getValue("Button:x", 0, i),
+			XML.getValue("Button:y", 0, i),
+			XML.getValue("Button:width", 0, i),
+			XML.getValue("Button:height", 0, i),
+			&value
+		);
 	}
+
 	
-	setView(currentView);
-	setDraw(doDraw);
+
+
+
 }
 
 
 void ofxArgosUI::saveToXML(string file) {
-	doSave = false;
-	
+
+	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
+
 	XML.clear();	// clear cause we are building a new xml file
 	
-	XML.addTag("options");
-		XML.pushTag("options");
-			XML.addValue("doDraw", doDraw);
-			XML.addValue("doAutoSave", doAutoSave);
-			XML.addValue("currentView", currentView);
-		XML.popTag();
 	
-	XML.addTag("controls");
-		XML.pushTag("controls");
-		for(int i=1; i < views.size(); i++) {
+	for(int i=1; i < views.size(); i++) {
+		
 			views[i]->saveToXML(XML);
-		}
-	XML.popTag();
-	
+	}
+
 	XML.saveFile(file);
 
 	if(doSaveBackup) XML.saveFile(file + ".bak");
-	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
+
 }
 
 

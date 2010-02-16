@@ -89,11 +89,13 @@ public:
 	ofxArgosUI_Icon			*addIcon		(int x, int y, int width, int height);
 	ofxArgosUI_Title		*addTitle		(string name, bool *value = NULL);
 
+	string							xmlFile;
+	int								lastTagNumber; 
+
 protected:
 
 	// ============================ XML Settings
 	ofxXmlSettings					XML;
-	string							xmlFile;
 
 	// ============================ GUI Options
 	bool							doAutoSave;

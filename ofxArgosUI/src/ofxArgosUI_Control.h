@@ -8,6 +8,8 @@
  Portions Copyright (c) 2008 Todd Vanderlin, http://toddvanderlin.com/
  -> Inspired by ofxSimpleGui API
 
+ Propety idea from the Jucer, rawmaterialssoftware.com
+
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
 
@@ -45,8 +47,8 @@ class ofxArgosUI_Control : public ofxTouchAPI_IO {
 
 public:
 
-	ofxArgosUI_Parameter	param;  
-
+	ofxArgosUI_Parameter		param;  
+	
 	string		name;			// Human readable name
 	string		key;			// Machine readable name
 	string		controlType;	// ...
@@ -65,7 +67,6 @@ public:
 
 	// ========================================= Basic
 	void setName(string newName);
-	void setKey(string newKey);
 	void setConfig(ofxArgosUI_Parameter *config);
 
 	// ========================================= Color
@@ -82,8 +83,38 @@ public:
 	// ========================================= Dragging
 	virtual void dropControl(int x, int y) {}
 
-	// ========================================= XML Settings (deprecated)
+	// ========================================= XML Settings (deprecated) - Remove these
 	virtual void loadFromXML(ofxXmlSettings &XML) {}
 	virtual void saveToXML(ofxXmlSettings &XML) {}
+
+	// =========================================
+	string	*getPropertyRef(const string keyVal) throw(); 
+
+	string	getPropertyString(const string keyVal, string defaultValue) throw(); 
+	float	getPropertyFloat(const string keyVal, float defaultValue) throw(); 
+	bool	getPropertyBool(const string keyVal, bool defaultValue) throw(); 
+	int		getPropertyInt(const string keyVal, int defaultValue) throw();
+
+	void	setPropertyString(string keyVal, string value) throw(); 
+	void	setPropertyFloat(string keyVal, float value) throw(); 
+	void	setPropertyBool(string keyVal, bool value) throw(); 
+	void	setPropertyInt(string keyVal, int value) throw();
+
+	void	createPropertyString(string keyVal, string value) throw(); 
+	void	createPropertyFloat(string keyVal, float value) throw(); 
+	void	createPropertyBool(string keyVal, bool value) throw(); 
+	void	createPropertyInt(string keyVal, int value) throw();
+
+	virtual	void updateProperties() {}
+
+	virtual void createProperties(); 
+
+private: 	
+	
+	typedef std::map<std::string, std::string> P;
+	
+	map<string,string>::iterator iter; 
+
+	P properties;
 
 };

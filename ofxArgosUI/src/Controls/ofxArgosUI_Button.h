@@ -52,18 +52,36 @@ public:
 		beToggle	= false;
 		beenPressed = false;
 		this->value	= value;
-		controlType = "Button";
 
+		controlType = "Button";
 		OSCaddress = "/button"; 
 
 		setup(x, y, width, height);
 
-		
+		createProperties();
+		updateProperties(); 
+
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
 		setPos(_x, _y); 
 		setSize(_width, _height);
+	}
+
+	void createProperties() {
+		ofxArgosUI_Control::createProperties(); 
+		createPropertyBool("cantoggle", false);
+	}
+
+	void updateProperties(){
+		name = getPropertyString("name", name);
+		x = getPropertyInt("x", x);
+		y = getPropertyInt("y", y);
+		width = getPropertyInt("w", width);
+		height = getPropertyInt("h", height);
+		OSCaddress = getPropertyString("osc", OSCaddress);
+
+		// Button Specific Stuff: 
 	}
 	
 	void loadFromXML(ofxXmlSettings &XML) {
@@ -71,10 +89,13 @@ public:
 	}
 	
 	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("value", getValue());
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controlType + ":" + "name", name, tagNum);
+			XML.setValue(controlType + ":" + "x", x, tagNum);
+			XML.setValue(controlType + ":" + "y", y, tagNum);
+			XML.setValue(controlType + ":" + "width", width, tagNum);
+			XML.setValue(controlType + ":" + "height", height, tagNum);
+			XML.setValue(controlType + ":" + "OSC", OSCaddress, tagNum);
 		XML.popTag();
 	}
 	
@@ -130,15 +151,15 @@ public:
 	void update() {
 		if(!enabled) return;
 		enabled = false;
+
+		updateProperties(); 
 	}
 
 	void draw(float x, float y) {
 	
-		enabled = true; 
+		enabled = true;
 
 		setPos(x, y);
-
-		//ofEnableAlphaBlending();
 
 		glPushMatrix();
 
@@ -154,11 +175,10 @@ public:
 			rRectangle(0, 0, width, height, 8); 
 
 			setTextColor();
-			argosText::font.drawString(name, ((width/2) - (name.length() * 4)), (height/2) + 2);
+			argosText::font.drawString(name, ((width/2) - (name.length() * 3.5)), (height/2) + 2);
 
 		glPopMatrix();
 
-		//ofDisableAlphaBlending();
 	}
 
 };

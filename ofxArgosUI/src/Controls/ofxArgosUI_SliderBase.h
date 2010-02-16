@@ -2,7 +2,6 @@
  
  Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://www.dimitridiakopoulos.com/
 
-
  Portions Copyright (c) 2008, 2009 Memo Aktens, http://www.memo.tv/
  -> Based on ofxSimpleGuiToo
  
@@ -54,6 +53,7 @@ public:
 	float		alphafill; 
 	
 	ofxArgosUI_SliderBase(string name, int x, int y, int width, int height, Type *value, Type min, Type max, float smoothing = 0) : ofxArgosUI_Control(name) {
+		
 		this->value = value;
 		this->min	= min;
 		this->max	= max;
@@ -64,11 +64,13 @@ public:
 
 		alphafill = 0; 
 
-		controlType = "SliderBase";
-
+		controlType = "Slider";
 		OSCaddress = "/slider"; 
 
 		setup(x, y, width, height);
+
+		createProperties();
+		updateProperties(); 
 
 	}
 	
@@ -80,6 +82,23 @@ public:
 		barwidth = pct;
 	}
 
+	void createProperties() {
+		ofxArgosUI_Control::createProperties(); 
+		createPropertyFloat("min", min);
+		createPropertyFloat("max", max);
+	}
+
+	void updateProperties(){
+		name = getPropertyString("name", name);
+		x = getPropertyInt("x", x);
+		y = getPropertyInt("y", y);
+		width = getPropertyInt("w", width);
+		height = getPropertyInt("h", height);
+		OSCaddress = getPropertyString("osc", OSCaddress);
+
+		// Todo: Slider Specific Stuff: 
+	}
+
 	void loadFromXML(ofxXmlSettings &XML) {
 		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0.0f));
 	}
@@ -88,8 +107,12 @@ public:
 		XML.addTag(controlType + "_" + key);
 			XML.pushTag(controlType + "_" + key);
 				XML.addValue("name", name);
-					XML.addValue("value", getValue());
-			XML.popTag();
+				XML.addValue("x", x);
+				XML.addValue("y", y);
+				XML.addValue("width", width);
+				XML.addValue("height", height);
+				XML.addValue("OSC", OSCaddress);
+		XML.popTag();
 	}
 	
 	Type getValue() {
@@ -113,7 +136,7 @@ public:
 			pct = xMovement - x;
 			float temp = ofMap(pct, 0.0, (float)width, min, max);
 			
-			//Clamp - make this use oF's clamp util function eventually
+			// Clamp values
 			if(temp >= max)			temp = max;
 			else if(temp <= min)	temp = min;
 			
@@ -155,6 +178,9 @@ public:
 	void update() {
 		if(!enabled) return;
 		enabled = false;
+
+		updateProperties(); 
+
 	}
 	
 	void draw(float x, float y) {
