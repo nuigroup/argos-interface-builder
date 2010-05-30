@@ -42,7 +42,7 @@ public:
 	SliderHandler(ofxArgosUI_Panel &panel) : WidgetTypeHandler(panel) {
 
 		editor->setName("Slider Editor"); 
-		editor->setSize(210, 210); 
+		editor->setSize(210, 180); 
 
 	}
 	
@@ -50,9 +50,8 @@ public:
 	
 		WidgetTypeHandler::editBaseProperties(control);
 
-		editor->addTextField("Min", 10, 150, 40, 20, &dk);
-		editor->addTextField("Max", 60, 150, 40, 20, &dk);
-		editor->addToggle("Show Label", 10, 180, 100, 15, &dc);
+		editor->addTextField("Min", 10, 150, 40, 20, control->getPropertyRef("min"));
+		editor->addTextField("Max", 60, 150, 40, 20, control->getPropertyRef("max"));
 		
 	}
 

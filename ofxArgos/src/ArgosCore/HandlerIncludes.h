@@ -31,3 +31,5 @@
 #include "SliderHandler.h"
 #include "ButtonHandler.h"
 #include "KnobHandler.h"
+#include "XYHandler.h"
+#include "ToggleHandler.h"

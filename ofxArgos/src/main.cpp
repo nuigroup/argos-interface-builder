@@ -39,7 +39,7 @@
 //======================================================================== Main ()
 int main( ){
 	
-	ofSetupOpenGL(830, 400, OF_WINDOW);
+	ofSetupOpenGL(1280, 800, OF_WINDOW);
 	ofRunApp(new Argos);
 
 }

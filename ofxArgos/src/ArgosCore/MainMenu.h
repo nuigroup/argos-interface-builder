@@ -27,3 +27,51 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
 
 *************************************************************************/
+
+#pragma once
+
+#include "ofxArgosUI.h"
+#include "StateManager.h"
+
+/***********************************************************************
+*	Main Menu... 
+*************************************************************************/ 
+
+class MainMenu : public ofxArgosUI_Panel {
+
+public:
+
+	ofxArgosUI			*gui; 
+	ofxArgosUI_Panel	*menupanel;
+
+	ofxArgosUI_Button	*hover; 
+
+	bool				show; 
+
+	MainMenu() : ofxArgosUI_Panel("Main Menu", ofGetWidth() - 110, 0, 100, 25)  {}
+
+	void init(ofxArgosUI &gui){
+
+		//enableAllEvents();
+
+
+		this->gui = &gui; 
+
+		gui.addControl(this); 
+
+		this->setCornerRadius(0);
+		this->enableAllInput(); 
+	
+		hover = this->addButton("Edit", this->x, this->y, 100, 10, &show);
+
+	}
+
+	void onRollover(int x, int y)	{
+		cout << "onRollOver \n"; 
+	}
+
+	void onMouseMove(int x, int y){
+		cout << "onMouseMove \n"; 
+	}
+
+};

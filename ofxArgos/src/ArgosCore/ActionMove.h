@@ -42,13 +42,17 @@ class actionMove : public ofxArgosUI_Control {
 	
 public:
 
-	actionMove(EditorPanel *ed); 
+	actionMove(EditorPanel *ed);  
 
 	int newX;
 	int newY;
 
+	int mX;
+	int mY; 
+
 	void setControl();
 
+	void onPress(int x, int y, int button);
 	void onRollOver(int x, int y);
 	void onRollOut();
 	void onDragOver(int x, int y, int button);
@@ -61,6 +65,7 @@ public:
 	void draw();
 
 protected:
+
 	EditorPanel *editor; 
 	
 };

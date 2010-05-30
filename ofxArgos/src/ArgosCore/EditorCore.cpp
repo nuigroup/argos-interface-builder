@@ -30,18 +30,13 @@
 
 #include "EditorCore.h"
 
-const float gridsize = 20.00; 
+const float gridsize = 5.00; 
 
 EditorPanel::EditorPanel() {}
 
 void EditorPanel::init(ofxArgosUI &gui){
 
-		// Give the editor access to the GUI
 		this->gui  = &gui; 
-
-		//Give actions access to the edtior
-		rControl = new actionResize(this); 
-		mControl = new actionMove(this); 
 
 		editor = gui.addPanel("No Focus", 10, 20, 210, 30); 
 
@@ -60,10 +55,12 @@ void EditorPanel::update(){
 				
 				cout << focus.focused->controlType << "\n"; 
 
-				editor->resetPanel("No Focus", 210, 30); 
-				clearHandlers(); 
+				reset(); 
 
 				focus.loaded = true;
+
+				rControl = new actionResize(this); 
+				mControl = new actionMove(this); 
 
 				if (focus.focused->controlType == "Button"){
 					bhandler = new ButtonHandler(*editor); 
@@ -79,6 +76,17 @@ void EditorPanel::update(){
 					khandler = new KnobHandler(*editor); 
 					khandler->editProperties(focus.focused); 
 				}
+
+				else if (focus.focused->controlType == "XYPad"){
+					xyhandler = new XYHandler(*editor); 
+					xyhandler->editProperties(focus.focused); 
+				}
+
+				else if (focus.focused->controlType == "Toggle"){
+					thandler = new ToggleHandler(*editor); 
+					thandler->editProperties(focus.focused); 
+				}
+
 			}
 		}
 	}
@@ -89,38 +97,33 @@ void EditorPanel::update(){
 }
 	
 // Avoid memory leaks... 
-void EditorPanel::clearHandlers(){
-	bhandler = NULL; 
-	delete bhandler; 
+void EditorPanel::reset(){
+
+	editor->resetPanel("No Focus", 210, 30); 
+
+	rControl->disableAllEvents();
+	mControl->disableAllEvents(); 
+
 }
 
 void EditorPanel::moveXY_Arrows(string axis, string dir){
-
 	if (stateManager::editing) {
-
 		if (axis == "x"){
-
 			if (dir == "left" ){
 				focus.focused->setPropertyInt("x", focus.focused->getPropertyInt("x", 0) - gridsize); 
 			}
-
 			else if (dir == "right") {
 				focus.focused->setPropertyInt("x", focus.focused->getPropertyInt("x", 0) + gridsize); 
 			}
 		}
-
 		else if (axis == "y"){
-
 			if (dir == "up" ){
 				focus.focused->setPropertyInt("y", focus.focused->getPropertyInt("y", 0) - gridsize);
 			}
-
 			else if (dir == "down") {
 				focus.focused->setPropertyInt("y", focus.focused->getPropertyInt("y", 0) + gridsize); 
 			}
 		}
-
-
 	}
 }
 
@@ -132,7 +135,7 @@ void EditorPanel::deleteControl() {
 					gui->views[1]->controls[i]->killMe(); 
 					gui->views[1]->controls.erase(gui->views[1]->controls.begin()+i);
 					focus.clear();
-					editor->resetPanel("No Focus", 210, 30); 
+					reset();  
 				}
 			}
 		}

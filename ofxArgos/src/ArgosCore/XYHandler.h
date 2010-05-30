@@ -30,19 +30,31 @@
 
 #pragma once
 
-#include "ofxArgosUI.h"
+#include "WidgetTypeHandler.h"
 
-class WidgetTypeHandler {
+class XYHandler : public WidgetTypeHandler {
 
-public:
+public: 
 
-	WidgetTypeHandler(ofxArgosUI_Panel &panel);	
-	virtual ~WidgetTypeHandler();
+	bool dc; 
+	string dk;
+
+	XYHandler(ofxArgosUI_Panel &panel) : WidgetTypeHandler(panel) {
+
+		editor->setName("X/Y Editor"); 
+		editor->setSize(210, 180); 
+
+	}
 	
-	ofxArgosUI_Panel 	*editor; 
+	void editProperties(ofxArgosUI_Control *control) {
 	
-	virtual void editBaseProperties(ofxArgosUI_Control *control);
+		WidgetTypeHandler::editBaseProperties(control);
 
-	virtual void editProperties(ofxArgosUI_Control *control) {}
-	
+		editor->addTextField("X-Min", 10, 150, 40, 20, control->getPropertyRef("minX"));
+		editor->addTextField("X-Max", 60, 150, 40, 20, control->getPropertyRef("maxX"));
+		editor->addTextField("Y-Min", 110, 150, 40, 20, control->getPropertyRef("minY"));
+		editor->addTextField("Y-Max", 160, 150, 40, 20, control->getPropertyRef("maxY"));
+		
+	}
+
 };

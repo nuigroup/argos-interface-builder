@@ -44,6 +44,8 @@ public:
 	int newWidth;
 	int newHeight; 
 
+	bool drawCorner; 
+
 	void setControl();
 
 	void onRollOver(int x, int y);

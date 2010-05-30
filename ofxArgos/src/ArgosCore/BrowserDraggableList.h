@@ -48,6 +48,7 @@ public:
 	}
 
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addButton("New Button", x, y, defaultCWidth, defaultCHeight, &b[bi++]);
 	}
 };
@@ -67,6 +68,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addToggle("New Toggle", x, y, defaultCWidth, defaultCHeight, &b[bi++]);
 	}
 };
@@ -86,6 +88,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addSlider("New Slider", x, y, defaultCWidth, defaultCHeight, &f[fi++], 0, 100, 0.85); 
 	}
 };
@@ -105,6 +108,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addKnob("New Knob", x, y, (defaultCWidth / 2.5), &f[fi++], 0, 1, .85);
 	}
 };
@@ -124,6 +128,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addSlider("New Slider", x, y, 200, 15, &f[fi++], 0, 100, 0.85); 
 		gui->addSlider("New Slider", x, y+15, 200, 15, &f[fi++], 0, 100, 0.85); 
 		gui->addSlider("New Slider", x, y+30, 200, 15, &f[fi++], 0, 100, 0.85); 
@@ -146,6 +151,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 	}
 };
 
@@ -165,6 +171,7 @@ public:
 	}
 	
 	void dropControl(int x, int y) {
+		focus.clear(); 
 		gui->addXYPad("New XYPad", x, y, defaultCWidth, defaultCHeight, &v[vi++], 0, 20, 0, 20); 
 	}
 };

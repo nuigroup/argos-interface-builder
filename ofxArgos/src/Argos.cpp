@@ -31,7 +31,6 @@
 #include "Argos.h"
 #include "utils.h"
 
-
 bool  b[300];
 float f[300];
 int	  iindex;
@@ -92,7 +91,6 @@ void Argos::resized(int w, int h){
 // ========================================================== Key Pressed
 void Argos::keyPressed (int key){ 
 
-
 	// Eventually forward these directly to editor... 
 	if (key == OF_KEY_DEL) editor.deleteControl(); 
 
@@ -101,12 +99,21 @@ void Argos::keyPressed (int key){
 	if (key == OF_KEY_UP) editor.moveXY_Arrows("y", "up"); 
 	if (key == OF_KEY_DOWN) editor.moveXY_Arrows("y", "down"); 
 
+	if (key == 257) layout.saveToXML("Preset1.xml");
+	if (key == 258) layout.saveToXML("Preset2.xml");
+	if (key == 259) layout.saveToXML("Preset3.xml");
+	if (key == 260) layout.saveToXML("Preset4.xml");
+
+	if (key == 261) layout.loadFromXML("Preset1.xml");
+	if (key == 262) layout.loadFromXML("Preset2.xml");
+	if (key == 263) layout.loadFromXML("Preset3.xml");
+	if (key == 264) layout.loadFromXML("Preset4.xml");
 
 	//if (key == '-') gui.toggleDraw();
 	//if (key == '=') browser.browser->toggleDraw();
 
-	//if (key == 's') gui.saveToXML(gui.xmlFile); 
-	//if (key == 'l') gui.loadFromXML(gui.xmlFile); 
+	if (key == 's') gui.saveToXML(gui.xmlFile); 
+	if (key == 'l') gui.loadFromXML(gui.xmlFile); 
     //if(key == '-') editor.editor->toggleDraw();
 
 }

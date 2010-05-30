@@ -27,3 +27,35 @@
 	OF THE USE OF THIS SOFTWARE,EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
 
 *************************************************************************/
+
+#pragma once
+
+#include "ofxArgosUI.h"
+#include "ofxArgosUI_Includes.h"
+#include "ofxXmlSettings.h"
+
+class LayoutHandler {
+
+public:
+
+	ofxArgosUI	*gui; 
+
+	ofxArgosUI_Button		*button;
+	ofxArgosUI_SliderFloat	*slider;
+	ofxArgosUI_Toggle		*toggle;
+	ofxArgosUI_Knob			*knob;
+	ofxArgosUI_XYPad		*xypad;
+
+	void init(ofxArgosUI &gui); 
+
+	void	loadFromXML(string file);
+	void	saveToXML(string file);	
+
+
+	string	xmlFile;
+	int		lastTagNumber; 
+
+protected: 
+	ofxXmlSettings	XML;
+
+};

@@ -1,6 +1,6 @@
 /***********************************************************************
  
- Copyright (c) 2009, 2010 Dimitri Diakopoulos, http://argos.dimitridiakopoulos.com/
+ Copyright (c) 509, 510 Dimitri Diakopoulos, http://argos.dimitridiakopoulos.com/
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@ actionMove::actionMove(EditorPanel *ed) : ofxArgosUI_Control("actionMove") {
 	controlType = "actionMove";
 	editor = ed;
 	dragging = false; 
+	canfocus = false; 
 }
 
 void actionMove::setControl() {
@@ -44,12 +45,18 @@ void actionMove::setControl() {
 	}
 }
 
+void actionMove::onPress(int x, int y, int Button) {
+	cout << "Pressed" << "\n"; 
+}
+
 void actionMove::onRollOver(int x, int y) {
 	glutSetCursor(GLUT_CURSOR_INFO); 	
 }
 
 void actionMove::onRollOut() {
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+	//cout << "onRollOut" << "\n"; 
+	if (dragging) _mouseDown = true; 
 }
 
 void actionMove::onDragOver(int x, int y, int button) {
@@ -58,8 +65,21 @@ void actionMove::onDragOver(int x, int y, int button) {
 
 	dragging = true; 
 
-	dragX = (floor(((float) x / 20)) * 20);
-	dragY = (floor(((float) y / 20)) * 20);
+	if (abs (floor( (float) x / 10) - ( (float) x / 10 ) )  < (abs (ceil( (float) x / 10) - ( (float )x / 10) ) ) ) {
+		dragX = (floor(((float) x / 10)) * 10);
+	}
+	else {
+		dragX = (ceil(((float) x / 10)) * 10);
+	}
+
+	if (abs (floor( (float) y / 10) - ( (float) y / 10 ) )  < (abs (ceil( (float) y / 10) - ( (float )y / 10) ) ) ) {
+		dragY = (floor(((float) y / 10)) * 10);
+	}
+	else {
+		dragY = (ceil(((float) y / 10)) * 10);
+	}
+
+	//cout << "onDragOver" << "\n"; 
 }
 
 void actionMove::onDragOutside(int x, int y, int button) {
@@ -68,8 +88,24 @@ void actionMove::onDragOutside(int x, int y, int button) {
 
 	dragging = true; 
 
-	dragX = (floor(((float) x / 20)) * 20);
-	dragY = (floor(((float) y / 20)) * 20);
+	if (abs (floor( (float) x / 10) - ( (float) x / 10 ) )  < (abs (ceil( (float) x / 10) - ( (float) x / 10) ) ) ) {
+		dragX = (floor(((float) x / 10)) * 10);
+	}
+	else {
+		dragX = (ceil(((float) x / 10)) * 10);
+	}
+
+	if (abs (floor( (float) y / 10) - ( (float) y / 10 ) )  < (abs (ceil( (float) y / 10) - ( (float) y / 10) ) ) ) {
+		dragY = (floor(((float) y / 10)) * 10);
+	}
+	else {
+		dragY = (ceil(((float) y / 10)) * 10);
+	}
+
+	//dragX = (floor(((float) x / 10)) * 10);
+	//dragY = (floor(((float) y / 10)) * 10);
+
+	//cout << "onDragOutside" << "\n"; 
 }
 
 void actionMove::onRelease(int x, int y, int button) {
@@ -80,6 +116,8 @@ void actionMove::onRelease(int x, int y, int button) {
 		if ( (newX >= 0) && (newY >= 0))
 			editor->newPosition(newX, newY); 
 	}
+
+	_mouseDown = false; 
 
 	dragging = false; 
 }
@@ -94,6 +132,8 @@ void actionMove::onReleaseOutside(int x, int y, int button) {
 		if ( (newX >= 0) && (newY >= 0))
 			editor->newPosition(newX, newY); 
 	}
+
+	_mouseDown = false; 
 }
 
 void actionMove::update() {}
@@ -110,12 +150,15 @@ void actionMove::draw() {
 
 		if (focus.focused != NULL){
 			ofNoFill(); 
-			ofSetColor(255, 255, 255); ;
+
+			ofSetColor(255, 255, 255); 
+
+			//cout << dragX - x  << "\t" << dragY - y << "\n"; 
 
 			newX = dragX;
-			newY = dragY; 
+			newY = dragY;
 
-			ofRect(newX, newY, width, height); 
+			ofRect(newX , newY, width, height); 
 
 		}
 	}

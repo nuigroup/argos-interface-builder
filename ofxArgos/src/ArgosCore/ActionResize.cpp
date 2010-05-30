@@ -35,21 +35,25 @@ actionResize::actionResize(EditorPanel *ed) : ofxArgosUI_Control("actionResize")
 	controlType = "actionResize";
 	editor = ed;
 	dragging = false; 
+	canfocus = false; 
+	drawCorner = false; 
 }
 
 void actionResize::setControl() {
 	if (focus.focused != NULL){
 		setPos(focus.focused->getPropertyInt("x", 0) + focus.focused->getPropertyInt("w", 0) + 5, focus.focused->getPropertyInt("y", 0) + focus.focused->getPropertyInt("h", 0) + 5); 
-		setSize(10,10);
+		setSize(15,15);
 	}
 }
 
 void actionResize::onRollOver(int x, int y) {
-	glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER); 	
+	glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER);
+	drawCorner = true; 
 }
 
 void actionResize::onRollOut() {
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+	drawCorner = false; 
 }
 
 void actionResize::onDragOutside(int x, int y, int button) {
@@ -57,8 +61,10 @@ void actionResize::onDragOutside(int x, int y, int button) {
 	glutSetCursor(GLUT_CURSOR_BOTTOM_RIGHT_CORNER); 
 	dragging = true; 
 
-	dragX = (floor(((float) x / 20)) * 20);
-	dragY = (floor(((float) y / 20)) * 20);
+	dragX = (floor(((float) x / 10)) * 10);
+	dragY = (floor(((float) y / 10)) * 10);
+
+	drawCorner = true;
 
 }
 
@@ -66,6 +72,8 @@ void actionResize::onRelease(int x, int y, int button) {
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 
 	dragging = false; 
+
+	drawCorner = false; 
 
 }
 
@@ -83,6 +91,8 @@ void actionResize::onReleaseOutside(int x, int y, int button) {
 			editor->newSize(20, 20);
 	}
 
+	drawCorner = false; 
+
 }
 
 void actionResize::update() {}
@@ -97,28 +107,28 @@ void actionResize::draw() {
 
 		editor->isResizing = true; 
 
-		if (focus.focused != NULL){
+		if (focus.focused !=  NULL){
+
 			ofNoFill(); 
-			ofSetColor(255, 255, 255);
-			
+
+			ofSetColor(255, 255, 255); 
+
 			newWidth = focus.focused->getPropertyInt("w", 0) + (dragX - (focus.focused->getPropertyInt("x", 0) + focus.focused->getPropertyInt("w", 0))); 
 			newHeight = focus.focused->getPropertyInt("h", 0) + (dragY - (focus.focused->getPropertyInt("y", 0) + focus.focused->getPropertyInt("h", 0))); 
-			
-			cout << newWidth << " :: " << newHeight << "\n"; 
 
 			ofRect(focus.focused->getPropertyInt("x", 0), focus.focused->getPropertyInt("y", 0), newWidth, newHeight); 
 
 		}
 	}
 
+	if (drawCorner){
+		glPushMatrix();
+			ofFill(); 
+				ofSetColor(255, 255, 255); 
+				ofRect(this->x, this->y, 5, 5); 
+			ofNoFill(); 
+		glPopMatrix();
+	}
 
-	glPushMatrix();
-
-		ofFill(); 
-			ofSetColor(0xe3e3e3); 
-			ofRect(x, y, 5, 5); 
-		ofNoFill(); 
-
-	glPopMatrix();
 
 }

@@ -56,6 +56,7 @@ public:
 	
 		modebutton = modepanel->addButton("Edit", modepanel->x + 10, modepanel->y + 10, 60, 20, &stateManager::editing);
 			modebutton->setToggleMode(true); 
+
 	}
 
 };

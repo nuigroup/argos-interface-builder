@@ -33,9 +33,11 @@
 
 #include "ofMain.h"				// ofMain
 
+
 #include "ofxArgosUI.h"			// Argos UI Toolkit
 #include "EditorCore.h"			// Widget Editor
 #include "BrowserCore.h"		// Widget Browser
+#include "LayoutHandler.h"		// Layout
 #include "ModeCore.h"			// Mode Changer
 #include "StaticFont.h"			// Text @ Static Size
 #include "OSCHandler.h"			// OSC Handler
@@ -51,15 +53,17 @@ public:
 	BrowserPanel	browser;
 	ModePanel		mode;
 
+	LayoutHandler	layout; 
+
 	string			version; 
 
 
 	Argos() {
 
-
 		editor.init(gui); 
 		browser.init(gui); 
 		mode.init(gui); 
+		layout.init(gui); 
 	
 		argosText::setFont("verdana.ttf", 10);
 		version = "v0.21"; 

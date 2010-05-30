@@ -45,6 +45,8 @@ public:
 	ButtonHandler		*bhandler;
 	SliderHandler		*shandler;
 	KnobHandler			*khandler; 
+	XYHandler			*xyhandler;
+	ToggleHandler		*thandler; 
 
 	actionResize		*rControl; 
 	actionMove			*mControl; 
@@ -56,7 +58,7 @@ public:
 
 	void update(); 
 
-	void clearHandlers(); 
+	void reset(); 
 
 	void moveXY_Arrows(string axis, string dir); 
 	

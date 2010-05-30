@@ -32,7 +32,7 @@
 
 #include "WidgetTypeHandler.h"
 
-class ButtonHandler  : public WidgetTypeHandler {
+class ButtonHandler : public WidgetTypeHandler {
 
 public: 
 
@@ -40,14 +40,14 @@ public:
 
 	ButtonHandler(ofxArgosUI_Panel &panel) : WidgetTypeHandler(panel) {
 		editor->setName("Button Editor"); 
-		editor->setSize(210, 170); 
+		editor->setSize(210, 180); 
 	}
 	
 	void editProperties(ofxArgosUI_Control *control) {
 	
 		WidgetTypeHandler::editBaseProperties(control);
 
-		editor->addToggle("Toggle?", 10, 140, 100, 15, &dc);
+		editor->addTextField("Roundiness", 10, 150, 40, 20, control->getPropertyRef("cornerradius"));
 		
 	}
 

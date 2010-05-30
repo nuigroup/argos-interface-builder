@@ -31,10 +31,7 @@
 #include "WidgetTypeHandler.h"
 
 WidgetTypeHandler::WidgetTypeHandler(ofxArgosUI_Panel &panel) {
-	
 	this->editor  = &panel; 
-	nstring = "0";
-
 }
 
 WidgetTypeHandler::~WidgetTypeHandler(){

@@ -30,19 +30,21 @@
 
 #pragma once
 
-#include "ofxArgosUI.h"
+#include "WidgetTypeHandler.h"
 
-class WidgetTypeHandler {
+class ToggleHandler : public WidgetTypeHandler {
 
-public:
+public: 
 
-	WidgetTypeHandler(ofxArgosUI_Panel &panel);	
-	virtual ~WidgetTypeHandler();
+	ToggleHandler(ofxArgosUI_Panel &panel) : WidgetTypeHandler(panel) {
+		editor->setName("Toggle Editor"); 
+		editor->setSize(210, 150); 
+	}
 	
-	ofxArgosUI_Panel 	*editor; 
+	void editProperties(ofxArgosUI_Control *control) {
 	
-	virtual void editBaseProperties(ofxArgosUI_Control *control);
+		WidgetTypeHandler::editBaseProperties(control);
+		
+	}
 
-	virtual void editProperties(ofxArgosUI_Control *control) {}
-	
 };
