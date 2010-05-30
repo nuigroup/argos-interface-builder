@@ -43,10 +43,12 @@ class ofxArgosUI_Button : public ofxArgosUI_Control {
 	
 public:
 	
-	bool*			value;
+	bool*	value;
 
-	bool			beToggle;
-	bool			beenPressed;
+	bool	beToggle;
+	bool	beenPressed;
+
+	int		cornerRadius; 
 	
 	ofxArgosUI_Button(string name, int x, int y, int width, int height, bool *value) : ofxArgosUI_Control(name) {
 		beToggle	= false;
@@ -56,11 +58,12 @@ public:
 		controlType = "Button";
 		OSCaddress = "/button"; 
 
+		cornerRadius = 8; 
+
 		setup(x, y, width, height);
 
 		createProperties();
 		updateProperties(); 
-
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -71,6 +74,7 @@ public:
 	void createProperties() {
 		ofxArgosUI_Control::createProperties(); 
 		createPropertyBool("cantoggle", false);
+		createPropertyInt("cornerradius", cornerRadius); 
 	}
 
 	void updateProperties(){
@@ -82,11 +86,12 @@ public:
 		OSCaddress = getPropertyString("osc", OSCaddress);
 
 		// Button Specific Stuff: 
+		int CRT = getPropertyInt("cornerraidus", cornerRadius);
+		if (CRT >= 0 && CRT <=12) cornerRadius = CRT;
+		else cornerRadius = 8; 
 	}
 	
-	void loadFromXML(ofxXmlSettings &XML) {
-		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0));
-	}
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
 	void saveToXML(ofxXmlSettings &XML) {
 		int tagNum =  XML.addTag(controlType);
@@ -95,7 +100,8 @@ public:
 			XML.setValue(controlType + ":" + "y", y, tagNum);
 			XML.setValue(controlType + ":" + "width", width, tagNum);
 			XML.setValue(controlType + ":" + "height", height, tagNum);
-			XML.setValue(controlType + ":" + "OSC", OSCaddress, tagNum);
+			XML.setValue(controlType + ":" + "osc", OSCaddress, tagNum);
+			XML.setValue(controlType + ":" + "roundiness", cornerRadius, tagNum);
 		XML.popTag();
 	}
 	
@@ -151,7 +157,6 @@ public:
 	void update() {
 		if(!enabled) return;
 		enabled = false;
-
 		updateProperties(); 
 	}
 
@@ -172,7 +177,7 @@ public:
 				ofSetColor(0x7d87d7);
 			}
 
-			rRectangle(0, 0, width, height, 8); 
+			rRectangle(0, 0, width, height, cornerRadius); 
 
 			setTextColor();
 			argosText::font.drawString(name, ((width/2) - (name.length() * 3.5)), (height/2) + 2);

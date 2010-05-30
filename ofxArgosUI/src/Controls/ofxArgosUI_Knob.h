@@ -88,8 +88,8 @@ public:
 
 	void createProperties() {
 		ofxArgosUI_Control::createProperties(); 
-		createPropertyFloat("min", min);
-		createPropertyFloat("max", max);
+		createPropertyInt("min", min);
+		createPropertyInt("max", max);
 	}
 
 	void updateProperties(){
@@ -100,26 +100,25 @@ public:
 		height = getPropertyInt("h", height);
 		OSCaddress = getPropertyString("osc", OSCaddress);
 
-		// Todo: Knob Specific Stuff: 
+		min = getPropertyFloat("min", min);
+		max = getPropertyFloat("max", max);
 
 		// Todo: Fix radius problems... 
 		radius = getPropertyInt("w", width) * 0.5;
 	}
 
 	
-	void loadFromXML(ofxXmlSettings &XML) {
-		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0));
-	}
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
 	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("x", x);
-				XML.addValue("y", y);
-				XML.addValue("width", width);
-				XML.addValue("height", height);
-				XML.addValue("OSC", OSCaddress);
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controlType + ":" + "name", name, tagNum);
+			XML.setValue(controlType + ":" + "x", x, tagNum);
+			XML.setValue(controlType + ":" + "y", y, tagNum);
+			XML.setValue(controlType + ":" + "width", radius, tagNum);
+			XML.setValue(controlType + ":" + "osc", OSCaddress, tagNum);
+			XML.setValue(controlType + ":" + "min", min, tagNum);
+			XML.setValue(controlType + ":" + "max", max, tagNum);
 		XML.popTag();
 	}
 	

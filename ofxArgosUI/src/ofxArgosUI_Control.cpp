@@ -129,7 +129,7 @@ void ofxArgosUI_Control::setPropertyString(string keyVal, string value) throw() 
 }
 
 void ofxArgosUI_Control::setPropertyFloat(string keyVal, float value) throw() {
-	properties.find(keyVal)->second = ofToString(value); 
+	properties.find(keyVal)->second = value; 
 }
 
 void ofxArgosUI_Control::setPropertyBool(string keyVal, bool value) throw() {

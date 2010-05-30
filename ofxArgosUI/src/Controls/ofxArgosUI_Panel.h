@@ -46,14 +46,19 @@ public:
 
 	int oWidth; 
 	int oHeight;
+
+	int cornerRadius;
 		
 	ofxArgosUI_Panel(string name, int x, int y, int width, int height) : ofxArgosUI_Control(name) {
 
 		disableAllEvents();
+		disableAllInput();	// Adds the FocusActive listener we can hack to clear the editor
 
 		oHeight = height; 
 		controlType = "Panel";
 		setup(x, y, width, height);
+
+		cornerRadius = 12; 
 
 		isprotected = false;
 		hidden = false; 
@@ -72,6 +77,8 @@ public:
 	void toggleDraw(){
 		enabled = !enabled; 
 	}
+
+	void focusActive(){}
 
 	void showPanel(){
 
@@ -132,6 +139,10 @@ public:
 		return control;
 	}
 
+	void setCornerRadius(int radius){
+		cornerRadius = radius; 
+	}
+
 	ofxArgosUI_Button *addButton(string name, int x, int y, int width, int height, bool *value) {
 		return (ofxArgosUI_Button *)addControl(new ofxArgosUI_Button(name, x, y, width, height, value));
 	}
@@ -187,7 +198,7 @@ public:
 
 		ofSetColor(0x363636);
 
-		rRectangle(x, y, width, height, 13);
+		rRectangle(x, y, width, height, cornerRadius);
 
 		ofSetColor(0xf0f0f0);
 		argosText::font.drawString(name, x + 5, y - 3);

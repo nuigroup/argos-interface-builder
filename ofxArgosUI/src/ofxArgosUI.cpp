@@ -100,6 +100,21 @@ void ofxArgosUI::setAutoSave(bool b) {
 	doAutoSave = b;
 }
 
+void ofxArgosUI::saveToXML(string file) {
+
+	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
+
+	cout << views.size() << "\n"; 
+
+	XML.clear();	// clear cause we are building a new xml file
+	
+	//for(int i = 1; i < views.size(); i++) {
+			views[1]->saveToXML(XML);
+	//}
+
+	XML.saveFile(file);
+
+}
 
 void ofxArgosUI::loadFromXML(string file) {
 
@@ -117,7 +132,7 @@ void ofxArgosUI::loadFromXML(string file) {
 
 	int numControls = XML.getNumTags("Button");
 
-	cout << numControls << "\n"; 
+	cout << "What the fuck is all this shit?" << "\n"; 
 	
 
 	for(int i=0; i <= numControls; i++) {
@@ -133,32 +148,7 @@ void ofxArgosUI::loadFromXML(string file) {
 			&value
 		);
 	}
-
-	
-
-
-
 }
-
-
-void ofxArgosUI::saveToXML(string file) {
-
-	printf("ofxArgosUI::saveToXML( %s )\n", file.c_str());
-
-	XML.clear();	// clear cause we are building a new xml file
-	
-	
-	for(int i=1; i < views.size(); i++) {
-		
-			views[i]->saveToXML(XML);
-	}
-
-	XML.saveFile(file);
-
-	if(doSaveBackup) XML.saveFile(file + ".bak");
-
-}
-
 
 void ofxArgosUI::setVerbose(bool v) {
 	verbose = v;

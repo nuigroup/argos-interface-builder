@@ -49,6 +49,7 @@ class ofxArgosUI {
 
 // let editor access protected controls
 friend class EditorPanel; 
+friend class LayoutHandler; 
 
 public:
 	

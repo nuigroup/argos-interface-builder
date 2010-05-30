@@ -45,28 +45,49 @@ public:
 	
 	ofxArgosUI_Toggle(string name, int x, int y, int width, int height, bool *value) : ofxArgosUI_Control(name) {
 		this->value	= value;
+		
 		controlType = "Toggle";
+		OSCaddress = "/toggle"; 
+
 		setup(x, y, width, height);
 
-		OSCaddress = "/toggle"; 
+		createProperties();
+		updateProperties(); 
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
 		setPos(_x, _y); 
 		setSize(_width, _height);
 	}
-	
-	void loadFromXML(ofxXmlSettings &XML) {
-		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0));
+
+	void createProperties() {
+		ofxArgosUI_Control::createProperties(); 
 	}
+
+	void updateProperties(){
+		name = getPropertyString("name", name);
+		x = getPropertyInt("x", x);
+		y = getPropertyInt("y", y);
+		width = getPropertyInt("w", width);
+		height = getPropertyInt("h", height);
+		OSCaddress = getPropertyString("osc", OSCaddress);
+
+		// Toggle Specific Stuff: 
+	}
+	
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
 	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("value", getValue());
-			XML.popTag();
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controlType + ":" + "name", name, tagNum);
+			XML.setValue(controlType + ":" + "x", x, tagNum);
+			XML.setValue(controlType + ":" + "y", y, tagNum);
+			XML.setValue(controlType + ":" + "width", width, tagNum);
+			XML.setValue(controlType + ":" + "height", height, tagNum);
+			XML.setValue(controlType + ":" + "osc", OSCaddress, tagNum);
+		XML.popTag();
 	}
+	
 	
 	bool getValue() {
 		return (*value);
@@ -95,6 +116,8 @@ public:
 	void update() {
 		if(!enabled) return;
 		enabled = false;
+
+		updateProperties(); 
 	}
 	
 	void draw(float x, float y) {
@@ -129,7 +152,7 @@ public:
 			ofFill();
 
 			ofSetColor(0xdfdfdf); 
-			argosText::font.drawString(name, height + 3, 14);
+			argosText::font.drawString(name, height + 2, 14);
 
 		glPopMatrix();
 

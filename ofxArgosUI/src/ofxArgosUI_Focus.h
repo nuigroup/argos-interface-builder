@@ -52,7 +52,6 @@ public:
 			// Bottom Right
 			ofLine(((focused->x + focused->width)+4), ((focused->y + focused->height)+4), ((focused->x + focused->width)-8), ((focused->y + focused->height)+4));
 			ofLine(((focused->x + focused->width)+4), ((focused->y + focused->height)+4), ((focused->x + focused->width)+4), ((focused->y + focused->height)-8));
-
 		}
 	}
 }; 

@@ -36,6 +36,7 @@
 #pragma once
 
 #include "ofxArgosUI_Control.h"
+#include "ofxArgosUI_Util.h"
 
 template <typename Type> class ofxArgosUI_SliderBase : public ofxArgosUI_Control {
 public:
@@ -44,13 +45,18 @@ public:
 	Type		min, max;
 	
 	float		barwidth;
+	float		barheight;
+
 	float		pct;
+	float		pct2; 
 	
 	float		lerpSpeed;
 	Type		targetValue;
 	Type		oldValue;
 
 	float		alphafill; 
+
+	bool		vertical; 
 	
 	ofxArgosUI_SliderBase(string name, int x, int y, int width, int height, Type *value, Type min, Type max, float smoothing = 0) : ofxArgosUI_Control(name) {
 		
@@ -63,6 +69,8 @@ public:
 		oldValue	= targetValue;
 
 		alphafill = 0; 
+
+		vertical = 0; 
 
 		controlType = "Slider";
 		OSCaddress = "/slider"; 
@@ -80,12 +88,16 @@ public:
 
 		pct		 = ofMap((*value), min, max, 0.0, width);
 		barwidth = pct;
+
+		pct2	  = ofMap((*value), min, max, 0.0, height);
+		barheight = pct2;
 	}
 
 	void createProperties() {
 		ofxArgosUI_Control::createProperties(); 
-		createPropertyFloat("min", min);
-		createPropertyFloat("max", max);
+		createPropertyInt("min", min);
+		createPropertyInt("max", max);
+		createPropertyBool("vertical", vertical);
 	}
 
 	void updateProperties(){
@@ -95,23 +107,22 @@ public:
 		width = getPropertyInt("w", width);
 		height = getPropertyInt("h", height);
 		OSCaddress = getPropertyString("osc", OSCaddress);
-
-		// Todo: Slider Specific Stuff: 
+		min = getPropertyFloat("min", min);
+		max = getPropertyFloat("max", max);
 	}
 
-	void loadFromXML(ofxXmlSettings &XML) {
-		set(XML.getValue("controls:" + controlType + "_" + key + ":value", 0.0f));
-	}
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
 	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("x", x);
-				XML.addValue("y", y);
-				XML.addValue("width", width);
-				XML.addValue("height", height);
-				XML.addValue("OSC", OSCaddress);
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controlType + ":" + "name", name, tagNum);
+			XML.setValue(controlType + ":" + "x", x, tagNum);
+			XML.setValue(controlType + ":" + "y", y, tagNum);
+			XML.setValue(controlType + ":" + "width", width, tagNum);
+			XML.setValue(controlType + ":" + "height", height, tagNum);
+			XML.setValue(controlType + ":" + "osc", OSCaddress, tagNum);
+			XML.setValue(controlType + ":" + "min", min, tagNum);
+			XML.setValue(controlType + ":" + "max", max, tagNum);
 		XML.popTag();
 	}
 	
@@ -124,7 +135,7 @@ public:
 		(*value) = f;
 	}
 	
-	void updateSlider(int xMovement) {
+	void updateSliderX(int xMovement) {
 
 		if(!enabled) return;
 		
@@ -146,41 +157,74 @@ public:
 
 		oschandler.sendOSC(*value, OSCaddress);
 	}
+
+	void updateSliderY(int yMovement) {
+
+		if(!enabled) return;
+		
+		if(pct2 > height) {
+			pct2 = height;
+		}
+
+		else {
+
+			pct2 = yMovement - y;
+
+			cout << pct2 << "\n"; 
+
+			float temp = ofMap(pct2, 0.0, (float) height, min, max);
+
+			cout << temp << "\n"; 
+			
+			// Clamp values
+			if(temp >= max)			temp = max;
+			else if(temp <= min)	temp = min;
+			
+			targetValue = temp;	
+			oldValue = *value;		// save oldValue (so the draw doesn't update target but uses it)
+		}
+
+		oschandler.sendOSC(*value, OSCaddress);
+	}
 	
 	// ============================================= Mouse
 	void focusActive() { if (canfocus) focus.set(this); }
 
 	void onPress(int x, int y, int button) {
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 	
 	void onDragOver(int x, int y, int button) {
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 	
 	void onDragOutside(int x, int y, int button) {
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 	
 	// ============================================= Touch
 	void onTouchDown(float x, float y, int ID){
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 
 	void onTouchMove(float x, float y, int ID){
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 
 	void onTouchMoveOutside(float x, float y, int ID){
-		updateSlider(x);
+		if (vertical) updateSliderY(y);
+		else updateSliderX(x); 
 	}
 	
 	void update() {
 		if(!enabled) return;
 		enabled = false;
-
 		updateProperties(); 
-
 	}
 	
 	void draw(float x, float y) {
@@ -197,9 +241,13 @@ public:
 		setPos(x, y);
 		
 		barwidth = ofMap((*value), min, max, 0.0, (float)width);
+		barheight = ofMap((*value), min, max, 0.0, (float)height);
 		
 		if(barwidth >= width)	barwidth = width;
 		else if(barwidth <= 0)	barwidth = 0;
+
+		if(barheight >= height)	barheight = height;
+		else if(barheight <= 0)	barheight = 0;
 		
 		ofEnableAlphaBlending();
 
@@ -208,17 +256,39 @@ public:
 				glTranslatef(x, y, 0);
 				ofFill();
 				
-				setFullColor();
+				if (width < height) {
 
-				ofRect(0, 0, width, height);
+					vertical = true; 
 
-				int sliderAlpha = (int) ofMap(barwidth, 0, width, 80, 255);  
-				ofSetColor(77, 91, 198, sliderAlpha); 
+					setFullColor();
+					// rRectangle somehow disables the alpha filling
+					rRectangle(0, 0, width, height, 1);
+					//ofRect(0, 0, width, height); 
 
-				ofRect(0, 0, barwidth, height);	
+					int sliderAlpha = (int) ofMap(barwidth, 0, width, 80, 255);  
+					ofSetColor(77, 91, 198, sliderAlpha); 
+					
+					ofRect(0, 0 , width, barheight);	
 
-				setTextColor();
-				argosText::font.drawString(ofToString((*value), 2), 3, height - 4);
+					setTextColor();
+					argosText::font.drawString(ofToString((*value), 2), 3, height - 4);
+				}
+
+				else {
+
+					vertical = false; 
+
+					setFullColor();
+
+					rRectangle(0, 0, width, height, 1);
+
+					ofSetColor(77, 91, 198); 
+
+					ofRect(0, 0, barwidth, height);	
+
+					setTextColor();
+					argosText::font.drawString(ofToString((*value), 2), 3, height - 4);
+				}
 				
 			glPopMatrix();
 

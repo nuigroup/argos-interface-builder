@@ -58,6 +58,9 @@ public:
 		OSCaddress = "/xypad"; 
 
 		setup(x, y, width, height);
+
+		createProperties();
+		updateProperties(); 
 	}
 	
 	void setup(int _x, int _y, int _width, int _height) {
@@ -65,17 +68,45 @@ public:
 		setSize(_width, _height);
 	}
 
-	void loadFromXML(ofxXmlSettings &XML) {
-		value->set(XML.getValue("controls:" + controlType + "_" + key + ":valueX", 0.0f), XML.getValue("controls:" + controlType + "_" + key + ":valueY", 0.0f));
+	void createProperties() {
+		ofxArgosUI_Control::createProperties(); 
+
+		createPropertyInt("minX", min.x);
+		createPropertyInt("maxX", max.x);
+		createPropertyInt("minY", min.y);
+		createPropertyInt("maxY", max.y);
 	}
+
+	void updateProperties(){
+		name = getPropertyString("name", name);
+		x = getPropertyInt("x", x);
+		y = getPropertyInt("y", y);
+		width = getPropertyInt("w", width);
+		height = getPropertyInt("h", height);
+		OSCaddress = getPropertyString("osc", OSCaddress);
+
+		// XY Specific Stuff:
+		min.x = getPropertyFloat("minX", min.x);
+		max.x = getPropertyFloat("maxX", max.x);
+		min.y = getPropertyFloat("minY", min.y);
+		max.y = getPropertyFloat("maxY", max.y);
+	}
+
+	void loadFromXML(ofxXmlSettings &XML) {}
 	
 	void saveToXML(ofxXmlSettings &XML) {
-		XML.addTag(controlType + "_" + key);
-			XML.pushTag(controlType + "_" + key);
-				XML.addValue("name", name);
-				XML.addValue("valueX", value->x);
-				XML.addValue("valueY", value->y);
-			XML.popTag();
+		int tagNum =  XML.addTag(controlType);
+			XML.setValue(controlType + ":" + "name", name, tagNum);
+			XML.setValue(controlType + ":" + "x", x, tagNum);
+			XML.setValue(controlType + ":" + "y", y, tagNum);
+			XML.setValue(controlType + ":" + "width", width, tagNum);
+			XML.setValue(controlType + ":" + "height", height, tagNum);
+			XML.setValue(controlType + ":" + "osc", OSCaddress, tagNum);
+			XML.setValue(controlType + ":" + "minX", min.x, tagNum);
+			XML.setValue(controlType + ":" + "maxX", max.x, tagNum);
+			XML.setValue(controlType + ":" + "minY", min.y, tagNum);
+			XML.setValue(controlType + ":" + "maxY", max.y, tagNum);
+		XML.popTag();
 	}
 	
 	void set(float x, float y) {
@@ -154,6 +185,8 @@ public:
 			(*value).x = ofMap(point.x, x, x + width, min.x, max.x); 
 			(*value).y = ofMap(point.y, y, y + height, min.y, max.y); 
 		}
+
+		updateProperties(); 
 
 	}
 

@@ -138,6 +138,8 @@ public:
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 			
+			ofSetColor(255, 255, 255); 
+
 			argosText::font.drawString(name, -2, -5); 
 
 			ofSetColor(0x767676); 
